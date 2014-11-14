@@ -1,0 +1,4 @@
+[31-Oct-2014 17:27:34 UTC] PHP Fatal error:  Uncaught exception 'Exception' with message '<strong>Database Error </strong> :' in /home/apsadmin507/public_html/pGBL@2014/src/login/get_staffData.php:14
+Stack trace:
+#0 {main}
+  thrown in /home/apsadmin507/public_html/pGBL@2014/src/login/get_staffData.php on line 14

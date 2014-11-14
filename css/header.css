@@ -1,0 +1,37 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11/13/2014, 11:30:29 AM
+    Author     : Sistemas
+*/
+
+.header-logo {
+    float: left;
+    width: 300px;
+}
+
+.header-user {
+    float: right;
+    width: 200px;
+    margin-top: 1em;
+}
+
+.header-title {
+    margin-left: 300px;
+    margin-right: 300px;
+    overflow: hidden;
+}
+
+.header-title h1{
+    margin-top: 50px;
+}
+
+.slogan {
+    font-size: 12px;
+    font-style: italic;
+    text-align: center;
+}
+

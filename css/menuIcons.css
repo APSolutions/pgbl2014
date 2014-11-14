@@ -1,0 +1,93 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 11/14/2014, 05:27:51 AM
+    Author     : APSolution
+*/
+
+@font-face {
+	font-family: "Flaticon";
+	src: url("../fonts/menus/flaticon.eot");
+	src: url("../fonts/menus/flaticon.eot#iefix") format("embedded-opentype"),
+                url("../fonts/menus/flaticon.woff") format("woff"),
+                url("../fonts/menus/flaticon.ttf") format("truetype"),
+                url("../fonts/menus/flaticon.svg") format("svg");
+	font-weight: normal;
+	font-style: normal;
+}
+
+[class^="icons-"], [class*=" icons-"] {   
+	font-family: 'Flaticon';
+        font-size: 7em;
+	speak: none;
+	font-style: normal;
+	font-weight: normal;
+	font-variant: normal;
+	text-transform: none;
+	line-height: 1;
+
+	/* Better Font Rendering =========== */
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+}
+
+.icons-bus21:before {
+	content: "\e000";
+}
+.icons-business68:before {
+	content: "\e001";
+}
+.icons-businessmen23:before {
+	content: "\e002";
+}
+.icons-checklist5:before {
+	content: "\e003";
+}
+.icons-chronometer10:before {
+	content: "\e004";
+}
+.icons-communities:before {
+	content: "\e005";
+}
+.icons-document9:before {
+	content: "\e006";
+}
+.icons-group4:before {
+	content: "\e007";
+}
+.icons-important:before {
+	content: "\e008";
+}
+.icons-oxygen:before {
+	content: "\e009";
+}
+.icons-personal5:before {
+	content: "\e00a";
+}
+.icons-pill:before {
+	content: "\e00b";
+}
+.icons-school7:before {
+	content: "\e00c";
+}
+.icons-shopping122:before {
+	content: "\e00d";
+}
+.icons-spring16:before {
+	content: "\e00e";
+}
+.icons-tent:before {
+	content: "\e00f";
+}
+.icons-three115:before {
+	content: "\e010";
+}
+.icons-time5:before {
+	content: "\e011";
+}
+.icons-whisk1:before {
+	content: "\e012";
+}
