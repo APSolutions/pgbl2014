@@ -4,6 +4,8 @@ session_name('Global');
 session_id('pgbl');
 session_start();
 ?>
+<?php
+?>
 <!DOCTYPE html>
 <html>
     <head>
