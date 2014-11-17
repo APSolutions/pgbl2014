@@ -98,7 +98,7 @@ session_start();
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="settings_menu.php">
                             <span class="icons-school7"></span>
                             <h3 class="cbp-ig-title">Universities</h3>
                             <span class="cbp-ig-category">Add/Remove permission</span>
