@@ -11,11 +11,11 @@ $lastname = $user->get_lastname();
                         <p class="userInfo">
                            Hi $name, $lastname
                         </p>
-                        <a href="#"> 
-                            <span class="header-user-icon flaticon-bell46" id="notifications" data-content="notifications"></span>
+                        <a href="#" class="tooltip" data-content="notifications">
+                            <span class="header-user-icon flaticon-bell46" id="notifications"></span>
                         </a>
-                        <a href="logout.php"> 
-                            <span class="header-user-icon flaticon-logout13" id="logout" data-content="logout"></span>  
+                        <a href="logout.php" class="tooltip" data-content="logout"> 
+                            <span class="header-user-icon flaticon-logout13" id="logout"></span>  
                         </a>                        
                     </div>
                     <div class="header-logo">

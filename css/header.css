@@ -61,20 +61,32 @@ margin-left: 20px;
     text-align: center;
 }
 
-.header-user-icon:hover:before{
-	content: attr(data-content);
-	text-transform: none;
-	text-indent: 0;
-	letter-spacing: 0;
-	font-weight: 300;
-	font-size: 110%;
-	padding: 0.8em 1em;
-	line-height: 1.2;
-	text-align: left;
-	left: auto;
-	margin-left: 4px;
-	position: absolute;
-	color: #fff;
-	background: #47a3da;
+.tooltip{
+    display: inline;
+    position: relative;
 }
 
+.tooltip:hover:after{
+    background: #47a3da;
+    background: #47a3da;
+    border-radius: 5px;
+    bottom: 26px;
+    color: #fff;
+    content: attr(data-content);
+    left: 20%;
+    padding: 5px 15px;
+    position: absolute;
+    z-index: 98;
+    opacity: 0.9;
+}
+
+.tooltip:hover:before{
+    border: solid;
+    border-color: #47a3da transparent;
+    border-width: 6px 6px 0 6px;
+    bottom: 20px;
+    content: "";
+    left: 50%;
+    position: absolute;
+    z-index: 99;
+}
