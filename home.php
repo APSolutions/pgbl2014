@@ -24,6 +24,7 @@ session_start();
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/logistic_menu/component.css" />
         <script src="js/logistic_menu/modernizr.custom.js"></script>
+        <script src="js/header.js"></script>
     </head>
     <body>
         <div class="container">
@@ -33,25 +34,24 @@ session_start();
             <div class="main">
                 <ul class="cbp-ig-grid">
                     <li>
-                        
-                        <a href="#">
+                        <a href="#" name="Administración" onclick="locator(event.currentTarget)">
                             <span class="mm-cogs"></span>
-                            <h3 class="cbp-ig-title">Administration</h3>
-                            <span class="cbp-ig-category">Manage GB</span>
+                            <h3 class="cbp-ig-title">Administración</h3>
+                            <span class="cbp-ig-category">Aministrar GB</span>
                         </a>
                     </li>
                     <li>
-                        <a href="logistic.php">
+                        <a href="#" name="Logística" onclick="locator(event.currentTarget)">
                             <span class="mm-history"></span>
-                            <h3 class="cbp-ig-title">Logistic</h3>
-                            <span class="cbp-ig-category">Brigades Logistic</span>
+                            <h3 class="cbp-ig-title">Logística</h3>
+                            <span class="cbp-ig-category">Logística de las Brigadas</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Programación" onclick="locator(event.currentTarget)">
                             <span class="mm-screen"></span>
-                            <h3 class="cbp-ig-title">Programming</h3>
-                            <span class="cbp-ig-category">Develop within GB</span>
+                            <h3 class="cbp-ig-title">Programación</h3>
+                            <span class="cbp-ig-category">Desarrollo dentro de GB</span>
                         </a>
                     </li>
                 </ul>

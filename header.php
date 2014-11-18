@@ -3,6 +3,7 @@ session_name('Global');
 session_id('pgbl');
 
 $user = $_SESSION["user"];
+$position = $_GET["position"];
 $name = $user->get_name();
 $lastname = $user->get_lastname();
     echo <<<_END
@@ -26,7 +27,7 @@ $lastname = $user->get_lastname();
                         </span>
                     </div>
                     <div class="header-title">
-                        <h1>Title</h1>
+                        <h1>$position</h1>
                     </div>                
     </header>
 _END;
