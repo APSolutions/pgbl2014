@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : Sistemas
 */
 @font-face {
-	font-family: "Flaticon";
+	font-family: "Flaticon1";
 	src: url("../fonts/header/flaticon.eot");
 	src: url("../fonts/header/flaticon.eot#iefix") format("embedded-opentype"),
 	url("../fonts/header/flaticon.woff") format("woff"),
@@ -20,7 +20,7 @@ and open the template in the editor.
 
 [class^="flaticon-"]:before, [class*=" flaticon-"]:before,
 [class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
-	font-family: Flaticon;
+	font-family: Flaticon1;
         font-size: 20px;
 font-style: normal;
 margin-left: 20px;
