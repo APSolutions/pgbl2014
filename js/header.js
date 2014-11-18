@@ -35,7 +35,7 @@ function locator(location){
         address = "settings.php"
     }
     //From other menus add else if(locale=="name attribute"){}
-    
+    //aldo gay
     window.location.href = address + "?position=" + locale;
 }
 
