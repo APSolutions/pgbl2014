@@ -5,15 +5,15 @@
  */
 function locator(location){
     var locale = location.getAttribute("name");
-    var address = ""
+    var address = "" ;
     //From main menu
     if (locale=="Administración"){
-        address = "menu_admin.php"
+        address = "menu_admin.php" ;
     }else if(locale=="Logística"){
-         address = "logistic.php"
+         address = "logistic.php" ; 
     }
     else if(locale=="Programación"){
-        address = "menu_devel.php"
+        address = "menu_devel.php" ;
     }
     //From logistic menu
     else if(locale=="Fichas"){
@@ -35,7 +35,7 @@ function locator(location){
         address = "settings.php"
     }
     //From other menus add else if(locale=="name attribute"){}
-    //aldo gay
     window.location.href = address + "?position=" + locale;
+    //window.location.href = address + "?position=" + locale + "&variable=" + variable;
 }
 

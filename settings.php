@@ -63,7 +63,7 @@ session_start();
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Kitchen Equipment" onclick="locator(event.currentTarget)"> 
                             <span class="icons-whisk1"></span>
                             <h3 class="cbp-ig-title">Kitchen Equipment</h3>
                             <span class="cbp-ig-category">Mange kitchen Equipment</span>
