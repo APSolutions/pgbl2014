@@ -15,7 +15,7 @@ if ($valid == 1) {
     session_id('pgbl');
     session_start();
     $_SESSION["username"] = $_POST['username'];
-    $_SESSION["user"] = new usuario(); 
+    $_SESSION["user"] = new usuario();
     header('location:../../menu_router.php');
 }  else {
     header('location:../../index.php');

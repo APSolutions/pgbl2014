@@ -23,6 +23,7 @@ session_start();
         <link rel="stylesheet" type="text/css" href="css/logistic_menu/component.css" />
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <script src="js/logistic_menu/modernizr.custom.js"></script>
+        <script src="js/header.js"></script>
     </head>
     <body>
         <div class="container">
@@ -32,42 +33,42 @@ session_start();
             <div class="main">
                 <ul class="cbp-ig-grid">
                     <li>
-                        <a href="#">
+                        <a href="#" name="Fichas" onclick="locator(event.currentTarget)">
                             <span class="cbp-ig-icon icon-file"></span>
                             <h3 class="cbp-ig-title">Fichas</h3>
                             <span class="cbp-ig-category">Actualiza tus fichas</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Itinerario" onclick="locator(event.currentTarget)">
                             <span class="cbp-ig-icon icon-numbered-list"></span>
                             <h3 class="cbp-ig-title">Itinerario</h3>
                             <span class="cbp-ig-category">Actualiza tus itinerarios</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Calendarios" onclick="locator(event.currentTarget)">
                             <span class="cbp-ig-icon icon-calendar"></span>
                             <h3 class="cbp-ig-title">Calendarios</h3>
                             <span class="cbp-ig-category">Ver y actualizar</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Evaluaciones" onclick="locator(event.currentTarget)">
                             <span class="cbp-ig-icon icon-signup"></span>
                             <h3 class="cbp-ig-title">Evaluaciones</h3>
                             <span class="cbp-ig-category">Completa</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Reportes" onclick="locator(event.currentTarget)">
                             <span class="cbp-ig-icon icon-stats"></span>
                             <h3 class="cbp-ig-title">Reportes</h3>
                             <span class="cbp-ig-category">Ver Reportes</span>
                         </a>
                     </li>
                     <li>
-                        <a href="settings.php">
+                        <a href="#" name="Configuraciones" onclick="locator(event.currentTarget)">
                             <span class="cbp-ig-icon icon-cog"></span>
                             <h3 class="cbp-ig-title">Configuraciones</h3>
                             <span class="cbp-ig-category">Actualiza el sistema</span>

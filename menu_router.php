@@ -11,16 +11,16 @@ $user_devel = $user->get_permission_devel();
 
 if ($user_admin && !$user_devel && !$user_logic ){
     //lleva al menu de administracion
-    $destination = 'Location:menu_admin.php';
+    $destination = 'Location:menu_admin.php?position=Administración';
 }elseif (!$user_admin && $user_devel && !$user_logic) {
     //lleva al menu de programacion
-    $destination = 'Location:menu_devel.php';
+    $destination = 'Location:menu_devel.php?position=Programación';
 }elseif  (!$user_admin && !$user_devel && $user_logic){
     //lleva al menu de logistica
-    $destination = 'Location:logistic.php';
+    $destination = 'Location:logistic.php?position=Logística';
 }else {
     //lleva al menu principal
-    $destination = 'Location:home.php';
+    $destination = 'Location:home.php?position=Menú Principal';
 }
 header($destination);
 
