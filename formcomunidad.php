@@ -11,6 +11,7 @@ session_start();
 <title>Crear Nueva Comunidad </title>
 <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
 <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
 <!--<script type="text/javascript" src="../js/viewformcomunidad.js"></script>-->
 </head>
 <body id="main_body" >
@@ -18,12 +19,9 @@ session_start();
         require 'header.php';
         ?>
 	<div id="form_container">
-	
-		<h1><a>Crear Nueva Comunidad </a></h1>
 		<form id="form_928984" class="appnitro"  method="post" action="">
 					<div class="form_description">
-			<h2>Crear Nueva Comunidad </h2>
-			<p>Formulario para crear nueva comunidad en el sistema</p>
+			<h1>Formulario de Comunidad</h1>
 		</div>						
 			<ul >
 			

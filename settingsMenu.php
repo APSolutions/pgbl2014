@@ -13,6 +13,7 @@ session_start();
         <link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="js/header.js"></script>
+        <script src="js/settings/settingsMenu.js"></script>
         <title>Global Brigades Panama</title>
     </head>
     <body>
@@ -25,12 +26,34 @@ session_start();
             <h1> Tabla para consultas </h1>
         </div>
         <div class="menu">
-            <a href="#" name="Config" onclick="locator(event.currentTarget)">
+            <?php          
+                $position = $_GET["position"];
+                echo <<<_END
+                <input id="position" type="hidden" name=$position value="" >
+_END
+                ?>
+            <a href="#" name="Crear" onclick="selectform(event.currentTarget)">
                             <button class="btn" name="Crear">Crear</button>
                         </a>
             <br
-            <a href="#" name="Config" onclick="locator(event.currentTarget)">
+                <?php          
+                $position = $_GET["position"];
+                echo <<<_END
+                <input id="position" type="hidden" name=$position value="" >
+_END
+                ?>
+            <a href="#" name="Editar" onclick="selectform(event.currentTarget)">
                             <button class="btn" name="Editar">Editar</button>
+                        </a>   
+            <br
+                 <?php          
+                $position = $_GET["position"];
+                echo <<<_END
+                <input id="position" type="hidden" name=$position value="" >
+_END
+                ?>
+             <a href="#" name="Eliminar" onclick="selectform(event.currentTarget)">
+                            <button class="btn" name="Eliminar">Eliminar</button>
                         </a>   
         </div>
     </body>
