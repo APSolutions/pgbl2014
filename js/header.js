@@ -34,6 +34,38 @@ function locator(location){
     else if(locale=="Configuraciones"){
         address = "settings.php"
     }
+    
+    //From Settings Menu
+    else if(locale=="Staff"){
+        address ="settings_menu.php"
+    }
+    else if(locale=="Communities"){
+        address ="settings_menu.php"
+    }
+    else if(locale=="Compounds"){
+        address ="settings_menu.php"
+    }
+    else if(locale=="Food Inventory"){
+        address ="settings_menu.php"
+    }
+    else if(locale=="Kitchen Equipment"){
+        address ="settings_menu.php"
+    }
+    else if(locale=="Medicine Inventory"){
+        address ="settings_menu.php"
+    }
+    else if(locale=="Security Equipment"){
+        address ="settings_menu.php"
+    }
+    else if(locale=="Vehicles"){
+        address ="settings_menu.php"
+    }
+    else if(locale=="Roles"){
+        address ="settings_menu.php"
+    }
+    else if(locale=="Universities"){
+        address ="settings_menu.php"
+    }
     //From other menus add else if(locale=="name attribute"){}
     window.location.href = address + "?position=" + locale;
     //window.location.href = address + "?position=" + locale + "&variable=" + variable;

@@ -10,7 +10,9 @@ session_start();
         <link href="css/login/style1.css" media="screen" rel='stylesheet' type='text/css' />
         <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
         <link rel="stylesheet" type="text/css" href="css/settings/settings.css" media="all">
+        <link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script src="js/header.js"></script>
         <title>Global Brigades Panama</title>
     </head>
     <body>
@@ -23,11 +25,11 @@ session_start();
             <h1> Tabla para consultas </h1>
         </div>
         <div class="menu">
-            <a href="#">
+            <a href="#" name="Config" onclick="locator(event.currentTarget)">
                             <button class="btn" name="Crear">Crear</button>
                         </a>
-            <br>
-            <a href="#">
+            <br
+            <a href="#" name="Config" onclick="locator(event.currentTarget)">
                             <button class="btn" name="Editar">Editar</button>
                         </a>   
         </div>

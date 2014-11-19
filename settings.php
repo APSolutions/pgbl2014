@@ -25,6 +25,7 @@ session_start();
         <link rel="stylesheet" type="text/css" href="css/logistic_menu/component.css" />
         <link rel="stylesheet" type="text/css" href="css/menuIcons.css" />
         <link rel="stylesheet" type="text/css" href="css/header.css" />
+        <script src="js/header.js"></script>
         <!--<script src="js/logistic_menu/modernizr.custom.js"></script>-->
     </head>
     <body>
@@ -35,28 +36,28 @@ session_start();
             <div class="main">
                 <ul class="cbp-ig-grid">
                     <li>
-                        <a href="#">
+                        <a href="#" name="Staff" onclick="locator(event.currentTarget)">
                             <span class="icons-group4"></span>
                             <h3 class="cbp-ig-title">Staff</h3>
                             <span class="cbp-ig-category">Permanent & Temporary</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Communities" onclick="locator(event.currentTarget)">
                             <span class="icons-communities"></span>
                             <h3 class="cbp-ig-title">Communities</h3>
                             <span class="cbp-ig-category">Brigade Communities</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Compounds" onclick="locator(event.currentTarget)">
                             <span class="icons-tent"></span>
                             <h3 class="cbp-ig-title">Compounds</h3>
                             <span class="cbp-ig-category">Compounds Settings</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Food Inventory" onclick="locator(event.currentTarget)">
                             <span class="icons-shopping122"></span>
                             <h3 class="cbp-ig-title">Food Inventory</h3>
                             <span class="cbp-ig-category">Add new food</span>
@@ -66,39 +67,39 @@ session_start();
                         <a href="#" name="Kitchen Equipment" onclick="locator(event.currentTarget)"> 
                             <span class="icons-whisk1"></span>
                             <h3 class="cbp-ig-title">Kitchen Equipment</h3>
-                            <span class="cbp-ig-category">Mange kitchen Equipment</span>
+                            <span class="cbp-ig-category">Manage kitchen Equipment</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Medicine Inventory" onclick="locator(event.currentTarget)">
                             <span class="icons-pill"></span>
                             <h3 class="cbp-ig-title">Medicines Inventory</h3>
                             <span class="cbp-ig-category">Manage medicines</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Security Equipment" onclick="locator(event.currentTarget)">
                             <span class="icons-oxygen"></span>
                             <h3 class="cbp-ig-title">Security Equipment</h3>
                             <span class="cbp-ig-category">Manage Security Equipment</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Vehicles" onclick="locator(event.currentTarget)">
                             <span class="icons-bus21"></span>
                             <h3 class="cbp-ig-title">Vehicles</h3>
                             <span class="cbp-ig-category">Manage Vehicles</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#">
+                        <a href="#" name="Roles" onclick="locator(event.currentTarget)">
                             <span class="icons-businessmen23"></span>
                             <h3 class="cbp-ig-title">Roles</h3>
                             <span class="cbp-ig-category">Add/Remove permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="settings_menu.php">
+                        <a href="#" name="Universities" onclick="locator(event.currentTarget)">
                             <span class="icons-school7"></span>
                             <h3 class="cbp-ig-title">Universities</h3>
                             <span class="cbp-ig-category">Add/Remove permission</span>
