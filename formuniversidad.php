@@ -16,6 +16,7 @@ and open the template in the editor.
 <title>Crear Nueva Universidad</title>
 <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
 <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
+<link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
 <!--<script type="text/javascript" src="../js/viewformuniversidad.js"></script>-->
 </head>
 <body id="main_body" >
@@ -23,12 +24,9 @@ and open the template in the editor.
         require 'header.php';
         ?>
 	<div id="form_container">
-	
-		<h1><a>Crear Nueva Universidad</a></h1>
 		<form id="form_928984" class="appnitro"  method="post" action="">
 					<div class="form_description">
-			<h2>Crear Nueva Universidad</h2>
-			<p>Formulario para crear nueva Universidad en el sistema</p>
+			<h1>Formulario de Universidad</h1>
 		</div>						
 			<ul >
 			

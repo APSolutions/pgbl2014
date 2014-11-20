@@ -11,6 +11,7 @@ session_start();
     <title>Crear Nuevo Campamento</title>
     <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
     <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
+    <link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
 <!--<script type="text/javascript" src="../js/viewformcampamento.js"></script> -->
     </head>	           
     <body id="main_body" >
@@ -18,13 +19,10 @@ session_start();
                 require 'header.php';
             ?>
 	<div id="form_container">
-	
-		<h1><a>Crear Campamento</a></h1>
 		<form id="form_930028" class="appnitro"  method="post" action="">
-					<div class="form_description">
-			<h2>Crear Campamento</h2>
-			<p>Formulario para crear nuevo campamento en el sistema</p>
-		</div>						
+                    <div class="form_description">
+			<h1>Formulario de campamento</h1>
+                    </div>						
 			<ul >
 			
 					<li id="li_1" >

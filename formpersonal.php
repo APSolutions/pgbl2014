@@ -13,6 +13,7 @@ session_start();
     <title>Crear Nuevo Personal</title>
     <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
     <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
+    <link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
     <!--<script type="text/javascript" src="../js/viewformcampamento.js"></script> -->
     <script type="text/javascript" src="js/calendar.js"></script>
     </head>	           
@@ -23,8 +24,7 @@ session_start();
             <div id="form_container">
                     <form id="form_930028" class="appnitro"  method="post" action="">
                                             <div class="form_description">
-                            <h2>Crear Personal</h2>
-                            <p>Formulario para registrar personal en el sistema</p>
+                            <h1>Formulario de personal</h1>
                     </div>						
                             <ul >
 
