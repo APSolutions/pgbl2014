@@ -23,10 +23,10 @@ function locator(location){
         //go to reports
     }
     else if(locale=="Calendarios"){
-        //go to reports
+        address = "calendars_menu.php" ;
     }
     else if(locale=="Evaluaciones"){
-        //go to reports
+        address = "evaluations_menu.php" ;
     }
     else if(locale=="Reportes"){
         //go to reports
