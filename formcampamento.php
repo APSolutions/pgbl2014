@@ -26,7 +26,7 @@ session_start();
 			<ul >
 			
 					<li id="li_1" >
-		<label class="description" for="element_1">Capacidad </label>
+		<label class="description" for="element_1">Nombre </label>
 		<div>
 			<input id="element_1" name="element_1" class="element text large" type="text" maxlength="255" value=""/> 
 		</div><p class="guidelines" id="guide_1"><small>Nombre del Campamento</small></p> 
