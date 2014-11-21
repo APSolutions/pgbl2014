@@ -3,7 +3,7 @@ session_name('Global');
 session_id('pgbl');
 
 $user = $_SESSION["user"];
-$position = $_GET["position"];
+$position = $_SESSION["position"];
 $name = $user->get_name();
 $lastname = $user->get_lastname();
     echo <<<_END
