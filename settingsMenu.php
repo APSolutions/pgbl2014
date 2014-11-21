@@ -34,27 +34,15 @@ _END
                 ?>
             <a href="#" name="Crear" onclick="selectform(event.currentTarget)">
                             <button class="btn" name="Crear">Crear</button>
-                        </a>
-            <br
-                <?php          
-                $position = $_GET["position"];
-                echo <<<_END
-                <input id="position" type="hidden" name=$position value="" >
-_END
-                ?>
+            </a>
+            <br>
             <a href="#" name="Editar" onclick="selectform(event.currentTarget)">
                             <button class="btn" name="Editar">Editar</button>
-                        </a>   
-            <br
-                 <?php          
-                $position = $_GET["position"];
-                echo <<<_END
-                <input id="position" type="hidden" name=$position value="" >
-_END
-                ?>
-             <a href="#" name="Eliminar" onclick="selectform(event.currentTarget)">
+            </a>   
+            <br>
+            <a href="#" name="Eliminar" onclick="selectform(event.currentTarget)">
                             <button class="btn" name="Eliminar">Eliminar</button>
-                        </a>   
+            </a>   
         </div>
     </body>
 </html>

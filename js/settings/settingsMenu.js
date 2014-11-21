@@ -9,30 +9,30 @@ function selectform (location){
     var address = "";
     var position = document.getElementById("position").getAttribute("name");
     if (locale =="Crear"){
-        if (position == "Staff"){
+        if (position == "Personal"){
             address = "formpersonal.php";
         }
-        else if (position == "Communities"){
+        else if (position == "Comunidades"){
             address = "formcomunidad.php";
         }
-        else if (position == "Compounds"){
+        else if (position == "Campamentos"){
             address = "formcampamento.php"
         }
-        else if (position == "Vehicles"){
+        else if (position == "Vehículos"){
             address = "formvehiculo.php"
         }
     }
     else if (locale =="Editar"){
-         if (position == "Staff"){
+         if (position == "Personal"){
             address = "formpersonal.php";
         }
-        else if (position == "Communities"){
+        else if (position == "Comunidades"){
             address = "formcomunidad.php";
         }
-        else if (position == "Compounds"){
+        else if (position == "Campamentos"){
             address = "formcampamento.php"
         }
-        else if (position == "Vehicles"){
+        else if (position == "Vehículos"){
             address = "formvehiculo.php"
         }
     }
