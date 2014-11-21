@@ -24,7 +24,6 @@ session_start();
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/logistic_menu/component.css" />
         <script src="js/logistic_menu/modernizr.custom.js"></script>
-        <script src="js/header.js"></script>
     </head>
     <body>
         <div class="container">
@@ -34,23 +33,23 @@ session_start();
             <div class="main">
                 <ul class="cbp-ig-grid">
                     <li>
-                        <a href="#" name="Administración" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Administracion"?>" name="Administracion" >
                             <span class="mm-cogs"></span>
-                            <h3 class="cbp-ig-title">Administración</h3>
+                            <h3 class="cbp-ig-title">Administracion</h3>
                             <span class="cbp-ig-category">Aministrar GB</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="Logística" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Logistica"?>" name="Logistica" >
                             <span class="mm-history"></span>
-                            <h3 class="cbp-ig-title">Logística</h3>
-                            <span class="cbp-ig-category">Logística de las Brigadas</span>
+                            <h3 class="cbp-ig-title">Logistica</h3>
+                            <span class="cbp-ig-category">Logistica de las Brigadas</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="Programación" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Programacion"?>" name="Programacion" >
                             <span class="mm-screen"></span>
-                            <h3 class="cbp-ig-title">Programación</h3>
+                            <h3 class="cbp-ig-title">Programacion</h3>
                             <span class="cbp-ig-category">Desarrollo dentro de GB</span>
                         </a>
                     </li>

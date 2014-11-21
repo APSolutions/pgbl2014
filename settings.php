@@ -25,7 +25,7 @@ session_start();
         <link rel="stylesheet" type="text/css" href="css/logistic_menu/component.css" />
         <link rel="stylesheet" type="text/css" href="css/menuIcons.css" />
         <link rel="stylesheet" type="text/css" href="css/header.css" />
-        <script src="js/header.js"></script>
+        <!--<script src="js/header.js"></script>-->
         <!--<script src="js/logistic_menu/modernizr.custom.js"></script>-->
     </head>
     <body>
@@ -36,70 +36,70 @@ session_start();
             <div class="main">
                 <ul class="cbp-ig-grid">
                     <li>
-                        <a href="#" name="Personal" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Personal"?>" name="Personal">
                             <span class="icons-group4"></span>
                             <h3 class="cbp-ig-title">Personal</h3>
                             <span class="cbp-ig-category">Permanent & Temporary</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="Comunidades" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Comunidades"?>" name="Comunidades">
                             <span class="icons-communities"></span>
                             <h3 class="cbp-ig-title">Comunidades</h3>
                             <span class="cbp-ig-category">Brigade Communities</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="Campamentos" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Campamentos"?>" name="Campamentos">
                             <span class="icons-tent"></span>
                             <h3 class="cbp-ig-title">Campamentos</h3>
                             <span class="cbp-ig-category">Compounds Settings</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="Inventario de Comida" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Inventario de Comida"?>" name="Inventario de Comida">
                             <span class="icons-shopping122"></span>
                             <h3 class="cbp-ig-title">Inventario de Comida</h3>
                             <span class="cbp-ig-category">Add new food</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="Equipos de Cocina" onclick="locator(event.currentTarget)"> 
+                        <a href="<?php echo "src/webrouter.php?position=Equipos de Cocina"?>" name="Equipos de Cocina"> 
                             <span class="icons-whisk1"></span>
                             <h3 class="cbp-ig-title">Equipos de Cocina</h3>
                             <span class="cbp-ig-category">Manage kitchen Equipment</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="Inventario de Medicinas" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Inventario de Medicinas"?>" name="Inventario de Medicinas">
                             <span class="icons-pill"></span>
                             <h3 class="cbp-ig-title">Inventario de Medicinas</h3>
                             <span class="cbp-ig-category">Manage medicines</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="Equipos de Seguridad" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Equipos de Seguridad"?>" name="Equipos de Seguridad">
                             <span class="icons-oxygen"></span>
                             <h3 class="cbp-ig-title">Equipos de Seguridad</h3>
                             <span class="cbp-ig-category">Manage Security Equipment</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="Vehículos" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Vehiculos"?>" name="Vehiculos">
                             <span class="icons-bus21"></span>
-                            <h3 class="cbp-ig-title">Vehículos</h3>
+                            <h3 class="cbp-ig-title">Vehiculos</h3>
                             <span class="cbp-ig-category">Manage Vehicles</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="Roles" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Roles"?>" name="Roles">
                             <span class="icons-businessmen23"></span>
                             <h3 class="cbp-ig-title">Roles</h3>
                             <span class="cbp-ig-category">Add/Remove permission</span>
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="Universidades" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Universidades"?>" name="Universidades">
                             <span class="icons-school7"></span>
                             <h3 class="cbp-ig-title">Universidades</h3>
                             <span class="cbp-ig-category">Add/Remove permission</span>

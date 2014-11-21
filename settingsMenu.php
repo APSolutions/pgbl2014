@@ -13,10 +13,15 @@ session_start();
         <link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <script src="js/header.js"></script>
-        <script src="js/settings/settingsMenu.js"></script>
+        <!--<script src="js/settings/settingsMenu.js"></script> -->
         <title>Global Brigades Panama</title>
     </head>
     <body>
+        <?php
+        if(isset($_SESSION["position"])){
+            $position1="SM".$_SESSION["position"];
+        }
+        ?>
         <div class="main_body">
              <?php
                 require 'header.php';
@@ -26,21 +31,15 @@ session_start();
             <h1> Tabla para consultas </h1>
         </div>
         <div class="menu">
-            <?php          
-                $position = $_GET["position"];
-                echo <<<_END
-                <input id="position" type="hidden" name=$position value="" >
-_END
-                ?>
-            <a href="#" name="Crear" onclick="selectform(event.currentTarget)">
+            <a href="<?php echo "src/webrouter.php?position=$position1+&action=crear"?>" name="Crear">
                             <button class="btn" name="Crear">Crear</button>
             </a>
             <br>
-            <a href="#" name="Editar" onclick="selectform(event.currentTarget)">
+            <a href="<?php echo "src/webrouter.php?position=$position1+&action=editar"?>" name="Editar">
                             <button class="btn" name="Editar">Editar</button>
             </a>   
             <br>
-            <a href="#" name="Eliminar" onclick="selectform(event.currentTarget)">
+            <a href="<?php echo "src/webrouter.php?position=$position1+&action=eliminar"?>" name="Eliminar">
                             <button class="btn" name="Eliminar">Eliminar</button>
             </a>   
         </div>

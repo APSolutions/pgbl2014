@@ -8,20 +8,24 @@ $user = $_SESSION["user"];
 $user_admin = $user->get_permission_admin();
 $user_logic = $user->get_permission_logic();
 $user_devel = $user->get_permission_devel();
+$position ="";
 
 if ($user_admin && !$user_devel && !$user_logic ){
     //lleva al menu de administracion
-    $destination = 'Location:menu_admin.php?position=Administración';
+    $destination = 'Location:menu_admin.php';
+    $_SESSION["position"] = 'Administracion';
 }elseif (!$user_admin && $user_devel && !$user_logic) {
     //lleva al menu de programacion
-    $destination = 'Location:menu_devel.php?position=Programación';
+    $destination = 'Location:menu_devel.php';
+    $_SESSION["position"] = 'Programacion';
 }elseif  (!$user_admin && !$user_devel && $user_logic){
     //lleva al menu de logistica
-    $destination = 'Location:logistic.php?position=Logística';
+    $destination = 'Location:logistic.php';
+    $_SESSION["position"] = 'Logistica';
 }else {
     //lleva al menu principal
-    $destination = 'Location:home.php?position=Menú Principal';
+    $destination = 'Location:home.php';
+    $_SESSION["position"] = 'Menu Principal';
 }
 header($destination);
-
 ?>
