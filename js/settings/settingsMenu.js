@@ -21,6 +21,9 @@ function selectform (location){
         else if (position == "Vehículos"){
             address = "formvehiculo.php";
         }
+        else if(position == "Universidades"){
+            address = "formuniversidad.php"
+        }
     }
     else if (locale =="Editar"){
          if (position == "Personal"){
@@ -39,5 +42,5 @@ function selectform (location){
     else{
         //Mensaje si esta seguro que quiere "borrar" el registro
     }
-    window.location.href = address + "?position=" + locale + " " + position;
+    window.location.href = address + "?position=" + locale + " " + position + "&locale=" + locale;
 }
