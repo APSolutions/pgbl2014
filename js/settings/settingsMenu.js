@@ -16,10 +16,13 @@ function selectform (location){
             address = "formcomunidad.php";
         }
         else if (position == "Campamentos"){
-            address = "formcampamento.php"
+            address = "formcampamento.php";
         }
         else if (position == "Vehículos"){
-            address = "formvehiculo.php"
+            address = "formvehiculo.php";
+        }
+        else if(position == "Universidades"){
+            address = "formuniversidad.php"
         }
     }
     else if (locale =="Editar"){
@@ -30,14 +33,14 @@ function selectform (location){
             address = "formcomunidad.php";
         }
         else if (position == "Campamentos"){
-            address = "formcampamento.php"
+            address = "formcampamento.php";
         }
         else if (position == "Vehículos"){
-            address = "formvehiculo.php"
+            address = "formvehiculo.php";
         }
     }
     else{
         //Mensaje si esta seguro que quiere "borrar" el registro
     }
-    window.location.href = address + "?position=" + locale + " " + position;
+    window.location.href = address + "?position=" + locale + " " + position + "&locale=" + locale;
 }
