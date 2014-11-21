@@ -16,10 +16,10 @@ function selectform (location){
             address = "formcomunidad.php";
         }
         else if (position == "Campamentos"){
-            address = "formcampamento.php"
+            address = "formcampamento.php";
         }
         else if (position == "Vehículos"){
-            address = "formvehiculo.php"
+            address = "formvehiculo.php";
         }
     }
     else if (locale =="Editar"){
@@ -30,10 +30,10 @@ function selectform (location){
             address = "formcomunidad.php";
         }
         else if (position == "Campamentos"){
-            address = "formcampamento.php"
+            address = "formcampamento.php";
         }
         else if (position == "Vehículos"){
-            address = "formvehiculo.php"
+            address = "formvehiculo.php";
         }
     }
     else{
