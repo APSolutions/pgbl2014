@@ -12,7 +12,7 @@ echo <<<_END
         <label class="login-field-icon fui-lock" for="login-pass"></label>
     </div>
 
-    <input type="submit" name"login" class="btn btn-primary btn-large btn-block" value="Login">
+    <input type="submit" name="login" class="btn btn-primary btn-large btn-block" value="Login">
  </form>
 _END;
 ?>
