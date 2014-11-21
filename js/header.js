@@ -32,38 +32,11 @@ function locator(location){
         //go to reports
     }
     else if(locale=="Configuraciones"){
-        address = "settings.php"
+        address = "settings.php";
     }
     //From Settings Menu
-    else if(locale=="Staff"){
-        address ="settingsMenu.php"
-    }
-    else if(locale=="Communities"){
-        address ="settingsMenu.php"
-    }
-    else if(locale=="Compounds"){
-        address ="settingsMenu.php"
-    }
-    else if(locale=="Food Inventory"){
-        address ="settingsMenu.php"
-    }
-    else if(locale=="Kitchen Equipment"){
-        address ="settingsMenu.php"
-    }
-    else if(locale=="Medicine Inventory"){
-        address ="settingsMenu.php"
-    }
-    else if(locale=="Security Equipment"){
-        address ="settingsMenu.php"
-    }
-    else if(locale=="Vehicles"){
-        address ="settingsMenu.php"
-    }
-    else if(locale=="Roles"){
-        address ="settingsMenu.php"
-    }
-    else if(locale=="Universities"){
-        address ="settingsMenu.php"
+    else if(locale=="Personal" || locale=="Comunidades" || locale=="Campamentos" || locale=="Inventario de Comida" || locale=="Equipos de Cocina" || locale=="Inventario de Medicinas" || locale=="Equipos de Seguridad" || locale=="Vehículos" || locale=="Roles" || locale=="Universidades"){      
+        address ="settingsMenu.php";
     }
     //From other menus add else if(locale=="name attribute"){}
     window.location.href = address + "?position=" + locale;
