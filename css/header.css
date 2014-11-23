@@ -26,40 +26,54 @@ font-style: normal;
 margin-left: 20px;
 }
 
-.flaticon-bell46:before {
-	content: "\e000";
+header {
+    min-width: 612px;
 }
 
-.flaticon-logout13:before {
-	content: "\e001";
+header > div {
+    height: 125px;
+    border: 1px solid;
+}
+
+.img-logo {
+    width: auto;
+    max-width: 200px;
+    min-width: 100px;
 }
 
 .header-logo {
     float: left;
-    width: 300px;
+    width: auto;
+    text-align: center;
+    font-size: 12px;
+    font-style: oblique;
 }
 
 .header-user {
     float: right;
-    width: 200px;
-    margin-top: 1em;
-}
-
-.header-title {
-    margin-left: 300px;
-    margin-right: 300px;
-    overflow: hidden;
-}
-
-.header-title h1{
-    margin-top: 50px;
-}
-
-.slogan {
-    font-size: 12px;
-    font-style: italic;
+    width: auto;
+    min-width: 100px;
     text-align: center;
+    font-size: 16px;
 }
+
+.header-main{
+    float: none;
+    width: auto;
+    min-width: 612px;
+}
+
+//Icons management
+
+.flaticon-bell46:before {
+    content: "\e000";
+}
+
+.flaticon-logout13:before {
+    content: "\e001";
+}
+
+//Tooltip on icons
 
 .tooltip{
     display: inline;

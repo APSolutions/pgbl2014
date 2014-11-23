@@ -16,7 +16,7 @@ if ($user_admin && !$user_devel && !$user_logic ){
     $_SESSION["position"] = 'Administracion';
 }elseif (!$user_admin && $user_devel && !$user_logic) {
     //lleva al menu de programacion
-    $destination = 'Location:menu_devel.php';
+    $destination = 'Location:development.php';
     $_SESSION["position"] = 'Programacion';
 }elseif  (!$user_admin && !$user_devel && $user_logic){
     //lleva al menu de logistica
