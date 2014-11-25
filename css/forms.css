@@ -825,3 +825,9 @@ background: #dedede;
 font-weight: bold;
 }
 
+.error {
+    a{
+        color:#DF0000;
+    }
+}
+
