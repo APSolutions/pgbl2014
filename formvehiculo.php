@@ -128,6 +128,8 @@ if(!$name == "" && !$contractType == ""  && !$capacity == "" && !$carYear == "" 
         echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
         $nameTemp = $contractTypeTemp = $capacityTemp = $carYearTemp = $licencePlateTemp = $ownerTemp = $ownerCellphoneTemp = $insuranceCompanyTemp = $insuranceNumberTemp = $insuranceTypeTemp = "";
         $name = $contractType = $capacity = $carYear = $licencePlate = $owner = $ownerCellphone = $insuranceCompany = $insuranceNumber = $insuranceType = "";
+        $checkedcontract1 = $checkedcontract2 = $checkedcontract3 = $checkedinsurance1 = $checkedinsurance2 = "";
+        $checkedcontract = $checkedinsurance = "checked";
     }
 }
 function cleanInput($data){
