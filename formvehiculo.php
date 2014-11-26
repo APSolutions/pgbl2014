@@ -224,6 +224,7 @@ and open the template in the editor.
 		<label class="description" for="ownerCellphone">Telefono del arrendatario </label>
 		<div>
 			<input id="ownerCellphone" name="ownerCellphone" class="element text small" type="text" maxlength="255" value="<?php echo $ownerCellphoneTemp;?>"/> 
+                        <br>
                         <span class="error">
                             <p class="error"><?php echo $ownerCellphoneErr;?></p>
                         </span>

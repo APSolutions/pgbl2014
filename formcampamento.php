@@ -9,6 +9,12 @@ $nameTemp = $locationTemp = $townTemp = $capacityTemp = $bedroomTemp = $electric
 $nameErr = $locationErr = $townErr = $capacityErr = $bedroomErr = $electricityErr = $wifiErr = $cellphoneSignalErr = $ventilationErr = $toiletQuantityErr = $drinkableWaterErr = $toiletTypeErr = "";
 $checkedelectricity = $checkedwifi = $checkedcellphonesignal = $checkedventilation = $checkeddrinkablewater = "checked";
 $checkedelectricity1 = $checkedelectricity2 = $checkedwifi1 = $checkedwifi2 = $checkedcellphonesignal1 = $checkedcellphonesignal2 = $checkedventilation1 = $checkedventilation2 = $checkedventilation3 = $checkeddrinkablewater1 = $checkeddrinkablewater2 = "";
+$selected = "selected";
+$selected1 = $selected2 = $selected3 = "";
+$flag = $flag2 = TRUE;
+$errorMessage = "";
+$toiletLetrineCh = $toiletSingleCh = $toiletMultipleCh = "";
+
 //asignacion de variables
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($_POST["name"]) ){
@@ -25,16 +31,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $locationErr = "La provincia del campamento es requerida!";
     }else{
         $locationTemp = cleanInput($_POST["location"]);
-        if (!preg_match("/^[a-zA-Z0-9 ]*$/",$locationTemp)){
-            $locationErr = "El nombre solo debe incluir letras!";
-        }else{
-            $location = $locationTemp;
+        if($locationTemp == "Darien"){
+            $selected1 ="selected"; 
+        } else if ($locationTemp == "Panamá Este"){
+            $selected2 ="selected";
+        } else {
+            $selected3 = "selected";  
         }
+        $location = $locationTemp;
     }
      if(empty($_POST["town"]) ){
         $townErr = "La comunidad del campamento es requerida!";
     }else{
-        $locationTemp = cleanInput($_POST["town"]);
+        $townTemp = cleanInput($_POST["town"]);
         if (!preg_match("/^[a-zA-Z0-9 ]*$/",$townTemp)){
             $townErr = "El nombre solo debe incluir letras!";
         }else{
@@ -99,10 +108,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }else{
         $ventilationTemp = cleanInput($_POST["ventilation"]);
         if($ventilationTemp == 1){
+            $ventilationTemp = "Aire Acondicionado";
             $checkedventilation1 ="checked"; 
         }else if($ventilationTemp == 2){
+            $ventilationTemp = "Abanico";
             $checkedventilation2 ="checked"; 
         } else{
+            $ventilationTemp = "Ninguno";
             $checkedcellphonesignal3 ="checked";
         }
         $ventilation = $ventilationTemp;
@@ -118,64 +130,76 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         }
         $drinkableWater = $drinkableWaterTemp;
     }
-}  
-   
-if(!$name == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$bedroom == "" && !$electricity == "" && !$wifi == "" && !$cellphoneSignal == "" && !$ventilation == "" && !$drinkableWater == ""){
+    $toiletQuantityTemp = $_POST["toiletQuantity"];
+    if (!preg_match("/^[0-9 ]*$/",$toiletQuantityTemp)){
+         $toiletQuantityErr = "La cantidad de habitaciones solo debe incluir números!";
+     }else{
+         $toiletQuantity = $toiletQuantityTemp; 
+     }
+    if(empty($_POST["toiletLetrine"]) && empty($_POST["toiletMultiple"]) && empty($_POST["toiletSingle"]) ){
+            $toiletTypeErr = "Favor especificar los tipos de baños del campamento!";  
+            $flag = FALSE;
+    } else {
+        if (!empty($_POST["toiletLetrine"])){
+            $toiletLetrineCh = "checked";
+        }
+        if (!empty($_POST["toiletSingle"])){
+            $toiletSingleCh = "checked";
+        }
+        if (!empty($_POST["toiletMultiple"])){
+            $toiletMultipleCh = "checked";
+        }
+    }
+}
+if(!$name == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$bedroom == "" && !$electricity == "" && !$wifi == "" && !$cellphoneSignal == "" && !$ventilation == "" && !$drinkableWater == "" && $flag){
     require_once 'src/login/connect.php';
-    $query = "CALL insert_compound('$name','$location','$town','$capacity','$bedroom','$electricity','$wifi','$cellphoneSignal','$ventilation','$toiletQuantity','$drinkableWater)";
+    $query = "CALL insert_compound('$name','$location','$town','$capacity','$bedroom','$electricity','$wifi','$cellphoneSignal','$ventilation','$toiletQuantity','$drinkableWater')";
     $result= $conn->query($query);
     if (!$result){
         echo "<script type='text/javascript'>alert('failed!')</script>";
     } else{
-        echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
-        if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(empty($_POST["toiletLetrine"]) && empty($_POST["toiletMultiple"]) && empty($_POST["toiletSingle"]) ){
-            $toiletTypeErr = "Favor especificar los tipos de baños del campamento!";
-        }
-        else{
-            if(!empty($_POST["toiletLetrine"])){
-                $toiletTypeTemp = cleanInput($_POST["toiletLetrine"]);
-                $toiletType = $toiletTypeTemp;
-                require_once 'src/login/connect.php';
+        if(!empty($_POST["toiletLetrine"])){
+                $toiletType = cleanInput($_POST["toiletLetrine"]);
                 $query = "CALL insert_compound_toiletType('$name','$toiletType')";
                 $result= $conn->query($query);
                 if (!$result){
-                        echo "<script type='text/javascript'>alert('failed!')</script>";
-                    } else{
-                        echo "<script type='text/javascript'>alert('submitted successfully!')</script>";   
+                        $flag2 = FALSE;
+                        $errorMessage = $errorMessage.'Error0: '.$conn->error;
                     }
-            }
-            if(!empty($_POST["toiletMultiple"])){
-                $toiletTypeTemp = cleanInput($_POST["toiletMultiple"]);
-                $toiletType = $toiletTypeTemp;
-                require_once 'src/login/connect.php';
+        }
+        if(!empty($_POST["toiletMultiple"])){
+                $toiletType = cleanInput($_POST["toiletMultiple"]);
                 $query = "CALL insert_compound_toiletType('$name','$toiletType')";
                 $result= $conn->query($query);
                 if (!$result){
-                        echo "<script type='text/javascript'>alert('failed!')</script>";
-                    } else{
-                        echo "<script type='text/javascript'>alert('submitted successfully!')</script>";   
-                    }
-            }
-            if(!empty($_POST["toiletSingle"])){
-                $toiletTypeTemp = cleanInput($_POST["toiletSingle"]);
-                $toiletType = $toilettypeTemp;
-                require_once 'src/login/connect.php';
-                $query = "CALL insert_compound_toiletType('$name','$toiletSingle')";
+                        $flag2 = FALSE;
+                        $errorMessage = $errorMessage.'Error1: '.$conn->error;
+                }   
+        }
+        if(!empty($_POST["toiletSingle"])){
+                $toiletType = cleanInput($_POST["toiletSingle"]);
+                $query = "CALL insert_compound_toiletType('$name','$toiletType')";
                 $result= $conn->query($query);
                 if (!$result){
-                        echo "<script type='text/javascript'>alert('failed!')</script>";
-                    } else{
-                        echo "<script type='text/javascript'>alert('submitted successfully!')</script>";   
-                    }
-            }
-            $nameTemp = $contractTypeTemp = $capacityTemp = $carYearTemp = $licencePlateTemp = $ownerTemp = $ownerCellphoneTemp = $insuranceCompanyTemp = $insuranceNumberTemp = $insuranceTypeTemp = "";
-            $name = $contractType = $capacity = $carYear = $licencePlate = $owner = $ownerCellphone = $insuranceCompany = $insuranceNumber = $insuranceType = "";
+                        $flag2 = FALSE;
+                        $errorMessage = $errorMessage.'Error2: '.$conn->error;
+                }  
         }
-}
+        if (!$flag2){
+            echo "<script type='text/javascript'>alert($errorMessage)</script>";
+        } else{
+            echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
+            $nameTemp = $locationTemp = $townTemp = $capacityTemp = $bedroomTemp = $electricityTemp = $wifiTemp = $cellphoneSignalTemp = $ventilationTemp = $drinkableWaterTemp = $toiletQuantityTemp = $toiletTypeTemp = "";
+            $name = $location = $town = $capacity = $bedroom = $electricity = $wifi = $cellphoneSignal = $ventilation = $toiletQuantity = $drinkableWater = $toiletType = "";
+            $checkedelectricity = $checkedwifi = $checkedcellphonesignal = $checkedventilation = $checkeddrinkablewater = "checked";
+            $checkedelectricity1 = $checkedelectricity2 = $checkedwifi1 = $checkedwifi2 = $checkedcellphonesignal1 = $checkedcellphonesignal2 = $checkedventilation1 = $checkedventilation2 = $checkedventilation3 = $checkeddrinkablewater1 = $checkeddrinkablewater2 = "";
+            $selected = "selected";
+            $selected1 = $selected2 = $selected3 = "";
+            $toiletLetrineCh = $toiletSingleCh = $toiletMultipleCh = "";
+        }    
     }
+     
 }
-
 function cleanInput($data){
     $data = trim($data);
     $data = stripcslashes($data) ;
@@ -206,7 +230,7 @@ function cleanInput($data){
 					<li id="li_1" >
 		<label class="description" for="name">Nombre </label>
 		<div>
-			<input id="name" name="name" class="element text large" type="text" maxlength="255" value=""/> 
+                    <input id="name" name="name" class="element text large" type="text" maxlength="255" value="<?php echo $nameTemp;?>"/> 
                         <span class="error">
                             <p class="error"><?php echo $nameErr;?></p>
                         </span>
@@ -215,10 +239,10 @@ function cleanInput($data){
 		<label class="description" for="location">Provincia </label>
 		<div>
 		<select class="element select medium" id="location" name="location"> 
-			<option value="" selected="selected"></option>
-                        <option value="1" >Daríen</option>
-                        <option value="2" >Panamá Este</option>
-                        <option value="3" >Panamá Oeste</option>
+			<option value="" <?php echo $selected;?>></option>
+                        <option value="Darien" <?php echo $selected1;?> >Daríen</option>
+                        <option value="Panamá Este" <?php echo $selected2;?> >Panamá Este</option>
+                        <option value="Panamá Oeste" <?php echo $selected3;?> >Panamá Oeste</option>
 		</select>
                     <span class="error">
                            <p class="error"><?php echo $locationErr;?></p>
@@ -227,7 +251,7 @@ function cleanInput($data){
 		</li>		<li id="li_2" >
 		<label class="description" for="town">Comunidad </label>
 		<div>
-			<input id="town" name="town" class="element text medium" type="text" maxlength="255" value=""/> 
+			<input id="town" name="town" class="element text medium" type="text" maxlength="255" value="<?php echo $townTemp;?>"/> 
                         <span class="error">
                             <p class="error"><?php echo $townErr;?></p>
                         </span>
@@ -235,7 +259,7 @@ function cleanInput($data){
 		</li>		<li id="li_4" >
 		<label class="description" for="capacity">Capacidad </label>
 		<div>
-			<input id="capacity" name="capacity" class="element text small" type="text" maxlength="255" value=""/> 
+			<input id="capacity" name="capacity" class="element text small" type="text" maxlength="255" value="<?php echo $capacityTemp;?>"/> 
                         <br>
                         <span class="error">
                             <p class="error"><?php echo $capacityErr;?></p>
@@ -244,7 +268,7 @@ function cleanInput($data){
 		</li>		<li id="li_6" >
 		<label class="description" for="bedroom">Habitaciones </label>
 		<div>
-			<input id="bedroom" name="bedroom" class="element text small" type="text" maxlength="255" value=""/> 
+			<input id="bedroom" name="bedroom" class="element text small" type="text" maxlength="255" value="<?php echo $bedroomTemp;?>"/> 
                         <span class="error">
                             <p class="error"><?php echo $bedroomErr;?></p>
                         </span>
@@ -307,11 +331,11 @@ function cleanInput($data){
 		</li>		<li id="li_12" >
 		<label class="description" for="name2">Tipo de Baño </label>
 		<span>
-			<input id="name2_1" name="toiletLetrine" class="element checkbox" type="checkbox" value="Letrina" />
+			<input id="name2_1" name="toiletLetrine" class="element checkbox" type="checkbox" <?php echo $toiletLetrineCh;?> value="Letrina" />
                 <label class="choice" for="name2_1">Letrina</label>
-                <input id="name2_2" name="toiletMultiple" class="element checkbox" type="checkbox" value="Baño Comunal" />
+                <input id="name2_2" name="toiletMultiple" class="element checkbox" type="checkbox" <?php echo $toiletMultipleCh;?>  value="Baño Comunal" />
                 <label class="choice" for="name2_2">Baño Comunal</label>
-                <input id="name2_3" name="toiletSingle" class="element checkbox" type="checkbox" value="Baño Individual" />
+                <input id="name2_3" name="toiletSingle" class="element checkbox" type="checkbox" <?php echo $toiletSingleCh;?> value="Baño Individual" />
                 <label class="choice" for="name2_3">Baño Individual</label>
                 <span class="error">
                     <p class="error"><?php echo $toiletTypeErr;?></p>
@@ -320,7 +344,7 @@ function cleanInput($data){
 		</li>		<li id="li_5" >
 		<label class="description" for="toiletQuantity">Cantidad de baños </label>
 		<div>
-			<input id="toiletQuantity" name="toiletQuantity" class="element text small" type="text" maxlength="255" value=""/> 
+			<input id="toiletQuantity" name="toiletQuantity" class="element text small" type="text" maxlength="255" value="<?php echo $toiletQuantityTemp?>"/> 
                         <span class="error">
                             <p class="error"><?php echo $toiletQuantityErr;?></p>
                         </span>

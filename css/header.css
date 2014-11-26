@@ -29,6 +29,7 @@ and open the template in the editor.
     color: #2a92d0;
     -webkit-font-smoothing: antialiased;
 }
+
 //Icons management
 .flaticon-child:before {
     content: "\e001"
