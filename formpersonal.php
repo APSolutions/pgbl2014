@@ -13,7 +13,6 @@ session_start();
     <title>Crear Nuevo Personal</title>
     <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
     <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
-    <link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
     <!--<script type="text/javascript" src="../js/viewformcampamento.js"></script> -->
     <script type="text/javascript" src="js/calendar.js"></script>
     </head>	           

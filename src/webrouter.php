@@ -38,7 +38,7 @@
     }else{
         //From main menu
         if ($position=="Administracion"){
-            $address = "menu_admin.php" ;
+            $address = "management.php" ;
         }else if($position=="Logistica"){
             $address = "logistic.php" ; 
         }

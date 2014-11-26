@@ -22,7 +22,6 @@ and open the template in the editor.
         <link rel="shortcut icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/logistic_menu/component.css" />
-        <link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
         <script src="js/logistic_menu/modernizr.custom.js"></script>
         <script src="js/header.js"></script>
     </head>

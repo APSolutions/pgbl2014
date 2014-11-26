@@ -18,7 +18,6 @@ session_start();
         <link href="css/login/style1.css" media="screen" rel='stylesheet' type='text/css' />
         <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
         <link rel="stylesheet" type="text/css" href="css/settings/settings.css" media="all">
-        <link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
     </head>
     <body>
         <div class="main_body">

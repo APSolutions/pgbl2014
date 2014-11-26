@@ -29,10 +29,7 @@ and open the template in the editor.
     color: #2a92d0;
     -webkit-font-smoothing: antialiased;
 }
-//Icons management
-.flaticon-child:before {
-    content: "\e001"
-}
+
 .flaticon-bell:before {
     content: "\e000"
 }
@@ -62,7 +59,7 @@ a:hover {
 header {
     width: 90%;
     max-width: 75em;
-    margin: 0 auto;
+    margin: 0 auto ;
 }
 
 header div.header-logo {
@@ -76,6 +73,7 @@ header div.header-logo {
 
 header div.header-title {
     float: left;
+    margin-top: 1em;
 }
 
 header div.header-user {

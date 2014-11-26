@@ -15,11 +15,10 @@ session_start();
         <meta name="keywords" content="global brigades, panama, logistic, menu" />
         <meta name="author" content="APSolution" />
         <link rel="shortcut icon" href="img/favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
         <link rel="stylesheet" type="text/css" href="css/logistic_menu/component.css" />
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <script src="js/logistic_menu/modernizr.custom.js"></script>
-        <script src="js/header.js"></script>l
+        <script src="js/header.js"></script>
     </head>
     <body>
         <div class="container">
