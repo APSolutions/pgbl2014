@@ -15,9 +15,8 @@ session_start();
         <meta name="keywords" content="global brigades, panama, main, menu" />
         <meta name="author" content="APSolution" />
         <link rel="shortcut icon" href="img/favicon.ico"/>
-        <link href="css/login/style1.css" media="screen" rel='stylesheet' type='text/css' />
         <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
-        <link rel="stylesheet" type="text/css" href="css/settings/settings.css" media="all">
+        <link rel="stylesheet" type="text/css" href="css/settings/settingsMenu.css" media="all">
     </head>
     <body>
         <div class="main_body">
