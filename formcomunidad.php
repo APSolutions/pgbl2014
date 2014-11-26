@@ -4,53 +4,157 @@ session_name('Global');
 session_id('pgbl');
 session_start();
 //variables del formulario
-$name = $location = $commMembers = "";
-$nameTemp = $locationTemp = $commMembersTemp = "";
-$nameErr = $locationErr = $commMembersErr = "";
+$name = $location = $commMembers = $program = "";
+$nameTemp = $locationTemp = $commMembersTemp = $programTemp ="";
+$nameErr = $locationErr = $commMembersErr = $programErr ="";
+$selected = "selected";
+$selected1 = $selected2 = $selected3 = "";
+$programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
+$flag = $flag2 = TRUE;
+$errorMessage = "";
 //asignacion de variables
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(empty($_POST["university"]) ){
-        $universityErr = "El nombre de la universidad es requerido!";
+    if(empty($_POST["name"]) ){
+        $nameErr = "El nombre de la comunidad es requerido!";
     }else{
-        $universityTemp = cleanInput($_POST["university"]);
-        if (!preg_match("/^[a-zA-Z0-9 ]*$/",$universityTemp)){
-            $universityErr = "El nombre solo debe incluir letras!";
+        $nameTemp = cleanInput($_POST["name"]);
+        if (!preg_match("/^[a-zA-Z0-9 ]*$/",$nameTemp)){
+            $nameErr = "El nombre solo debe incluir letras!";
         }else{
-            $university = $universityTemp;
+            $name = $nameTemp;
         }
     }
-    if(empty($_POST["country"]) ){
-        $countryErr = "El País de la universidad es requerido!";
-    }else{
-        $countryTemp = cleanInput($_POST["country"]); 
-        if (!preg_match("/^[a-zA-Z ]*$/",$countryTemp)){
-            $countryErr = "El país solo debe incluir letras!";
-        }else{
-            $country = $countryTemp;
-        }
-    }
-    if(empty($_POST["location"]) ){
-        $locationErr = "La ubicación de la universidad es requerida!";
+    if($_POST["location"] == "" ){
+        $locationErr = "La provincia de la comunidad es requerida!";
     }else{
         $locationTemp = cleanInput($_POST["location"]);
-        if (!preg_match("/^[a-zA-Z0-9 ]*$/",$locationTemp)){
-            $locationErr = "La ciudad/estado solo debe incluir letras!";
-        }else{
-            $location = $locationTemp; 
+        if($locationTemp == "Darien"){
+            $selected1 ="selected"; 
+        } else if ($locationTemp == "Panama Este"){
+            $selected2 ="selected";
+        } else {
+            $selected3 = "selected";  
+        }
+        $location = $locationTemp;
+    }
+   
+    $commMembersTemp = cleanInput($_POST["commMembers"]);
+    if (!preg_match("/^[0-9 ]*$/",$commMembersTemp)){
+        $commMembersErr = "La población solo debe incluir números!";
+    }else{
+        $commMembers = $commMembersTemp;
+    }
+    if(empty($_POST["ambiente"]) && empty($_POST["humanRights"]) && empty($_POST["medical"]) && empty($_POST["microfinanzas"]) && empty($_POST["negocios"]) && empty($_POST["publicHealth"]) && empty($_POST["profesional"]) ){
+        $programErr = "Favor especificar los programas activos en la comunidad!";  
+        $flag = FALSE;
+    } else {
+        if (!empty($_POST["ambiente"])){
+            $programAmbienteCh = "checked";
+        }
+        if (!empty($_POST["humanRights"])){
+            $programHumanRightsCh = "checked";
+        }
+        if (!empty($_POST["medical"])){
+            $programMedicalCh = "checked";
+        }
+        if (!empty($_POST["microfinanzas"])){
+            $programMicrofinanceCh = "checked";
+        }
+        if (!empty($_POST["negocios"])){
+            $programBusinessCh = "checked";
+        }
+        if (!empty($_POST["publicHealth"])){
+            $programPublicHealthCh = "checked";
+        }
+        if (!empty($_POST["profesional"])){
+            $programProfesionalCh = "checked";
         }
     }
 }
-if(!$university == "" && !$country == "" && !$location == ""){
+
+if(!$name == "" && !$location == "" && $flag){
     require_once 'src/login/connect.php';
-    $query = "CALL insert_university('$university','$country','$location')";
+    $query = "CALL insert_community('$name','$location','$commMembers')";
     $result= $conn->query($query);
     if (!$result){
         echo "<script type='text/javascript'>alert('failed!')</script>";
     } else{
-        echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
-        $universityTemp = $countryTemp = $locationTemp = "";
-        $university = $country = $location = "";
+        if(!empty($_POST["ambiente"])){
+                $program = cleanInput($_POST["ambiente"]);
+                $query = "CALL insert_communityxprogram('$name','$program')";
+                $result= $conn->query($query);
+                if (!$result){
+                        $flag2 = FALSE;
+                        $errorMessage = $errorMessage.'Error0: '.$conn->error;
+                    }
+        }
+        if(!empty($_POST["humanRights"])){
+                $program = cleanInput($_POST["humanRights"]);
+                $query = "CALL insert_communityxprogram('$name','$program')";
+                $result= $conn->query($query);
+                if (!$result){
+                        $flag2 = FALSE;
+                        $errorMessage = $errorMessage.'Error0: '.$conn->error;
+                    }
+        }
+        if(!empty($_POST["medical"])){
+                $program = cleanInput($_POST["medical"]);
+                $query = "CALL insert_communityxprogram('$name','$program')";
+                $result= $conn->query($query);
+                if (!$result){
+                        $flag2 = FALSE;
+                        $errorMessage = $errorMessage.'Error0: '.$conn->error;
+                    }
+        }
+        if(!empty($_POST["microfinanzas"])){
+                $program = cleanInput($_POST["microfinanzas"]);
+                $query = "CALL insert_communityxprogram('$name','$program')";
+                $result= $conn->query($query);
+                if (!$result){
+                        $flag2 = FALSE;
+                        $errorMessage = $errorMessage.'Error0: '.$conn->error;
+                    }
+        }
+        if(!empty($_POST["negocios"])){
+                $program = cleanInput($_POST["negocios"]);
+                $query = "CALL insert_communityxprogram('$name','$program')";
+                $result= $conn->query($query);
+                if (!$result){
+                        $flag2 = FALSE;
+                        $errorMessage = $errorMessage.'Error0: '.$conn->error;
+                    }
+        }
+        if(!empty($_POST["publicHealth"])){
+                $program = cleanInput($_POST["publicHealth"]);
+                $query = "CALL insert_communityxprogram('$name','$program')";
+                $result= $conn->query($query);
+                if (!$result){
+                        $flag2 = FALSE;
+                        $errorMessage = $errorMessage.'Error0: '.$conn->error;
+                    }
+        }
+        if(!empty($_POST["profesional"])){
+                $program = cleanInput($_POST["profesional"]);
+                $query = "CALL insert_communityxprogram('$name','$program')";
+                $result= $conn->query($query);
+                if (!$result){
+                        $flag2 = FALSE;
+                        $errorMessage = $errorMessage.'Error0: '.$conn->error;
+                    }
+        }
+        if (!$flag2){
+            echo "<script type='text/javascript'>alert($errorMessage)</script>";
+        } else{
+            echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
+            $name = $location = $commMembers = $program = "";
+            $nameTemp = $locationTemp = $commMembersTemp = $programTemp ="";
+            $nameErr = $locationErr = $commMembersErr = $programErr ="";
+            $selected = "selected";
+            $selected1 = $selected2 = $selected3 = "";
+            $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
+        }    
     }
+     
 }
 function cleanInput($data){
     $data = trim($data);
@@ -73,53 +177,64 @@ function cleanInput($data){
         require 'header.php';
         ?>
 	<div id="form_container">
-		<form id="form_928984" class="appnitro"  method="post" action="">
+		<form id="form_928984" class="appnitro"  method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
 					<div class="form_description">
 			<h1>Formulario de Comunidad</h1>
 		</div>						
 			<ul >
 			
 					<li id="li_1" >
-		<label class="description" for="element_1">Nombre </label>
+		<label class="description" for="name">Nombre </label>
 		<div>
-			<input id="element_1" name="element_1" class="element text medium" type="text" maxlength="255" value=""/> 
-		</div><p class="guidelines" id="guide_1"><small>Nombre de la Comunidad</small></p> 
+			<input id="name" name="name" class="element text medium" type="text" maxlength="255" value="<?php echo $nameTemp;?>"/> 
+                         <span class="error">
+                            <p class="error"><?php echo $nameErr;?></p>
+                        </span>
+                </div><p class="guidelines" id="guide_1"><small>Nombre de la Comunidad</small></p> 
 		</li>		<li id="li_3" >
-		<label class="description" for="element_3">Provincia </label>
+		<label class="description" for="location">Provincia </label>
 		<div>
-		<select class="element select medium" id="element_3" name="element_3"> 
-			<option value="" selected="selected"></option>
-<option value="1" >Panamá Oeste</option>
-<option value="2" >Panama Este</option>
-<option value="3" >Darien</option>
-
+		<select class="element select medium" id="location" name="location"> 
+			<option value="" <?php echo $selected;?>></option>
+                        <option value="Darien" <?php echo $selected1;?> >Darien</option>
+                        <option value="Panama Este" <?php echo $selected2;?> >Panamá Este</option>
+                        <option value="Panama Oeste" <?php echo $selected3;?> >Panamá Oeste</option>
 		</select>
+                <span class="error">
+                       <p class="error"><?php echo $locationErr;?></p>
+                </span>
 		</div> 
 		</li>		<li id="li_2" >
-		<label class="description" for="element_2">Población </label>
+		<label class="description" for="commMembers">Población </label>
 		<div>
-			<input id="element_2" name="element_2" class="element text medium" type="text" maxlength="255" value=""/> 
-		</div><p class="guidelines" id="guide_2"><small>Total de habitantes en la comunidad</small></p> 
+			<input id="commMembers" name="commMembers" class="element text medium" type="text" maxlength="255" value="<?php echo $commMembersTemp;?>"/> 
+                        <span class="error">
+                            <p class="error"><?php echo $commMembersErr;?></p>
+                        </span>
+                </div><p class="guidelines" id="guide_2"><small>Total de habitantes en la comunidad</small></p> 
 		</li>		<li id="li_4" >
 		<label class="description" for="element_4">Programas </label>
 		<span>
-			<input id="element_4_1" name="element_4_1" class="element checkbox" type="checkbox" value="1" />
+			<input id="element_4_1" name="ambiente" class="element checkbox" type="checkbox"<?php echo $programAmbienteCh;?>  value="4" />
 <label class="choice" for="element_4_1">Ambiente</label>
-<input id="element_4_2" name="element_4_2" class="element checkbox" type="checkbox" value="1" />
+<input id="element_4_2" name="humanRights" class="element checkbox" type="checkbox" <?php echo $programHumanRightsCh;?> value="5" />
 <label class="choice" for="element_4_2">Derechos Humanos</label>
-<input id="element_4_3" name="element_4_3" class="element checkbox" type="checkbox" value="1" />
+<input id="element_4_3" name="medical" class="element checkbox" type="checkbox"<?php echo $programMedicalCh;?> value="6" />
 <label class="choice" for="element_4_3">Medico Dental</label>
-<input id="element_4_4" name="element_4_4" class="element checkbox" type="checkbox" value="1" />
+<input id="element_4_4" name="microfinanzas" class="element checkbox" type="checkbox"<?php echo $programMicrofinanceCh;?> value="7" />
 <label class="choice" for="element_4_4">Microfinanzas</label>
-<input id="element_4_5" name="element_4_5" class="element checkbox" type="checkbox" value="1" />
+<input id="element_4_5" name="negocios" class="element checkbox" type="checkbox"<?php echo $programBusinessCh;?> value="2" />
 <label class="choice" for="element_4_5">Negocios</label>
-<input id="element_4_6" name="element_4_6" class="element checkbox" type="checkbox" value="1" />
+<input id="element_4_6" name="publicHealth" class="element checkbox" type="checkbox"<?php echo $programPublicHealthCh;?> value="8" />
 <label class="choice" for="element_4_6">Salud Pública</label>
-<input id="element_4_7" name="element_4_7" class="element checkbox" type="checkbox" value="1" />
+<input id="element_4_7" name="profesional" class="element checkbox" type="checkbox" <?php echo $programProfesionalCh;?> value="10" />
 <label class="choice" for="element_4_7">Profesional</label>
 
 		</span><p class="guidelines" id="guide_4"><small>Programas activos en la comunidad</small></p> 
-		</li>
+		 <span class="error">
+                            <p class="error"><?php echo $programErr;?></p>
+                        </span>
+                </li>
 			
 					<li class="buttons">
 			    <input type="hidden" name="form_id" value="928984" />
