@@ -12,7 +12,7 @@ $position ="";
 
 if ($user_admin && !$user_devel && !$user_logic ){
     //lleva al menu de administracion
-    $destination = 'Location:menu_admin.php';
+    $destination = 'Location:management.php';
     $_SESSION["position"] = 'Administracion';
 }elseif (!$user_admin && $user_devel && !$user_logic) {
     //lleva al menu de programacion

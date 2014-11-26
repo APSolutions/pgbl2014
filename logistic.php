@@ -7,6 +7,7 @@ require 'src/login/usuario.php';
 session_name('Global');
 session_id('pgbl');
 session_start();
+$_SESSION["position"] = "Logistica";
 ?>
 <!DOCTYPE html>
 <html>
@@ -19,7 +20,6 @@ session_start();
         <meta name="keywords" content="global brigades, panama, logistic, menu" />
         <meta name="author" content="APSolution" />
         <link rel="shortcut icon" href="img/favicon.ico"/>
-        <link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
         <link rel="stylesheet" type="text/css" href="css/logistic_menu/component.css" />
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <script src="js/logistic_menu/modernizr.custom.js"></script>

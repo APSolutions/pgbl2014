@@ -60,13 +60,12 @@ function cleanInput($data){
 }
 ?>
 <!DOCTYPE html>
-<html 
+<html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Crear Nueva Comunidad </title>
 <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
 <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
-<link rel="stylesheet" type="text/css" href="css/logistic_menu/default.css" />
 <!--<script type="text/javascript" src="../js/viewformcomunidad.js"></script>-->
 </head>
 <body id="main_body" >
