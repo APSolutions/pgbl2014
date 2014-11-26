@@ -8,7 +8,7 @@ and open the template in the editor.
     Author     : Sistemas
 */
 @font-face {
-	font-family: "Flaticon1";
+	font-family: "header";
 	src: url("../fonts/header/flaticon.eot");
 	src: url("../fonts/header/flaticon.eot#iefix") format("embedded-opentype"),
 	url("../fonts/header/flaticon.woff") format("woff"),
@@ -18,89 +18,120 @@ and open the template in the editor.
 	font-style: normal;
 }
 
-[class^="flaticon-"]:before, [class*=" flaticon-"]:before,
-[class^="flaticon-"]:after, [class*=" flaticon-"]:after {   
-	font-family: Flaticon1;
-        font-size: 20px;
-font-style: normal;
-margin-left: 20px;
+.header-icon:before {
+    font-family: "header";
+    speak: none;
+    font-style: normal;
+    font-weight: normal;
+    font-variant: normal;
+    text-transform: none;
+    text-align: center;
+    color: #2a92d0;
+    -webkit-font-smoothing: antialiased;
+}
+//Icons management
+.flaticon-child:before {
+    content: "\e001"
+}
+.flaticon-bell:before {
+    content: "\e000"
+}
+
+.flaticon-logout:before {
+    content: "\e001"
+}
+
+/* Clearfix hack by Nicolas Gallagher: http://nicolasgallagher.com/micro-clearfix-hack/ */
+.clearfix:before, .clearfix:after { content: " "; display: table; }
+.clearfix:after { clear: both; }
+
+body {
+    font-family: 'Lato', Calibri, Arial, sans-serif;
+    color: #206f9f;
+}
+
+a {
+    color: #f0f0f0;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #000;
 }
 
 header {
-    min-width: 612px;
+    width: 90%;
+    max-width: 75em;
+    margin: 0 auto;
 }
 
-header > div {
-    height: 125px;
-    border: 1px solid;
-}
-
-.img-logo {
-    width: auto;
-    max-width: 200px;
-    min-width: 100px;
-}
-
-.header-logo {
+header div.header-logo {
     float: left;
-    width: auto;
+    font-size: 100%;
     text-align: center;
-    font-size: 12px;
-    font-style: oblique;
+    text-transform: lowercase;
+    color: #237baf;
+    font-style: italic;
 }
 
-.header-user {
+header div.header-title {
+    float: left;
+}
+
+header div.header-user {
     float: right;
-    width: auto;
-    min-width: 100px;
     text-align: center;
-    font-size: 16px;
 }
 
-.header-main{
-    float: none;
-    width: auto;
-    min-width: 612px;
+header div.header-logo img {
+    max-width: 200px;
 }
 
-//Icons management
-
-.flaticon-bell46:before {
-    content: "\e000";
+header div.header-title h1 {
+    font-size: 2.125em;
+    line-height: 1.3;
+    margin: 0 0 0.6em 0;
+    float: left;
+    font-weight: 400;
 }
 
-.flaticon-logout13:before {
-    content: "\e001";
+header div.header-user a {
+    font-size: 1.5em;
+    margin: 0.5em 0.5em;
 }
 
-//Tooltip on icons
-
-.tooltip{
-    display: inline;
-    position: relative;
+header > span {
+	display: block;
+	position: relative;
+	z-index: 9999;
+	font-weight: 700;
+	text-transform: uppercase;
+	letter-spacing: 0.5em;
+	padding: 0 0 0.6em 0.1em;
 }
 
-.tooltip:hover:after{
-    background: #47a3da;
-    background: #47a3da;
-    border-radius: 5px;
-    bottom: 26px;
-    color: #fff;
-    content: attr(data-content);
-    left: 20%;
-    padding: 5px 15px;
-    position: absolute;
-    z-index: 98;
-    opacity: 0.9;
+header div.header-user span:before {
+	width: 30px;
+	height: 30px;
+	top: -8px;
+	position: relative;
 }
 
-.tooltip:hover:before{
-    border: solid;
-    border-color: #47a3da transparent;
-    border-width: 6px 6px 0 6px;
-    bottom: 20px;
-    content: "";
-    left: 50%;
-    position: absolute;
-    z-index: 99;
+header div.header-user span:hover:after {
+	content: attr(data-content);
+	text-transform: none;
+	text-indent: 0;
+	letter-spacing: 0;
+	font-weight: 300;
+	font-size: 75%;
+        margin-top: 1.2em;
+        width: 5em;
+        margin-left: -3.5em;
+	padding: 0.4em 0.4em;
+	line-height: 1.2;
+	text-align: center;
+	position: absolute;
+	color: #fff;
+        background: #68b3e1;
+        border-radius: 10%;
 }
