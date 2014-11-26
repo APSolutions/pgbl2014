@@ -3,6 +3,61 @@ require 'src/login/usuario.php';
 session_name('Global');
 session_id('pgbl');
 session_start();
+//variables del formulario
+$name = $location = $commMembers = "";
+$nameTemp = $locationTemp = $commMembersTemp = "";
+$nameErr = $locationErr = $commMembersErr = "";
+//asignacion de variables
+if ($_SERVER["REQUEST_METHOD"] == "POST"){
+    if(empty($_POST["university"]) ){
+        $universityErr = "El nombre de la universidad es requerido!";
+    }else{
+        $universityTemp = cleanInput($_POST["university"]);
+        if (!preg_match("/^[a-zA-Z0-9 ]*$/",$universityTemp)){
+            $universityErr = "El nombre solo debe incluir letras!";
+        }else{
+            $university = $universityTemp;
+        }
+    }
+    if(empty($_POST["country"]) ){
+        $countryErr = "El País de la universidad es requerido!";
+    }else{
+        $countryTemp = cleanInput($_POST["country"]); 
+        if (!preg_match("/^[a-zA-Z ]*$/",$countryTemp)){
+            $countryErr = "El país solo debe incluir letras!";
+        }else{
+            $country = $countryTemp;
+        }
+    }
+    if(empty($_POST["location"]) ){
+        $locationErr = "La ubicación de la universidad es requerida!";
+    }else{
+        $locationTemp = cleanInput($_POST["location"]);
+        if (!preg_match("/^[a-zA-Z0-9 ]*$/",$locationTemp)){
+            $locationErr = "La ciudad/estado solo debe incluir letras!";
+        }else{
+            $location = $locationTemp; 
+        }
+    }
+}
+if(!$university == "" && !$country == "" && !$location == ""){
+    require_once 'src/login/connect.php';
+    $query = "CALL insert_university('$university','$country','$location')";
+    $result= $conn->query($query);
+    if (!$result){
+        echo "<script type='text/javascript'>alert('failed!')</script>";
+    } else{
+        echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
+        $universityTemp = $countryTemp = $locationTemp = "";
+        $university = $country = $location = "";
+    }
+}
+function cleanInput($data){
+    $data = trim($data);
+    $data = stripcslashes($data) ;
+    $data = htmlspecialchars($data);
+    return $data;
+}
 ?>
 <!DOCTYPE html>
 <html 
