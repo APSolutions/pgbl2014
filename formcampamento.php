@@ -120,9 +120,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 }  
    
-if(!$name == "" && !$contractType == ""  && !$capacity == "" && !$carYear == "" && !$licencePlate == "" && !$owner == "" && !$ownerCellphone == "" && !$insuranceCompany == "" && !$insuranceNumber == "" && !$insuranceType == ""){
+if(!$name == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$bedroom == "" && !$electricity == "" && !$wifi == "" && !$cellphoneSignal == "" && !$ventilation == "" && !$drinkableWater == ""){
     require_once 'src/login/connect.php';
-    $query = "CALL insert_vehicles('$name','$contractType','$capacity','$carYear','$licencePlate','$owner','$ownerCellphone','$insuranceCompany','$insuranceNumber','$insuranceType')";
+    $query = "CALL insert_compound('$name','$location','$town','$capacity','$bedroom','$electricity','$wifi','$cellphoneSignal','$ventilation','$toiletQuantity','$drinkableWater)";
     $result= $conn->query($query);
     if (!$result){
         echo "<script type='text/javascript'>alert('failed!')</script>";
@@ -190,7 +190,6 @@ function cleanInput($data){
     <title>Crear Nuevo Campamento</title>
     <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
     <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
-    <link rel="stylesheet" type="text/css" href="css/settings/default.css" />
 <!--<script type="text/javascript" src="../js/viewformcampamento.js"></script> -->
     </head>	           
     <body id="main_body" >
@@ -209,7 +208,7 @@ function cleanInput($data){
 		<div>
 			<input id="name" name="name" class="element text large" type="text" maxlength="255" value=""/> 
                         <span class="error">
-                            <a><?php echo $nameErr;?></a>
+                            <p class="error"><?php echo $nameErr;?></p>
                         </span>
 		</div><p class="guidelines" id="guide_1"><small>Nombre del Campamento</small></p> 
 		</li>		<li id="li_3" >
@@ -222,7 +221,7 @@ function cleanInput($data){
                         <option value="3" >Panamá Oeste</option>
 		</select>
                     <span class="error">
-                           <a><?php echo $locationErr;?></a>
+                           <p class="error"><?php echo $locationErr;?></p>
                     </span>
 		</div> 
 		</li>		<li id="li_2" >
@@ -230,15 +229,16 @@ function cleanInput($data){
 		<div>
 			<input id="town" name="town" class="element text medium" type="text" maxlength="255" value=""/> 
                         <span class="error">
-                            <a><?php echo $townErr;?></a>
+                            <p class="error"><?php echo $townErr;?></p>
                         </span>
                 </div><p class="guidelines" id="guide_2"><small>Pueblo o Comunidad donde esta ubicado el campamento</small></p> 
 		</li>		<li id="li_4" >
 		<label class="description" for="capacity">Capacidad </label>
 		<div>
 			<input id="capacity" name="capacity" class="element text small" type="text" maxlength="255" value=""/> 
+                        <br>
                         <span class="error">
-                            <a><?php echo $capacityErr;?></a>
+                            <p class="error"><?php echo $capacityErr;?></p>
                         </span>
                 </div><p class="guidelines" id="guide_4"><small>Cantidad de personas que puede recibir el campamento</small></p> 
 		</li>		<li id="li_6" >
@@ -246,7 +246,7 @@ function cleanInput($data){
 		<div>
 			<input id="bedroom" name="bedroom" class="element text small" type="text" maxlength="255" value=""/> 
                         <span class="error">
-                            <a><?php echo $bedroomErr;?></a>
+                            <p class="error"><?php echo $bedroomErr;?></p>
                         </span>
                 </div><p class="guidelines" id="guide_6"><small>Cantidad de habitaciones que tiene el campamento</small></p> 
 		</li>		<li id="li_7" >
@@ -256,7 +256,7 @@ function cleanInput($data){
                     <input name="electricity"  type="radio" value="1" <?php echo $checkedelectricity1;?> />Sí
                     <input name="electricity"  type="radio" value="2" <?php echo $checkedelectricity2;?> />No
                     <span class="error">
-                            <a><?php echo $electricityErr;?></a>
+                            <p class="error"><?php echo $electricityErr;?></p>
                     </span>
 		</span><p class="guidelines" id="guide_7"><small>¿El campamento tiene electricidad?</small></p> 
 		</li>		<li id="li_8" >
@@ -265,8 +265,9 @@ function cleanInput($data){
                     <input  name="wifi" type="radio" value="0" style="display:none;" <?php echo $checkedwifi;?>>
                     <input  name="wifi"  type="radio" value="1" <?php echo $checkedwifi1;?>/>Sí
                     <input  name="wifi"  type="radio" value="2" <?php echo $checkedwifi2;?> />No
+                    <br>
                     <span class="error">
-                            <a><?php echo $wifiErr;?></a>
+                            <p class="error"><?php echo $wifiErr;?></p>
                     </span>
 		</span><p class="guidelines" id="guide_8"><small>¿El campamento tiene acceso a Internet?</small></p> 
 		</li>		<li id="li_9" >
@@ -276,7 +277,7 @@ function cleanInput($data){
                     <input  name="cellphoneSignal"  type="radio" value="1" <?php echo $checkedcellphonesignal1;?>/>Sí
                     <input  name="cellphoneSignal"  type="radio" value="2" <?php echo $checkedcellphonesignal2;?>/>No
                     <span class="error">
-                            <a><?php echo $cellphoneSignalErr;?></a>
+                            <p class="error"><?php echo $cellphoneSignalErr;?></p>
                     </span>
 		</span> 
 		</li>		<li id="li_10" >
@@ -290,7 +291,7 @@ function cleanInput($data){
                 <input id="name0_3" name="ventilation" class="element radio" type="radio" value="3" <?php echo $checkedventilation3;?>/>
                 <label class="choice" for="name0_3">Ninguno</label>
                 <span class="error">
-                            <a><?php echo $ventilationErr;?></a>
+                            <p class="error"><?php echo $ventilationErr;?></p>
                 </span>
 		</span> 
 		</li>		<li id="li_11" >
@@ -300,7 +301,7 @@ function cleanInput($data){
                     <input  name="drinkableWater" type="radio" value="1" <?php echo $checkeddrinkablewater1;?> />Sí
                     <input  name="drinkableWater" type="radio" value="2" <?php echo $checkeddrinkablewater2;?> />No
                     <span class="error">
-                            <a><?php echo $drinkableWaterErr;?></a>
+                            <p class="error"><?php echo $drinkableWaterErr;?></p>
                     </span>
                 </span> 
 		</li>		<li id="li_12" >
@@ -313,7 +314,7 @@ function cleanInput($data){
                 <input id="name2_3" name="toiletSingle" class="element checkbox" type="checkbox" value="Baño Individual" />
                 <label class="choice" for="name2_3">Baño Individual</label>
                 <span class="error">
-                    <a><?php echo $toiletTypeErr;?></a>
+                    <p class="error"><?php echo $toiletTypeErr;?></p>
                 </span>
 		</span><p class="guidelines" id="guide_12"><small>Tipos de baño que tiene el campamento</small></p> 
 		</li>		<li id="li_5" >
@@ -321,7 +322,7 @@ function cleanInput($data){
 		<div>
 			<input id="toiletQuantity" name="toiletQuantity" class="element text small" type="text" maxlength="255" value=""/> 
                         <span class="error">
-                            <a><?php echo $toiletQuantityErr;?></a>
+                            <p class="error"><?php echo $toiletQuantityErr;?></p>
                         </span>
                 </div> 
 		</li>

@@ -72,7 +72,6 @@ function cleanInput($data){
         <link rel="shortcut icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
         <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
-        <link rel="stylesheet" type="text/css" href="css/settings/default.css" />
     </head>
     <body id="main_body" >
         <?php
@@ -88,8 +87,8 @@ function cleanInput($data){
                         <label class="description" for="university">Nombre de la Universidad</label>
                         <div>
                             <input id="university" name="university" class="element text medium" type="text" maxlength="255" value="<?php echo $universityTemp;?>"/> 
-                            <span class="error">
-                                <a><?php echo $universityErr;?></a>
+                            <span>
+                                <p class="error"><?php echo $universityErr;?></p>
                             </span>
                         </div><p class="guidelines" id="guide_1"><small>Nombre de la Comunidad</small></p>
                     </li>
@@ -97,8 +96,8 @@ function cleanInput($data){
                         <label class="description" for="country">Páis </label>
                         <div>
                             <input id="country" name="country" class="element text medium" type="text" maxlength="255" value="<?php echo $countryTemp;?>"/>
-                            <span class="error">
-                                <a><?php echo $countryErr;?></a>
+                            <span>
+                                <p class ="error"><?php echo $countryErr;?></p>
                             </span>
                         </div><p class="guidelines" id="guide_2"><small>País de origen de la Universidad</small></p> 
                     </li>
@@ -106,8 +105,8 @@ function cleanInput($data){
                         <label class="description" for="location">Ciudad/Estado </label>
                         <div>
                             <input id="location" name="location" class="element text medium" type="text" maxlength="255" value="<?php echo $locationTemp;?>"/>
-                            <span class="error">
-                                <a><?php echo $locationErr;?></a>
+                            <span>
+                                <p class="error"><?php echo $locationErr;?></p>
                             </span>
                         </div><p class="guidelines" id="guide_3"><small>Ciudad de origen de la universidad o estado si es de Estados Unidos</small></p> 
                     </li>

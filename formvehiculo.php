@@ -151,7 +151,6 @@ and open the template in the editor.
 <title>Crear Nuevo Vehículo</title>
 <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
 <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
-<link rel="stylesheet" type="text/css" href="css/settings/default.css" />
 <!--<script type="text/javascript" src="../js/viewformuniversidad.js"></script>-->
 </head>
 <body id="main_body" >
@@ -170,7 +169,7 @@ and open the template in the editor.
 		<div>
 			<input id="name" name="name" class="element text medium" type="text" maxlength="255" value="<?php echo $nameTemp;?>"/> 
                         <span class="error">
-                            <a><?php echo $nameErr;?></a>
+                            <p class ="error"><?php echo $nameErr;?></p>
                         </span>
                 </div><p class="guidelines" id="guide_1"><small>Modelo, Apodo, Marca, que identifique el vehículo</small></p> 
 		</li>		<li id="li_9" >
@@ -182,7 +181,7 @@ and open the template in the editor.
                     <input  name="contractType" type="radio" value="3" <?php echo $checkedcontract3;?>>Contrato
 
                 <span class="error">
-                    <a><?php echo $contractTypeErr;?></a>
+                    <p class="error"><?php echo $contractTypeErr;?></p>
 </span>
 
 		</span> 
@@ -192,7 +191,7 @@ and open the template in the editor.
 			<input id="capacity" name="capacity" class="element text small" type="text" maxlength="255" value="<?php echo $capacityTemp;?>"/> 
                         <br>
                         <span class="error">
-                            <a> <?php echo $capacityErr;?></a>
+                            <p class="error"> <?php echo $capacityErr;?></p>
                         </span>
                 </div><p class="guidelines" id="guide_2"><small>Cantidad de puestos que tiene el vehículo</small></p> 
 		</li>		<li id="li_3" >
@@ -201,7 +200,7 @@ and open the template in the editor.
 			<input id="carYear" name="carYear" class="element text small" type="text" maxlength="255" value="<?php echo $carYearTemp;?>"/> 
                         <br>
                         <span class="error">
-                            <a><?php echo $carYearErr;?></a> 
+                            <p class="error"><?php echo $carYearErr;?></p> 
                         </span>
                 </div><p class="guidelines" id="guide_3"><small>Año del vehículo</small></p> 
 		</li>		<li id="li_4" >
@@ -210,7 +209,7 @@ and open the template in the editor.
 			<input id="licencePlate" name="licencePlate" class="element text small" type="text" maxlength="255" value="<?php echo $licencePlateTemp;?>"/> 
                         <br>
                         <span class="error">
-                            <a><?php echo $licencePlateErr;?></a>
+                            <p class="error"><?php echo $licencePlateErr;?></p>
                         </span>
                 </div> 
 		</li>		<li id="li_5" >
@@ -218,7 +217,7 @@ and open the template in the editor.
 		<div>
 			<input id="owner" name="owner" class="element text medium" type="text" maxlength="255" value="<?php echo $ownerTemp;?>"/> 
                         <span class="error">
-                            <a><?php echo $ownerErr;?></a>
+                            <p class="error"><?php echo $ownerErr;?></p>
                         </span>
                 </div><p class="guidelines" id="guide_5"><small>Nombre de la compañía o persona dueña del vehículo</small></p> 
 		</li>		<li id="li_6" >
@@ -226,7 +225,7 @@ and open the template in the editor.
 		<div>
 			<input id="ownerCellphone" name="ownerCellphone" class="element text small" type="text" maxlength="255" value="<?php echo $ownerCellphoneTemp;?>"/> 
                         <span class="error">
-                            <a><?php echo $ownerCellphoneErr;?></a>
+                            <p class="error"><?php echo $ownerCellphoneErr;?></p>
                         </span>
                 </div> 
 		</li>		<li id="li_7" >
@@ -234,7 +233,7 @@ and open the template in the editor.
 		<div>
 			<input id="insuranceCompany" name="insuranceCompany" class="element text medium" type="text" maxlength="255" value="<?php echo $insuranceCompanyTemp;?>"/> 
                         <span class="error">
-                            <a><?php echo $insuranceCompanyErr;?></a>
+                            <p class="error"><?php echo $insuranceCompanyErr;?></p>
                         </span>
                 </div> 
 		</li>		<li id="li_8" >
@@ -242,7 +241,7 @@ and open the template in the editor.
 		<div>
 			<input id="insuranceNumber" name="insuranceNumber" class="element text medium" type="text" maxlength="255" value="<?php echo $insuranceNumberTemp;?>"/> 
                         <span class="error">
-                            <a><?php echo $insuranceNumberErr;?></a>
+                            <p class="error"><?php echo $insuranceNumberErr;?></p>
                         </span>
                 </div> 
 		</li>		<li id="li_10" >
@@ -253,7 +252,7 @@ and open the template in the editor.
                     <input name="insuranceType"  type="radio" value="2" <?php echo $checkedinsurance2;?> />Terceros
 
 <span class="error">
-    <a><?php echo $insuranceTypeErr;?></a>
+    <p class="error"><?php echo $insuranceTypeErr;?></p>
 </span>
 		</span> 
 		</li>
