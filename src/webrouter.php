@@ -47,10 +47,10 @@
         }
         //From logistic menu
         else if($position=="Fichas"){
-            //go to reports
+            $address = "fichas.php" ;
         }
         else if($position=="Itinerario"){
-            //go to reports
+            $address = "itinerarios.php" ;
         }
         else if($position=="Calendarios"){
             $address = "calendars_menu.php" ;
@@ -59,7 +59,7 @@
             $address = "evaluations_menu.php" ;
         }
         else if($position=="Reportes"){
-            //go to reports
+            $address = "reports.php" ;
         }
         else if($position=="Configuraciones"){
             $address = "settings.php";
