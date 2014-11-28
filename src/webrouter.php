@@ -2,7 +2,7 @@
     session_name('Global');
     session_id('pgbl');
     session_start();
-    $address =$position=$action="";
+    $address =$position=$action=$program="";
     //if para guardar la posicion y accion que tiene GET
     if(isset($_GET["position"])){
         $_SESSION["position"] = trim($_GET["position"]);
@@ -10,10 +10,14 @@
         if (isset($_GET["action"])){
              $_SESSION["action"] = $_GET["action"];
              $action= $_SESSION["action"];
-        } 
+        }
+        if (isset($_GET["program"])){
+             $_SESSION["program"] = $_GET["program"];
+             $program= $_SESSION["program"];
+        }
     }
     //From settingsMenu
-    If($action == "crear" || $action == "editar" || $action == "eliminar"){
+    If(!empty($action)){
         if($position == "Personal"){
             $address = "formpersonal.php";
         }else if($position == "Comunidades"){
@@ -34,6 +38,12 @@
             $address = "formuniversidad.php";
         }else if($position == "Vehiculos"){
             $address = "formvehiculo.php";
+        }
+    }else if(!empty($program)){
+        if(strcmp($location,"Fichas")){
+            $address = "fichasList.php";
+        }else{
+            $address = "itinerariosList.php";
         }
     }else{
         //From main menu

@@ -8,7 +8,21 @@ if (isset($_SESSION["user"])){
     $lastname = $user->get_lastname();
 }
 
-$position = $_SESSION["position"];
+$tittle = "";
+
+if(isset($_SESSION["position"])){
+        $position=$_SESSION["position"];
+        $tittle = $position;
+        if (isset($_SESSION["action"]) && !strcmp($_SESSION["action"],"") == 0){;
+             $action= $_SESSION["action"];
+             $tittle = $action . " " . $tittle;
+        }
+        if (isset($_SESSION["program"]) && !strcmp($_SESSION["program"],"") == 0){
+             $program= $_SESSION["program"];
+             $tittle .= " de " .  $program;
+        }
+        
+    }
 
 
 echo <<<END
@@ -27,7 +41,7 @@ echo <<<END
                 </a>                          
         </div> 
         <div class="header-title">
-            <h1 class="position">$position</h1>
+            <h1 class="position">$tittle</h1>
         </div>
         
     </header>

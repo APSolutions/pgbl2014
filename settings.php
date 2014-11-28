@@ -10,6 +10,8 @@ session_name('Global');
 session_id('pgbl');
 session_start();
 $_SESSION["position"] = "Configuraciones";
+$_SESSION["action"] = "";
+$_SESSION["program"] = "";
 ?>
 
 <html>

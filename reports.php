@@ -1,11 +1,12 @@
 <?php
-    require 'src/login/usuario.php';
-    
-    session_name('Global');
-    session_id('pgbl');
-    session_start();
-    $_SESSION["position"] = "Reportes";
-    
+require 'src/login/usuario.php';
+
+session_name('Global');
+session_id('pgbl');
+session_start();
+$_SESSION["position"] = "Reportes";
+$_SESSION["action"] = "";
+$_SESSION["program"] = "";    
 ?>
 <!DOCTYPE html>
 <html>
