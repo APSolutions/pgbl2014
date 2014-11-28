@@ -276,7 +276,7 @@ function cleanInput($data){
 		</li>		<li id="li_7" >
 		<label class="description" for="electricity">Electricidad </label>
 		<span>
-                    <input  name="electricity" type="radio" value="0" style="display:none;" <?php echo $checkedelectricity;?>>
+                    <input  name="electricity" type="radio" value="0" style="display:none;" <?php echo $checkedelectricity;?>/>
                     <input name="electricity"  type="radio" value="1" <?php echo $checkedelectricity1;?> />Sí
                     <input name="electricity"  type="radio" value="2" <?php echo $checkedelectricity2;?> />No
                     <span class="error">
