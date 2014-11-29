@@ -34,7 +34,7 @@ and open the template in the editor.
             require 'header.php';
             ?>	
             <div class="main">
-                <ul class="cbp-ig-grid">
+                <ul class="cbp-ig-grid quantity2">
                     <li>
                         <a href="#" name="CVisitas" onclick="locator(event.currentTarget)">
                             <span class="mm-cogs"></span>

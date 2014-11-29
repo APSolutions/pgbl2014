@@ -29,7 +29,7 @@ $_SESSION["program"] = "";
             require_once 'header.php';
             ?>
             <div class="main">
-                <ul class="cbp-ig-grid">
+                <ul class="cbp-ig-grid quantity5">
                     <li>
                         <a href="#" name="EBrigadas" onclick="locator(event.currentTarget)">
                             <span class="cbp-ig-icon icon-#"></span>

@@ -39,8 +39,24 @@
 }
 
 /* grid item */
+.quantity2 li {
+	width: 50%;
+	float: left;
+	height: 200px;
+	text-align: center;
+	border-top: 1px solid #ddd;
+}
+
 .quantity3 li {
 	width: 33%;
+	float: left;
+	height: 200px;
+	text-align: center;
+	border-top: 1px solid #ddd;
+}
+
+.quantity4 li {
+	width: 25%;
 	float: left;
 	height: 200px;
 	text-align: center;
@@ -57,6 +73,24 @@
 
 /* we are using a combination of borders and box shadows to control the grid lines */
 /*for 4 multiple elements*/
+.quantity2 li{
+	border-top: none;
+}
+
+.quantity2 li:nth-child(odd){
+	box-shadow: 1px 0 0 #ddd;
+}
+
+.quantity4 li:nth-child(-n+4){
+	border-top: none;
+}
+
+.quantity4 li:nth-child(4n-1),
+.quantity4 li:nth-child(4n-2),
+.quantity4 li:nth-child(4n-3){
+	box-shadow: 1px 0 0 #ddd;
+}
+
 .quantity5 li:nth-child(-n+5){
 	border-top: none;
 }
@@ -251,6 +285,12 @@
 	margin-top: 80px;
 }
 
+@media screen and (max-width: 1700px){
+    .quantity3 li,
+    .quantity5 li{
+        font-size: 80%;
+    }
+}
 
 @media screen and (max-width: 62.75em) {
 	.cbp-ig-grid li{
@@ -276,21 +316,25 @@
 }
 
 @media screen and (max-width: 41.6em) { 
+        .quantity2 li,    
         .quantity3 li,
         .quantity5 li{
             width: 100%;
 	}
 
+        .quantity2 li:nth-child(-n+2),
 	.quantity3 li:nth-child(-n+2),
         .quantity5 li:nth-child(-n+2){
 		border-top: 1px solid #ddd;
 	}
 
+        .quantity2 li:nth-child(2n-1),
 	.quantity3 li:nth-child(2n-1),
         .quantity5 li:nth-child(2n-1){
 		box-shadow: none
 	}
 
+        .quantity2 li:first-child,
 	.quantity3 li:first-child,
         .quantity5 li:first-child{
 		border-top: none;
@@ -298,7 +342,8 @@
 }
 
 @media screen and (max-width: 25em) { 
-	.quantity3 li,
+        .quantity2 li,	
+        .quantity3 li,
         .quantity5 li{
 		font-size: 80%;
 	}
