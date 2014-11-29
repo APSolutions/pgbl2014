@@ -33,7 +33,7 @@ $_SESSION["program"] = "";
             require_once 'header.php';
             ?>
             <div class="main">
-                <ul class="cbp-ig-grid">
+                <ul class="cbp-ig-grid quantity3">
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Fichas"?>" name="Fichas" >
                             <span class="cbp-ig-icon icon-file"></span>

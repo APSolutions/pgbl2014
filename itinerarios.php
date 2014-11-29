@@ -31,7 +31,7 @@ $_SESSION["program"] = "";
         ?>
         <div class="container">
             <div class="main">
-                <ul class="cbp-ig-grid">
+                <ul class="cbp-ig-grid quantity3">
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Itinerarios&program=Ambiente"?>" name="eviromental" >
                             <span class="cbp-ig-icon icon-programs-enviromental"></span>

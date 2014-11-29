@@ -39,22 +39,46 @@
 }
 
 /* grid item */
-.cbp-ig-grid li {
+.quantity3 li {
 	width: 33%;
 	float: left;
-	height: 250px;
+	height: 200px;
+	text-align: center;
+	border-top: 1px solid #ddd;
+}
+
+.quantity5 li {
+	width: 20%;
+	float: left;
+	height: 200px;
 	text-align: center;
 	border-top: 1px solid #ddd;
 }
 
 /* we are using a combination of borders and box shadows to control the grid lines */
-.cbp-ig-grid li:nth-child(-n+3){
+/*for 4 multiple elements*/
+.quantity5 li:nth-child(-n+5){
 	border-top: none;
 }
 
-.cbp-ig-grid li:nth-child(3n-1),
-.cbp-ig-grid li:nth-child(3n-2) {
+.quantity5 li:nth-child(5n-1),
+.quantity5 li:nth-child(5n-2),
+.quantity5 li:nth-child(5n-3),
+.quantity5 li:nth-child(5n-4){
 	box-shadow: 1px 0 0 #ddd;
+}
+/*para elementos de multiplo de 3*/
+.quantity3 li:nth-child(-n+3){
+	border-top: none;
+}
+
+.quantity3 li:nth-child(3n-1),
+.quantity3 li:nth-child(3n-2) {
+	box-shadow: 1px 0 0 #ddd;
+}
+
+.quantity3 li:last-child {
+    box-shadow:none;
 }
 
 /* anchor style */
@@ -78,7 +102,7 @@
 
 [class^="icon-"], [class*=" icon-"] {
 	font-family: 'icomoon';
-	font-size: 6em;
+	font-size: 3.25em;
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
@@ -93,7 +117,7 @@
 
 [class^="icon-programs-"], [class*=" icon-programs-"] {
 	font-family: 'programs';
-	font-size: 6em;
+	font-size: 3.25em;
 	speak: none;
 	font-style: normal;
 	font-weight: normal;
@@ -229,17 +253,16 @@
 
 
 @media screen and (max-width: 62.75em) {
-	.cbp-ig-grid li {
+	.cbp-ig-grid li{
 		width: 50%;
 	}
+        /*reset gridlines*/
+        .quantity3 li:nth-child(n+2), 
+        .quantity5 li:nth-child(n+2){
+            border-top: 1px solid #ddd;
+        }
 
-	/* reset the grid lines */
-	.cbp-ig-grid li:nth-child(-n+3){
-		border-top: 1px solid #ddd;
-	}
-
-	.cbp-ig-grid li:nth-child(3n-1),
-	.cbp-ig-grid li:nth-child(3n-2) {
+	.cbp-ig-grid li:nth-child(even){
 		box-shadow: none;
 	}
 
@@ -247,31 +270,36 @@
 		border-top: none;
 	}
 
-	.cbp-ig-grid li:nth-child(2n-1) {
+	.cbp-ig-grid li:nth-child(2n-1){
 		box-shadow: 1px 0 0 #ddd;
 	}
 }
 
 @media screen and (max-width: 41.6em) { 
-	.cbp-ig-grid li {
-		width: 100%;
+        .quantity3 li,
+        .quantity5 li{
+            width: 100%;
 	}
 
-	.cbp-ig-grid li:nth-child(-n+2){
+	.quantity3 li:nth-child(-n+2),
+        .quantity5 li:nth-child(-n+2){
 		border-top: 1px solid #ddd;
 	}
 
-	.cbp-ig-grid li:nth-child(2n-1) {
+	.quantity3 li:nth-child(2n-1),
+        .quantity5 li:nth-child(2n-1){
 		box-shadow: none
 	}
 
-	.cbp-ig-grid li:first-child {
+	.quantity3 li:first-child,
+        .quantity5 li:first-child{
 		border-top: none;
 	}
 }
 
 @media screen and (max-width: 25em) { 
-	.cbp-ig-grid {
+	.quantity3 li,
+        .quantity5 li{
 		font-size: 80%;
 	}
 

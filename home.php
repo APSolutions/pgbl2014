@@ -33,24 +33,24 @@ $_SESSION["program"] = "";
             require 'header.php';
             ?>	
             <div class="main">
-                <ul class="cbp-ig-grid">
+                <ul class="cbp-ig-grid quantity3">
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Administracion"?>" name="Administracion" >
-                            <span class="mm-cogs"></span>
+                            <span class="cbp-ig-icon mm-cogs"></span>
                             <h3 class="cbp-ig-title">Administracion</h3>
                             <span class="cbp-ig-category">Aministrar GB</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Logistica"?>" name="Logistica" >
-                            <span class="mm-history"></span>
+                            <span class="cbp-ig-icon mm-history"></span>
                             <h3 class="cbp-ig-title">Logistica</h3>
                             <span class="cbp-ig-category">Logistica de las Brigadas</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Programacion"?>" name="Programacion" >
-                            <span class="mm-screen"></span>
+                            <span class="cbp-ig-icon mm-screen"></span>
                             <h3 class="cbp-ig-title">Programacion</h3>
                             <span class="cbp-ig-category">Desarrollo dentro de GB</span>
                         </a>

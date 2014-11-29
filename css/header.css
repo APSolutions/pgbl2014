@@ -58,7 +58,6 @@ a:hover {
 
 header {
     width: 90%;
-    max-width: 75em;
     margin: 0 auto ;
 }
 
@@ -132,4 +131,17 @@ header div.header-user span:hover:after {
 	color: #fff;
         background: #68b3e1;
         border-radius: 10%;
+}
+
+@media screen and (max-width: 41.6em){
+    .header-title h1{
+        clear: both;
+        width: 100%;
+        text-align: center;
+        margin:0;
+    }
+    .header-user {
+        width: 100%;
+        text-align: center;
+    }
 }
