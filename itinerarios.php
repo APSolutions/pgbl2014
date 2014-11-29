@@ -34,49 +34,49 @@ $_SESSION["program"] = "";
                 <ul class="cbp-ig-grid">
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Itinerarios&program=Ambiente"?>" name="eviromental" >
-                            <span class="cbp-ig-icon icon-eviromental"></span>
+                            <span class="cbp-ig-icon icon-programs-enviromental"></span>
                             <h3 class="cbp-ig-title">Ambiente</h3>
                             <span class="cbp-ig-category">short description</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Itinerarios&program=Derechos Humanos"?>" name="humanRights" >
-                            <span class="cbp-ig-icon icon-humanRights"></span>
+                            <span class="cbp-ig-icon icon-programs-human-rights"></span>
                             <h3 class="cbp-ig-title">Derechos Humanos</h3>
                             <span class="cbp-ig-category">short description</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Itinerarios&program=Medico/Dental"?>" name="medical" >
-                            <span class="cbp-ig-icon icon-medical"></span>
+                            <span class="cbp-ig-icon icon-programs-medical"></span>
                             <h3 class="cbp-ig-title">Medico/Dental</h3>
                             <span class="cbp-ig-category">short description</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Itinerarios&program=Microfinanzas"?>" name="microfinance" >
-                            <span class="cbp-ig-icon icon-microfinance"></span>
+                            <span class="cbp-ig-icon icon-programs-microfinance"></span>
                             <h3 class="cbp-ig-title">Microfinanzas</h3>
                             <span class="cbp-ig-category">short description</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Itinerarios&program=Negocios"?>" name="business" >
-                            <span class="cbp-ig-icon icon-business"></span>
+                            <span class="cbp-ig-icon icon-programs-business"></span>
                             <h3 class="cbp-ig-title">Negocios</h3>
                             <span class="cbp-ig-category">short description</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Itinerarios&program=Salud Publica"?>" name="publicHealth" >
-                            <span class="cbp-ig-icon icon-publicHealth"></span>
+                            <span class="cbp-ig-icon icon-programs-public-health"></span>
                             <h3 class="cbp-ig-title">Salud Pública</h3>
                             <span class="cbp-ig-category">short description</span>
                         </a>
                     </li>
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Itinerarios&program=Profesional"?>" name="professional" >
-                            <span class="cbp-ig-icon icon-professional"></span>
+                            <span class="cbp-ig-icon icon-programs-professional"></span>
                             <h3 class="cbp-ig-title">Profesional</h3>
                             <span class="cbp-ig-category">short description</span>
                         </a>
