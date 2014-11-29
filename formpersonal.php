@@ -3,6 +3,13 @@ require 'src/login/usuario.php';
 session_name('Global');
 session_id('pgbl');
 session_start();
+//cargar variables de base de datos
+$permanente = "1";
+$temporal = "2";
+//
+
+
+
 //variables del formulario
 $name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = "";
 $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = "";
@@ -298,8 +305,9 @@ function is_leap_year($year){
     <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
     <!--<script type="text/javascript" src="../js/viewformcampamento.js"></script> -->
     <script type="text/javascript" src="js/calendar.js"></script>
+    <script type="text/javascript" src="js/settings/formpersonal.js"></script>
     </head>	           
-    <body id="main_body" >
+    <body id="main_body" onload="set_variables('<?php echo $permanente; ?>','<?php echo $temporal; ?>')" >
             <?php
                 require 'header.php';
             ?>
@@ -313,8 +321,8 @@ function is_leap_year($year){
                                             <li id="li_7" >
                     <label class="description" for="element_7">Tipo de Personal </label>
                     <span>
-                            <input  name="staffType"  type="radio" value="1" />Permanente
-                            <input  name="staffType"  type="radio" value="2" />Temporal
+                            <input  name="staffType"  type="radio" value="1" onclick="get_variables()" />Permanente
+                            <input  name="staffType"  type="radio" value="2" onclick="get_variables()"/>Temporal
                     </span><p class="guidelines" id="guide_7"><small>Permanentes para contratos indefinidos o de mas de 6 meses
     Temporal para contratos de menos de 6 meses</small></p> 
                     </li>		<li id="li_29" >
@@ -378,7 +386,7 @@ function is_leap_year($year){
                     </li>		<li id="li_32" >
                     <label class="description" for="element_32">Rol </label>
                     <div>
-                    <select class="element select medium" id="element_32" name="element_32"> 
+                    <select class="element select medium" id="rol" name="element_32"> 
                             <option value="" selected="selected"></option>
     <option value="1" >Rol 1</option>
     <option value="2" >Rol 2</option>
