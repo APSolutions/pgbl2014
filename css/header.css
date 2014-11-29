@@ -134,14 +134,26 @@ header div.header-user span:hover:after {
 }
 
 @media screen and (max-width: 41.6em){
-    .header-title h1{
-        clear: both;
+    .header-title{
+        float: none;
         width: 100%;
         text-align: center;
-        margin:0;
+        margin-left: auto;
+        margin-right: auto;
     }
+    
+    .header-title h1{
+        width: 100%;
+        text-align: center;
+    }
+    
     .header-user {
         width: 100%;
         text-align: center;
+    }
+    
+    .header-logo{
+        text-align: center;
+        width: 100%;
     }
 }
