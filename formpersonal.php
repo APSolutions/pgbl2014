@@ -214,10 +214,10 @@ if (isset($_POST["staffType"])){
             $i = 0;
             while($row = $result->fetch_assoc()){
                 $roles[$i] = $row['name'];
-                $i++;
+                $i ++;
             }
         }
-    } 
+    }
 }
 
 if(!$name == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$bedroom == "" && !$electricity == "" && !$wifi == "" && !$cellphoneSignal == "" && !$ventilation == "" && !$drinkableWater == "" && $flag){
@@ -320,14 +320,15 @@ function is_leap_year($year){
     <script type="text/javascript" src="js/settings/formpersonal.js"></script>
     <script type="text/javascript">
         var roles = "";
-        function set_variables(){       
+        function set_variables(){
             roles = <?php echo json_encode($roles); ?>;
         }
         function get_variables(){ 
             var select = document.getElementById('rol');
             var opt = new Array(roles.length);
-            for (i = 0;roles.length;i++){
-                opt[i] = document.createElement('option'); 
+                    
+            for (i = 0;i < roles.length;i++){
+                opt[i] = document.createElement('option');
                 opt[i].value = i;
                 opt[i].innerHTML = roles[i];
                 select.appendChild(opt[i]);
