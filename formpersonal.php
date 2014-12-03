@@ -4,10 +4,9 @@ session_name('Global');
 session_id('pgbl');
 session_start();
 //cargar variables de base de datos
-$permanente = "1";
-$temporal = "2";
+$roles = array();
 //
-
+ 
 
 
 //variables del formulario
@@ -207,6 +206,23 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     } 
 }
+if (isset($_POST["staffType"])){
+    $staffType = $_POST["staffType"];
+    require_once 'src/login/connect.php';
+    $query = "CALL get_roleNames('$staffType')";
+    $result= $conn->query($query);
+    if (!$result){
+        $errorMessage = $errorMessage.'Error2: '.$conn->error;
+    } else{
+        if ($result->num_rows > 0){
+            $i = 0;
+            while($row = $result->fetch_assoc()){
+                $roles[$i] = $row['name'];
+            }
+        }
+    } 
+}
+
 if(!$name == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$bedroom == "" && !$electricity == "" && !$wifi == "" && !$cellphoneSignal == "" && !$ventilation == "" && !$drinkableWater == "" && $flag){
     require_once 'src/login/connect.php';
     $query = "CALL insert_compound('$name','$location','$town','$capacity','$bedroom','$electricity','$wifi','$cellphoneSignal','$ventilation','$toiletQuantity','$drinkableWater')";
@@ -303,29 +319,56 @@ function is_leap_year($year){
     <title>Crear Nuevo Personal</title>
     <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
     <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
-    <!--<script type="text/javascript" src="../js/viewformcampamento.js"></script> -->
     <script type="text/javascript" src="js/calendar.js"></script>
     <script type="text/javascript" src="js/settings/formpersonal.js"></script>
+    <script type="text/javascript">
+        var roles = "";
+        function set_variables(){
+            <?php
+                $ar = array('apple', 'orange', 1, false, null, true, 3 + 5);
+            ?>
+            roles = <?php echo json_encode($ar); ?>;
+            window.alert("hola xD");
+            for (i = 0; i < ; i++){
+                window.alert (roles[i]);
+            }
+        }
+        function get_variables(){
+            var select = document.getElementById('rol');
+            var opt1 = document.createElement('option'); 
+            for (i = 0;roles.lenght;i++){
+                opt1.value = i;
+                opt1.innerHTML = roles[i];
+                select.appendChild(opt1);
+            }
+        }
+        function submit1(){
+            document.getElementById("form_roles").submit();
+        }
+    </script>
     </head>	           
-    <body id="main_body" onload="set_variables('<?php echo $permanente; ?>','<?php echo $temporal; ?>')" >
+    <body id="main_body" onload="set_variables(); get_variables();" >
             <?php
                 require 'header.php';
             ?>
             <div id="form_container">
-                    <form id="form_930028" class="appnitro"  method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
-                                            <div class="form_description">
+                   
+                     <form  id="form_roles" class="roles"  method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>"> 
+                          <div class="form_description">
                             <h1>Formulario de personal</h1>
-                    </div>						
+                    </div>					 
+                         <label class="description" for="element_7">Tipo de Personal </label>
+                            <span>  
+                         <input  name="staffType"  type="radio" value="1" onclick="submit1()" />Permanente
+                            <input  name="staffType"  type="radio" value="2" onclick="submit1()" />Temporal
+                         </span><p class="guidelines" id="guide_7"><small>Permanentes para contratos indefinidos o de mas de 6 meses                                            
+    Temporal para contratos de menos de 6 meses</small></p> 
+                     </form>
+                    <form id="form_930028" class="appnitro"  method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>">
+                                           	
                             <ul >
 
-                                            <li id="li_7" >
-                    <label class="description" for="element_7">Tipo de Personal </label>
-                    <span>
-                            <input  name="staffType"  type="radio" value="1" onclick="get_variables()" />Permanente
-                            <input  name="staffType"  type="radio" value="2" onclick="get_variables()"/>Temporal
-                    </span><p class="guidelines" id="guide_7"><small>Permanentes para contratos indefinidos o de mas de 6 meses
-    Temporal para contratos de menos de 6 meses</small></p> 
-                    </li>		<li id="li_29" >
+                                           		<li id="li_29" >
                     <label class="description" for="element_29">Fecha de Contratación </label>
                     <span>
                             <input id="element_29_1" name="element_29_1" class="element text" size="2" maxlength="2" value="" type="text"> /
@@ -388,10 +431,6 @@ function is_leap_year($year){
                     <div>
                     <select class="element select medium" id="rol" name="element_32"> 
                             <option value="" selected="selected"></option>
-    <option value="1" >Rol 1</option>
-    <option value="2" >Rol 2</option>
-    <option value="3" >Rol 3</option>
-
                     </select>
                     </div><p class="guidelines" id="guide_32"><small>Cargo del personal</small></p> 
                     </li>		<li id="li_37" >
