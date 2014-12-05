@@ -6,9 +6,9 @@ session_start();
 //cargar variables de base de datos
 require '/src/settings/personalQuery.php';
 //variables del formulario
-$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = "";
+$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = "";
 $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = "";
-$nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = "";
+$nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = "";
 $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = "";
 $arreglo = array(
         'yearErr' => "",
@@ -18,7 +18,7 @@ $arreglo = array(
 $bornDateYearErr = $bornDateMonthErr = $bornDateDayErr = "";
 $selectedBloodType = $selectedGender = "selected";
 $selectedBloodType1 = $selectedBloodType2 = $selectedBloodType3 = $selectedBloodType4 = $selectedBloodType5 = $selectedBloodType6 = $selectedBloodType7 = $selectedBloodType8 = $selectedGender1 = $selectedGender2 = "";
-$checkedmaritalstatus = $checkedstaffType = "";
+$checkedmaritalstatus = $checkedstaffType = "checked";
 $checkedmaritalstatus1 = $checkedmaritalstatus2 = $checkedmaritalstatus3 = $checkedmaritalstatus4 = $checkedmaritalstatus5 = $checkedstaffType1 = $checkedstaffType2 ="";
 $flag = $flag2 = TRUE;
 $errorMessage = "";
@@ -26,182 +26,213 @@ $errorMessage = "";
 
 //asignacion de variables
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if (isset($_POST["form2"])){
-        if(empty($_POST["name"]) ){
-            $nameErr = "El nombre del personal es requerido!";
+    if(empty($_POST["name"]) ){
+        $nameErr = "El nombre del personal es requerido!";
+    }else{
+        $nameTemp = cleanInput($_POST["name"]);
+        if (!preg_match("/^[a-zA-Z ]*$/",$nameTemp)){
+            $nameErr = "El nombre solo debe incluir letras!";
         }else{
-            $nameTemp = cleanInput($_POST["name"]);
-            if (!preg_match("/^[a-zA-Z ]*$/",$nameTemp)){
-                $nameErr = "El nombre solo debe incluir letras!";
-            }else{
-                $name = $nameTemp;
-            }
+            $name = $nameTemp;
         }
-        if($_POST["lastname"] == "" ){
-            $lastnameErr = "El apellido del personal es requerido!";
+    }
+    if($_POST["lastname"] == "" ){
+        $lastnameErr = "El apellido del personal es requerido!";
+    }else{
+        $lastnameTemp = cleanInput($_POST["lastname"]);
+        if (!preg_match("/^[a-zA-Z ]*$/",$lastnameTemp)){
+            $lastnameErr = "El apellido solo debe incluir letras!";
         }else{
-            $lastnameTemp = cleanInput($_POST["lastname"]);
-            if (!preg_match("/^[a-zA-Z ]*$/",$lastnameTemp)){
-                $lastnameErr = "El apellido solo debe incluir letras!";
-            }else{
-                $lastname = $lastnameTemp;
-            }
+            $lastname = $lastnameTemp;
         }
-         if(empty($_POST["id"]) ){
-            $idErr = "La cédula/pasaporte del personal es requerida!";
+    }
+     if(empty($_POST["id"]) ){
+        $idErr = "La cédula/pasaporte del personal es requerida!";
+    }else{
+        $idTemp = cleanInput($_POST["id"]);
+        if (!preg_match("/^[a-zA-Z0-9- ]*$/",$idTemp)){
+            $idErr = "La cédula/pasaporte solo debe incluir letras y números!";
         }else{
-            $idTemp = cleanInput($_POST["id"]);
-            if (!preg_match("/^[a-zA-Z0-9- ]*$/",$idTemp)){
-                $idErr = "La cédula/pasaporte solo debe incluir letras y números!";
-            }else{
-                $id = $idTemp;
-            }
+            $id = $idTemp;
         }
-        if(empty($_POST["bloodType"]) ){
-            $bloodTypeErr = "El tipo de sangre del personal es requerido!";
-        }else{
-            $bloodTypeTemp = cleanInput($_POST["bloodType"]);
-            if($bloodTypeTemp == "A+"){
-                $selectedBloodType1 ="selected"; 
-            } else if ($bloodTypeTemp == "A-"){
-                $selectedBloodType2 ="selected";
-            } else if ($bloodTypeTemp == "B+"){
-                $selectedBloodType3 ="selected";
-            } else if ($bloodTypeTemp == "B-"){
-                $selectedBloodType4 ="selected";
-            } else if ($bloodTypeTemp == "O+"){
-                $selectedBloodType5 ="selected";
-            } else if ($bloodTypeTemp == "O-"){
-                $selectedBloodType6 ="selected";
-            } else if ($bloodTypeTemp == "AB+"){
-                $selectedBloodType7 ="selected";
-            } else {
-                $selectedBloodType8 = "selected";  
-            }
-            $bloodType = $bloodTypeTemp;
+    }
+    if(empty($_POST["bloodType"]) ){
+        $bloodTypeErr = "El tipo de sangre del personal es requerido!";
+    }else{
+        $bloodTypeTemp = cleanInput($_POST["bloodType"]);
+        if($bloodTypeTemp == "A+"){
+            $selectedBloodType1 ="selected"; 
+        } else if ($bloodTypeTemp == "A-"){
+            $selectedBloodType2 ="selected";
+        } else if ($bloodTypeTemp == "B+"){
+            $selectedBloodType3 ="selected";
+        } else if ($bloodTypeTemp == "B-"){
+            $selectedBloodType4 ="selected";
+        } else if ($bloodTypeTemp == "O+"){
+            $selectedBloodType5 ="selected";
+        } else if ($bloodTypeTemp == "O-"){
+            $selectedBloodType6 ="selected";
+        } else if ($bloodTypeTemp == "AB+"){
+            $selectedBloodType7 ="selected";
+        } else {
+            $selectedBloodType8 = "selected";  
         }
-        if(empty($_POST["bornDateYear"]) || empty($_POST["bornDateMonth"]) || empty($_POST["bornDateDay"]) ){
-            $bornDateErr = "La fecha de nacimiento del personal es requerido";
-        }else{
-            $bornDateYearTemp = cleanInput($_POST["bornDateYear"]);
-            $bornDateMonthTemp = cleanInput($_POST["bornDateMonth"]);
-            $bornDateDayTemp = cleanInput($_POST["bornDateDay"]);
-            if (!preg_match("/^[0-9]*$/",$bornDateYearTemp) || !preg_match("/^[0-9]*$/",$bornDateMonthTemp) || !preg_match("/^[0-9]*$/",$bornDateDayTemp) ){
-                $bornDateErr = "La fecha de nacimiento solo debe incluir numeros!";
+        $bloodType = $bloodTypeTemp;
+    }
+    if(empty($_POST["bornDateYear"]) || empty($_POST["bornDateMonth"]) || empty($_POST["bornDateDay"]) ){
+        $bornDateErr = "La fecha de nacimiento del personal es requerido";
+    }else{
+        $bornDateYearTemp = cleanInput($_POST["bornDateYear"]);
+        $bornDateMonthTemp = cleanInput($_POST["bornDateMonth"]);
+        $bornDateDayTemp = cleanInput($_POST["bornDateDay"]);
+        if (!preg_match("/^[0-9]*$/",$bornDateYearTemp) || !preg_match("/^[0-9]*$/",$bornDateMonthTemp) || !preg_match("/^[0-9]*$/",$bornDateDayTemp) ){
+            $bornDateErr = "La fecha de nacimiento solo debe incluir numeros!";
+        } else{
+            $arreglo = validateDate($bornDateYearTemp, $bornDateMonthTemp, $bornDateDayTemp);
+            print $arreglo['yearErr']." xD".$arreglo['monthErr']." xD".$arreglo['dayErr'];
+            if (!empty($arreglo['yearErr']) || !empty($arreglo['monthErr']) || !empty($arreglo['dayErr'])){
+                $bornDateErr = " ";
             } else{
-                $arreglo = validateDate($bornDateYearTemp, $bornDateMonthTemp, $bornDateDayTemp);
-                print $arreglo['yearErr']." xD".$arreglo['monthErr']." xD".$arreglo['dayErr'];
-                if (!empty($arreglo['yearErr']) || !empty($arreglo['monthErr']) || !empty($arreglo['dayErr'])){
-                    $bornDateErr = " ";
-                } else{
-                    $bornDate = $bornDateYearTemp."-".$bornDateMonthTemp."-".$bornDateDayTemp;
-                }
-            }  
-        }
-        //lógica para calcular la edad a partir del año
-        if ($bornDateMonthTemp <= date("m") && empty($bornDateErr)){
-            if($bornDateMonthTemp == date("m") && $bornDateDayTemp < date("d")){
-                $age = date("Y") - $bornDateYearTemp - 1;
-            } else{
-                $age = date("Y") - $bornDateYearTemp;
+                $bornDate = $bornDateYearTemp."-".$bornDateMonthTemp."-".$bornDateDayTemp;
             }
-        } else if (empty($bornDateErr)){
+        }  
+    }
+    //lógica para calcular la edad a partir del año
+    if ($bornDateMonthTemp <= date("m") && empty($bornDateErr)){
+        if($bornDateMonthTemp == date("m") && $bornDateDayTemp < date("d")){
+            $age = date("Y") - $bornDateYearTemp - 1;
+        } else{
             $age = date("Y") - $bornDateYearTemp;
         }
+    } else if (empty($bornDateErr)){
+        $age = date("Y") - $bornDateYearTemp;
+    }
 
-        if(empty($_POST["citizenship"]) ){
-            $citizenshipErr = "La nacionalidad es requerida!";
+    if(empty($_POST["citizenship"]) ){
+        $citizenshipErr = "La nacionalidad es requerida!";
+    }else{
+        $citizenshipTemp = cleanInput($_POST["citizenship"]);
+        if (!preg_match("/^[a-zA-Zñ ]*$/",$citizenshipTemp)){
+            $citizenshipErr = "La nacionalidad solo debe incluir letras!";
         }else{
-            $citizenshipTemp = cleanInput($_POST["citizenship"]);
-            if (!preg_match("/^[a-zA-Zñ ]*$/",$citizenshipTemp)){
-                $citizenshipErr = "La nacionalidad solo debe incluir letras!";
-            }else{
-                $citizenship = $citizenshipTemp; 
-            }
+            $citizenship = $citizenshipTemp; 
         }
-        if(empty($_POST["gender"]) ){
-            $genderErr = "Favor elegir el tipo de sexo!";
-        }else{
-            $genderTemp = cleanInput($_POST["gender"]);
-            if($genderTemp == "1"){
-                $selectedGender1 ="selected"; 
-            } else {
-                $selectedGender2 = "selected";  
-            }
-            $gender = $genderTemp;
+    }
+    if(empty($_POST["gender"]) ){
+        $genderErr = "Favor elegir el tipo de sexo!";
+    }else{
+        $genderTemp = cleanInput($_POST["gender"]);
+        if($genderTemp == "1"){
+            $selectedGender1 ="selected"; 
+        } else {
+            $selectedGender2 = "selected";  
         }
-         if(($_POST["maritalStatus"] == 0)){
-            $maritalStatusErr = "Favor especificar Estado Civil";
+        $gender = $genderTemp;
+    }
+    if(($_POST["maritalStatus"] == 0)){
+        $maritalStatusErr = "Favor especificar Estado Civil";
+    }else{
+        $maritalStatusTemp = cleanInput($_POST["maritalStatus"]);
+        if($maritalStatusTemp == 1){
+            $checkedmaritalstatus1 ="checked";
+            $maritalStatusTemp = "Soltero(a)";
+        }else if ($maritalStatusTemp == 2){
+            $checkedmaritalstatus2 ="checked";
+            $maritalStatusTemp = "Casado(a)";
+        }else if ($maritalStatusTemp == 3){
+            $checkedmaritalstatus3 ="checked";
+            $maritalStatusTemp = "Separado(a)";
+        }else if ($maritalStatusTemp == 4){
+            $checkedmaritalstatus4 ="checked";
+            $maritalStatusTemp = "Viudo(a)";
         }else{
-            $maritalStatusTemp = cleanInput($_POST["maritalStatus"]);
-            if($maritalStatusTemp == 1){
-                $checkedmaritalstatus1 ="checked";
-                $maritalStatusTemp = "Soltero(a)";
-            }else if ($maritalStatusTemp == 2){
-                $checkedmaritalstatus2 ="checked";
-                $maritalStatusTemp = "Casado(a)";
-            }else if ($maritalStatusTemp == 3){
-                $checkedmaritalstatus3 ="checked";
-                $maritalStatusTemp = "Separado(a)";
-            }else if ($maritalStatusTemp == 4){
-                $checkedmaritalstatus4 ="checked";
-                $maritalStatusTemp = "Viudo(a)";
-            }else{
-                $checkedmaritalstatus5 ="checked";
-                $maritalStatusTemp = "Divorciado(a)";
-            }
-            $maritalStatus = $maritalStatusTemp;
-        }   
-        if(empty($_POST["address"]) ){
-            $addressErr = "La direccion es requerida!";
+            $checkedmaritalstatus5 ="checked";
+            $maritalStatusTemp = "Divorciado(a)";
+        }
+        $maritalStatus = $maritalStatusTemp;
+    }   
+    if(empty($_POST["address"]) ){
+        $addressErr = "La direccion es requerida!";
+    }else{
+        $addressTemp = cleanInput($_POST["address"]);
+        if (!preg_match("/^[a-zA-Z0-9-# ]*$/",$addressTemp)){
+            $addressErr = "La dirección solo debe incluir letras y numeros!";
         }else{
-            $addressTemp = cleanInput($_POST["address"]);
-            if (!preg_match("/^[a-zA-Z0-9-# ]*$/",$addressTemp)){
-                $addressErr = "La dirección solo debe incluir letras y numeros!";
-            }else{
-                $address = $addressTemp; 
-            }
+            $address = $addressTemp; 
+        }
+    } 
+    if(empty($_POST["cellphone"]) ){
+        $cellphoneErr = "El No. de celular es requerido!";
+    }else{
+        $cellphoneTemp= cleanInput($_POST["cellphone"]);
+        if (!preg_match("/^[0-9- ]*$/",$cellphoneTemp)){
+            $cellphoneErr = "El No. de celular solo debe tener numeros, espacios y guiones!";
+        }else{
+            $cellphone = $cellphoneTemp; 
+        }
+    }
+    if(empty($_POST["email"]) ){
+        $emailErr = "El correo electrónico es requerido!";
+    }else{
+        $emailTemp= cleanInput($_POST["email"]);
+        if (!preg_match("/^[a-zA-Z0-9-@. ]*$/",$emailTemp)){
+            $emailErr = "El correo electrónico no puede tener caracteres especiales";
+        }else{
+            $email = $emailTemp; 
+        }
+    }
+    if(empty($_POST["university"]) ){
+        $universityErr = "La universidad es requerida!";
+    }else{
+        $universityTemp = cleanInput($_POST["university"]);
+        if (!preg_match("/^[a-zA-Z0-9-# ]*$/",$universityTemp)){
+            $universityErr = "La universidad solo debe incluir letras y numeros!";
+        }else{
+            $university = $universityTemp; 
+        }
+    } 
+    if(empty($_POST["career"]) ){
+        $careerErr = "La direccion es requerida!";
+    }else{
+        $careerTemp = cleanInput($_POST["career"]);
+        if (!preg_match("/^[a-zA-Z-# ]*$/",$careerTemp)){
+            $careerErr = "La carrera solo debe incluir letras!";
+        }else{
+            $career = $careerTemp; 
+        }
+    } 
+    if(($_POST["staffType"] == 0)){
+        $staffTypeErr = "El tipo de personal es requerido!";
+    }else{
+        $staffType = cleanInput($_POST["staffType"]);
+        if($staffType == 1){
+            $checkedstaffType1 ="checked"; 
+        }else{
+            $checkedstaffType2 ="checked";
         } 
-        if(empty($_POST["cellphone"]) ){
-            $cellphoneErr = "El No. de celular es requerido!";
-        }else{
-            $cellphoneTemp= cleanInput($_POST["cellphone"]);
-            if (!preg_match("/^[0-9- ]*$/",$cellphoneTemp)){
-                $cellphoneErr = "El No. de celular solo debe tener numeros, espacios y guiones!";
-            }else{
-                $cellphone = $cellphoneTemp; 
-            }
+    }
+     if(empty($_POST["Rol"]) ){
+        $rolErr = "El tipo de sangre del personal es requerido!";
+    }else{
+        $rolTemp = cleanInput($_POST["Rol"]);
+        if($bloodTypeTemp == "A+"){
+            $selectedBloodType1 ="selected"; 
+        } else if ($bloodTypeTemp == "A-"){
+            $selectedBloodType2 ="selected";
+        } else if ($bloodTypeTemp == "B+"){
+            $selectedBloodType3 ="selected";
+        } else if ($bloodTypeTemp == "B-"){
+            $selectedBloodType4 ="selected";
+        } else if ($bloodTypeTemp == "O+"){
+            $selectedBloodType5 ="selected";
+        } else if ($bloodTypeTemp == "O-"){
+            $selectedBloodType6 ="selected";
+        } else if ($bloodTypeTemp == "AB+"){
+            $selectedBloodType7 ="selected";
+        } else {
+            $selectedBloodType8 = "selected";  
         }
-        if(empty($_POST["email"]) ){
-            $emailErr = "El correo electrónico es requerido!";
-        }else{
-            $emailTemp= cleanInput($_POST["email"]);
-            if (!preg_match("/^[a-zA-Z0-9-@. ]*$/",$emailTemp)){
-                $emailErr = "El correo electrónico no puede tener caracteres especiales";
-            }else{
-                $email = $emailTemp; 
-            }
-        }
-        if(empty($_POST["university"]) ){
-            $universityErr = "La universidad es requerida!";
-        }else{
-            $universityTemp = cleanInput($_POST["university"]);
-            if (!preg_match("/^[a-zA-Z0-9-# ]*$/",$universityTemp)){
-                $universityErr = "La universidad solo debe incluir letras y numeros!";
-            }else{
-                $university = $universityTemp; 
-            }
-        } 
-        if(empty($_POST["career"]) ){
-            $careerErr = "La direccion es requerida!";
-        }else{
-            $careerTemp = cleanInput($_POST["career"]);
-            if (!preg_match("/^[a-zA-Z-# ]*$/",$careerTemp)){
-                $careerErr = "La carrera solo debe incluir letras!";
-            }else{
-                $career = $careerTemp; 
-            }
-        } 
+        $bloodType = $bloodTypeTemp;
     }
 }
 
@@ -336,9 +367,27 @@ function is_leap_year($year){
                 select.appendChild(opt[i]);
             }
         }
+        function get_fecha (){
+            var dir = document.getElementsByName("staffType");
+            for(i=0; i< dir.length ;i++){
+                if (dir[i].checked){
+                    var tipo = dir[i].value;
+                }
+            }
+            if (tipo == 0){
+                document.getElementById('entrevista').style.display='none';
+                document.getElementById('contratacion').style.display='none';
+            }else if (tipo == 1){
+                document.getElementById('contratacion').style.display='block';
+                document.getElementById('entrevista').style.display='none';     
+            }else{
+                document.getElementById('entrevista').style.display='block';
+                document.getElementById('contratacion').style.display='none';
+            } 
+        }
     </script>
     </head>	           
-    <body id="main_body" onload="set_roles()">
+    <body id="main_body" onload="set_roles();get_fecha()">
         <?php
             require 'header.php';
         ?>
@@ -352,46 +401,53 @@ function is_leap_year($year){
                         <label class="description">Tipo de Personal </label>
                         <span>  
                             <input  name="staffType" type="radio" value="0" style="display:none;" <?php echo $checkedstaffType;?>>
-                            <input  name="staffType"  type="radio" value="1" onclick="get_roles(1);" <?php echo $checkedstaffType1;?> >Permanente
-                            <input  name="staffType"  type="radio" value="2" onclick="get_roles(2);" <?php echo $checkedstaffType2;?> >Temporal
+                            <input  name="staffType"  type="radio" value="1" onclick="get_roles(1);get_fecha();" <?php echo $checkedstaffType1;?> >Permanente
+                            <input  name="staffType"  type="radio" value="2" onclick="get_roles(2);get_fecha();" <?php echo $checkedstaffType2;?> >Temporal
                         </span><p class="guidelines" id="guide_7"><small>Permanente para contratos de más de 6 meses o indefinidos. Temporal contratos menores a 6 meses </small></p> 
-                    </li>                      
-                    <li id="li_29" >
-                        <label class="description">Fecha de Contratación </label>
+                        <br><br>
+                        <span class="error">
+                            <p class="error"><?php echo $staffTypeErr;?></p>
+                        </span>
+                    </li>  
+                     <li id="contratacion" style="display:none" >
+                        <label class="description" id="contratacion_titulo">Fecha de Contratación </label>
                         <span>
-                            <input id="element_29_1" name="element_29_1" class="element text" size="2" maxlength="2" value="" type="text"> /
-                            <label for="element_29_1">DD</label>
+                            <input id="cont_inputDia" name="element_29_1" class="element text" size="2" maxlength="2" value="" type="text">
+                            <label for="element_29_1" id="cont_labelDia">DD</label>
                         </span>
                         <span>
-                            <input id="element_29_2" name="element_29_2" class="element text" size="2" maxlength="2" value="" type="text"> /
-                            <label for="element_29_2">MM</label>
+                            <input id="cont_inputMes" name="element_29_2" class="element text" size="2" maxlength="2" value="" type="text">
+                            <label for="element_29_2" id="cont_labelMes">MM</label>
                         </span>
                         <span>
-                            <input id="element_29_3" name="element_29_3" class="element text" size="4" maxlength="4" value="" type="text">
-                            <label for="element_29_3">YYYY</label>
+                            <input id="cont_inputAño"  name="element_29_3" class="element text" size="4" maxlength="4" value="" type="text">
+                            <label for="element_29_3"  id="cont_labelAño">YYYY</label>
                         </span>
-                    </li>		
-                    <li id="li_30" >
-                        <label class="description" for="element_30">Fecha de Entrevista </label>
-                        <span>
-                            <input id="element_30_1" name="element_30_1" class="element text" size="2" maxlength="2" value="" type="text"> /
-                            <label for="element_30_1">DD</label>
-                        </span>
-                        <span>
-                            <input id="element_30_2" name="element_30_2" class="element text" size="2" maxlength="2" value="" type="text"> /
-                            <label for="element_30_2">MM</label>
+                    </li>	
+                     <li id="entrevista" style="display:none">
+                        <label class="description" for="element_30" id="entrevista_titulo" >Fecha de Entrevista </label>
+                        <span> 
+                            <input id="ent_inputDia"  name="element_30_1" class="element text" size="2" maxlength="2" value="" type="text">
+                            <label id="ent_labelDia"  for="element_30_1">DD</label>
                         </span>
                         <span>
-                            <input id="element_30_3" name="element_30_3" class="element text" size="4" maxlength="4" value="" type="text">
-                            <label for="element_30_3">YYYY</label>
+                            <input id="ent_inputMes"  name="element_30_2" class="element text" size="2" maxlength="2" value="" type="text"> 
+                            <label for="element_30_2" id="ent_labelMes" >MM</label>
+                        </span>
+                        <span>
+                            <input id="ent_inputAño"  name="element_30_3" class="element text" size="4" maxlength="4" value="" type="text">
+                            <label for="element_30_3" id="ent_labelAño" >YYYY</label>
                         </span>
                     </li>
                     <li id="li_32" >
                 <label class="description" for="element_32">Rol </label>
                 <div>
                 <select class="element select medium" id="rol" name="element_32"> 
-                        <option value="" selected="selected"></option>
+                        <option value="" selected="selected" <?php echo $selectedRol;?>></option>
                 </select>
+                     <span class="error">
+                        <p class="error"><?php echo $rolErr;?></p>
+                     </span>
                 </div><p class="guidelines" id="guide_32"><small>Cargo del personal</small></p> 
                 </li>		
                     <li id="li_37" >
@@ -518,7 +574,7 @@ function is_leap_year($year){
                     <li id="li_33" >
                 <label class="description" for="element_33">Estado Civil </label>
                 <span>
-                        <input  name="maritalStatus" type="radio" value="0" style="display:none;" <?php echo $checkedmaritalstatus;?>/>
+                        <input  name="maritalStatus"  type="radio" value="0" style="display:none;" <?php echo $checkedmaritalstatus;?>/>
                         <input  name="maritalStatus"  type="radio" value="1" <?php echo $checkedmaritalstatus1;?>/>Soltero(a)
                         <input  name="maritalStatus"  type="radio" value="2" <?php echo $checkedmaritalstatus2;?> />Casado(a)
                         <input  name="maritalStatus"  type="radio" value="3" <?php echo $checkedmaritalstatus3;?>/>Separado(a)
