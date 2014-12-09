@@ -8,15 +8,25 @@ require '/src/settings/personalQuery.php';
 //variables del formulario
 $name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = "";
 $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = "";
-$nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = "";
-$bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = "";
-$arreglo = array(
+$nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = "";
+$bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
+$arregloBorn = array(
+        'yearErr' => "",
+        'monthErr' => "",
+        'dayErr' => "",
+        );
+$arregloCont = array(
+        'yearErr' => "",
+        'monthErr' => "",
+        'dayErr' => "",
+        );
+$arregloEnt = array(
         'yearErr' => "",
         'monthErr' => "",
         'dayErr' => "",
         );
 $bornDateYearErr = $bornDateMonthErr = $bornDateDayErr = "";
-$selectedBloodType = $selectedGender = "selected";
+$selectedBloodType = $selectedGender = $selectedRol = "selected";
 $selectedBloodType1 = $selectedBloodType2 = $selectedBloodType3 = $selectedBloodType4 = $selectedBloodType5 = $selectedBloodType6 = $selectedBloodType7 = $selectedBloodType8 = $selectedGender1 = $selectedGender2 = "";
 $checkedmaritalstatus = $checkedstaffType = "checked";
 $checkedmaritalstatus1 = $checkedmaritalstatus2 = $checkedmaritalstatus3 = $checkedmaritalstatus4 = $checkedmaritalstatus5 = $checkedstaffType1 = $checkedstaffType2 ="";
@@ -88,9 +98,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         if (!preg_match("/^[0-9]*$/",$bornDateYearTemp) || !preg_match("/^[0-9]*$/",$bornDateMonthTemp) || !preg_match("/^[0-9]*$/",$bornDateDayTemp) ){
             $bornDateErr = "La fecha de nacimiento solo debe incluir numeros!";
         } else{
-            $arreglo = validateDate($bornDateYearTemp, $bornDateMonthTemp, $bornDateDayTemp);
-            print $arreglo['yearErr']." xD".$arreglo['monthErr']." xD".$arreglo['dayErr'];
-            if (!empty($arreglo['yearErr']) || !empty($arreglo['monthErr']) || !empty($arreglo['dayErr'])){
+            $arregloBorn = validateDate($bornDateYearTemp, $bornDateMonthTemp, $bornDateDayTemp);
+      
+            if (!empty($arregloBorn['yearErr']) || !empty($arregloBorn['monthErr']) || !empty($arregloBorn['dayErr'])){
                 $bornDateErr = " ";
             } else{
                 $bornDate = $bornDateYearTemp."-".$bornDateMonthTemp."-".$bornDateDayTemp;
@@ -212,27 +222,45 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         } 
     }
      if(empty($_POST["Rol"]) ){
-        $rolErr = "El tipo de sangre del personal es requerido!";
+        $rolErr = "El rol del personal es requerido!";
     }else{
-        $rolTemp = cleanInput($_POST["Rol"]);
-        if($bloodTypeTemp == "A+"){
-            $selectedBloodType1 ="selected"; 
-        } else if ($bloodTypeTemp == "A-"){
-            $selectedBloodType2 ="selected";
-        } else if ($bloodTypeTemp == "B+"){
-            $selectedBloodType3 ="selected";
-        } else if ($bloodTypeTemp == "B-"){
-            $selectedBloodType4 ="selected";
-        } else if ($bloodTypeTemp == "O+"){
-            $selectedBloodType5 ="selected";
-        } else if ($bloodTypeTemp == "O-"){
-            $selectedBloodType6 ="selected";
-        } else if ($bloodTypeTemp == "AB+"){
-            $selectedBloodType7 ="selected";
-        } else {
-            $selectedBloodType8 = "selected";  
-        }
-        $bloodType = $bloodTypeTemp;
+        $rol = cleanInput($_POST["Rol"]); 
+    }
+    
+    if(empty($_POST["contDateYear"]) || empty($_POST["contDateMonth"]) || empty($_POST["contDateDay"]) ){
+        $contDateErr = "La fecha de contratación del personal es requerida";
+    }else{
+        $contDateYearTemp = cleanInput($_POST["contDateYear"]);
+        $contDateMonthTemp = cleanInput($_POST["contDateMonth"]);
+        $contDateDayTemp = cleanInput($_POST["contDateDay"]);
+        if (!preg_match("/^[0-9]*$/",$contDateYearTemp) || !preg_match("/^[0-9]*$/",$contDateMonthTemp) || !preg_match("/^[0-9]*$/",$contDateDayTemp) ){
+            $contDateErr = "La fecha de contratacion solo debe incluir numeros!";
+        } else{
+            $arregloCont = validateDate($contDateYearTemp, $contDateMonthTemp, $contDateDayTemp);
+            if (!empty($arregloCont['yearErr']) || !empty($arregloCont['monthErr']) || !empty($arregloCont['dayErr'])){
+                $contDateErr = " ";
+            } else{
+                $contDate = $contDateYearTemp."-".$contDateMonthTemp."-".$contDateDayTemp;
+            }
+        }  
+    }
+    if(empty($_POST["entDateYear"]) || empty($_POST["entDateMonth"]) || empty($_POST["entDateDay"]) ){
+        $entDateErr = "La fecha de entrevista del personal es requerido";
+    }else{
+        $entDateYearTemp = cleanInput($_POST["entDateYear"]);
+        $entDateMonthTemp = cleanInput($_POST["entDateMonth"]);
+        $entDateDayTemp = cleanInput($_POST["entDateDay"]);
+        if (!preg_match("/^[0-9]*$/",$entDateYearTemp) || !preg_match("/^[0-9]*$/",$entDateMonthTemp) || !preg_match("/^[0-9]*$/",$entDateDayTemp) ){
+            $entDateErr = "La fecha de enrevista solo debe incluir numeros, 4 cifras y no puede ser negativo!";
+        } else{
+            $arregloEnt = validateDate($entDateYearTemp, $entDateMonthTemp, $entDateDayTemp);
+           
+            if (!empty($arregloEnt['yearErr']) || !empty($arregloEnt['monthErr']) || !empty($arregloEnt['dayErr'])){
+                $entDateErr = " ";
+            } else{
+                $entDate = $entDateYearTemp."-".$entDateMonthTemp."-".$entDateDayTemp;
+            }
+        }  
     }
 }
 
@@ -293,8 +321,8 @@ function cleanInput($data){
 }
 function validateDate($year,$month,$day){
     $yearErr = $monthErr = $dayErr = "";
-    if($year > date("Y") || $year <1){
-        $yearErr = "El año no puede ser mayor al actual o negativo";
+    if($year > date("Y") || $year <1000){
+        $yearErr = "El año no puede ser mayor al actual o negativo y debe tener 4 cifras";
     }
     if($month > 12 || $month <1){
         $monthErr = "El mes debe ser un numero valido de 1 a 12 ";
@@ -385,6 +413,15 @@ function is_leap_year($year){
                 document.getElementById('contratacion').style.display='none';
             } 
         }
+        function clean_fechaErr(tipo){
+            var contErr = document.getElementById('contErr');
+            var entErr = document.getElementById('entErr');
+            if (tipo = 2){
+                entErr.innerHTML = "";
+            } else{
+                contErr.innerHTML = "";
+            }
+        }
     </script>
     </head>	           
     <body id="main_body" onload="set_roles();get_fecha()">
@@ -401,8 +438,8 @@ function is_leap_year($year){
                         <label class="description">Tipo de Personal </label>
                         <span>  
                             <input  name="staffType" type="radio" value="0" style="display:none;" <?php echo $checkedstaffType;?>>
-                            <input  name="staffType"  type="radio" value="1" onclick="get_roles(1);get_fecha();" <?php echo $checkedstaffType1;?> >Permanente
-                            <input  name="staffType"  type="radio" value="2" onclick="get_roles(2);get_fecha();" <?php echo $checkedstaffType2;?> >Temporal
+                            <input  name="staffType"  type="radio" value="1" onclick="get_roles(1);get_fecha();clean_fechaErr(1)" <?php echo $checkedstaffType1;?> >Permanente
+                            <input  name="staffType"  type="radio" value="2" onclick="get_roles(2);get_fecha();clean_fechaErr(2)" <?php echo $checkedstaffType2;?> >Temporal
                         </span><p class="guidelines" id="guide_7"><small>Permanente para contratos de más de 6 meses o indefinidos. Temporal contratos menores a 6 meses </small></p> 
                         <br><br>
                         <span class="error">
@@ -412,42 +449,74 @@ function is_leap_year($year){
                      <li id="contratacion" style="display:none" >
                         <label class="description" id="contratacion_titulo">Fecha de Contratación </label>
                         <span>
-                            <input id="cont_inputDia" name="element_29_1" class="element text" size="2" maxlength="2" value="" type="text">
+                            <input id="cont_inputDia" name="contDateDay" class="element text" size="2" maxlength="2" value="<?php echo $contDateDayTemp;?>" type="text">
                             <label for="element_29_1" id="cont_labelDia">DD</label>
                         </span>
                         <span>
-                            <input id="cont_inputMes" name="element_29_2" class="element text" size="2" maxlength="2" value="" type="text">
+                            <input id="cont_inputMes" name="contDateMonth" class="element text" size="2" maxlength="2" value="<?php echo $contDateMonthTemp;?>" type="text">
                             <label for="element_29_2" id="cont_labelMes">MM</label>
                         </span>
                         <span>
-                            <input id="cont_inputAño"  name="element_29_3" class="element text" size="4" maxlength="4" value="" type="text">
+                            <input id="cont_inputAño"  name="contDateYear" class="element text" size="4" maxlength="4" value="<?php echo $contDateYearTemp;?>" type="text">
                             <label for="element_29_3"  id="cont_labelAño">YYYY</label>
                         </span>
+                         <span class="error">
+                        <p class="error" id="contErr"><?php 
+                        $print ="";
+                        if (!$contDateErr == ""){
+                            $print .= $contDateErr."<br>";
+                        }
+                        if (!empty($arregloCont['yearErr'])){
+                            $print .= $arregloCont['yearErr']."<br>";
+                        }
+                        if (!empty($arregloCont['monthErr'])){
+                            $print .= $arregloCont['monthErr']."<br>";
+                        } 
+                        if (!empty($arregloCont['dayErr'])){
+                            $print .= $arregloCont['dayErr'];
+                        }
+                        echo $print;?></p>
+                </span>
                     </li>	
                      <li id="entrevista" style="display:none">
                         <label class="description" for="element_30" id="entrevista_titulo" >Fecha de Entrevista </label>
                         <span> 
-                            <input id="ent_inputDia"  name="element_30_1" class="element text" size="2" maxlength="2" value="" type="text">
+                            <input id="ent_inputDia"  name="entDateDay" class="element text" size="2" maxlength="2" value="<?php echo $entDateDayTemp;?>" type="text">
                             <label id="ent_labelDia"  for="element_30_1">DD</label>
                         </span>
                         <span>
-                            <input id="ent_inputMes"  name="element_30_2" class="element text" size="2" maxlength="2" value="" type="text"> 
+                            <input id="ent_inputMes"  name="entDateMonth" class="element text" size="2" maxlength="2" value="<?php echo $entDateMonthTemp;?>" type="text"> 
                             <label for="element_30_2" id="ent_labelMes" >MM</label>
                         </span>
                         <span>
-                            <input id="ent_inputAño"  name="element_30_3" class="element text" size="4" maxlength="4" value="" type="text">
+                            <input id="ent_inputAño"  name="entDateYear" class="element text" size="4" maxlength="4" value="<?php echo $entDateYearTemp;?>" type="text">
                             <label for="element_30_3" id="ent_labelAño" >YYYY</label>
                         </span>
+                         <span class="error">
+                        <p class="error" id="entErr"><?php 
+                        $print ="";
+                        if (!$entDateErr == ""){
+                            $print .= $entDateErr."<br>";
+                        }
+                        if (!empty($arregloEnt['yearErr'])){
+                            $print .= $arregloEnt['yearErr']."<br>";
+                        }
+                        if (!empty($arregloEnt['monthErr'])){
+                            $print .= $arregloEnt['monthErr']."<br>";
+                        } 
+                        if (!empty($arregloEnt['dayErr'])){
+                            $print .= $arregloEnt['dayErr'];
+                        }
+                        echo $print;?></p>
+                        
+                </span>
                     </li>
                     <li id="li_32" >
                 <label class="description" for="element_32">Rol </label>
                 <div>
                 <select class="element select medium" id="rol" name="element_32"> 
-                        <option value="" selected="selected" <?php echo $selectedRol;?>></option>
-                </select>
-                     <span class="error">
-                        <p class="error"><?php echo $rolErr;?></p>
-                     </span>
+                        <option value="" selected="selected" ></option>
+                </select>          
                 </div><p class="guidelines" id="guide_32"><small>Cargo del personal</small></p> 
                 </li>		
                     <li id="li_37" >
