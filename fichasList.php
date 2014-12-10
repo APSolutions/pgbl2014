@@ -40,7 +40,7 @@
                   <td>7/1/2014</td>
                   <td>Chepo</td>
                   <td>
-                    <a href="#" class="button">Editar</a>
+                      <a href="src/ficha/prepareFicha.php?fichaID=PH01-ENE14" class="button">Editar</a>
                     <a href="#" class="button">Excluir</a>
                   </td>
                 </tr>

@@ -32,7 +32,7 @@ class Ficha {
     private function obtainVariables(){
        try {
            require_once '../login/connect.php';
-           $query = "CALL get_fichasData($this->id);";
+           $query = "CALL get_fichasData('$this->id');";
            $result = $conn->query($query);
            if ($result->num_rows > 0){
                while($row = $result->fetch_assoc()){
@@ -48,6 +48,7 @@ class Ficha {
             }
             return 'ok';
        } catch (Exception $ex) {
+           print "error";
            return 'error on variables';
        } 
     }
@@ -55,11 +56,21 @@ class Ficha {
     private function obtainFlights(){
         try {
             require_once '../login/connect.php';
-            $query = "";
+            $query = "CALL get_fichasFlights('$this->id');";
             $result = $conn->query($query);
-            //logica para sacar los vuelos
+            if ($result->num_rows > 0){
+                $i = 0;
+                while($row = $result->fetch_assoc()){
+                   $this->flights[i]["id"] = $row["flight"];
+                   $this->flights[i]["type"] = $row["fDate"];
+                   $this->flights[i]["arrivalTime"] = $row["dDate"];
+                   $this->flights[i]["tStudents"] = $row["aDate"];
+                   $i ++;
+               }
+            }
             return 'ok';
         } catch (Exception $ex) {
+            print "error";
             return 'error';
         }      
     }
@@ -67,11 +78,18 @@ class Ficha {
     private function obtainVehicles(){
         try {
             require_once '../login/connect.php';
-            $query = "";
+            $query = "CALL get_fichaVehicles('$this->id');";
             $result = $conn->query($query);
-            //logica para sacar los vehiculos
+            if ($result->num_rows > 0){
+                $i = 0;
+                while($row = $result->fetch_assoc()){
+                   $this->vehicles[i] = $row["vehicle"];
+                   $i ++;
+               }
+            }
             return 'ok';
         } catch (Exception $ex) {
+            print "error";
             return 'error';
         }
     }
@@ -79,11 +97,19 @@ class Ficha {
     private function obtainStaff(){
         try {
             require_once '../login/connect.php';
-            $query = "";
+            $query = "CALL get_fichaStaff('$this->id');";
             $result = $conn->query($query);
-            //logica para sacar el staff
+            if ($result->num_rows > 0){
+                $i = 0;
+                while($row = $result->fetch_assoc()){
+                   $this->staff[i]["id"] = $row["staff"];
+                   $this->staff[i]["role"] = $row["role"];
+                   $i ++;
+               }
+            }
             return 'ok';
         } catch (Exception $ex) {
+            print "error";
             return 'error';
         }
     }

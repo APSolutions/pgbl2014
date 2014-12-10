@@ -1,9 +1,11 @@
-<!DOCTYPE html>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
+<?php
+require 'src/ficha/ficha.php';
+require 'src/login/usuario.php';
+
+session_name('Global');
+session_id('pgbl');
+session_start();  
+?>
 <html>
     <head>
         <!-- Page description-->
@@ -21,7 +23,10 @@ and open the template in the editor.
     </head>
     <body>
         <?php
-        // put your code here
+        require 'header.php';
+        $ficha = $_SESSION["ficha"];
+        $test = $ficha->getFichaData()["id"];
+        echo $test;
         ?>
     </body>
 </html>

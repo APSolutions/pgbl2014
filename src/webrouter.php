@@ -40,7 +40,7 @@
             $address = "formvehiculo.php";
         }
     }else if(!empty($program)){
-        if($location == "Fichas"){
+        if($position == "Fichas"){
             $address = "fichasList.php";
         }else{
             $address = "itinerariosList.php";
