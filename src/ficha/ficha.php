@@ -32,19 +32,23 @@ class Ficha {
     private function obtainVariables(){
        try {
            require_once '../login/connect.php';
-           $query = "";
+           $query = "CALL get_fichasData($this->id);";
            $result = $conn->query($query);
-           $this->iDate = "";
-           $this->fDate = "";
-           $this->dDate = "";
-           $this->aDate = "";
-           $this->tStudents = "";
-           $this->cityTour = "";
-           $this->compoundID = "";
-           $this->communityID = "";
-           return 'ok';
+           if ($result->num_rows > 0){
+               while($row = $result->fetch_assoc()){
+                   $this->iDate = $row["iDate"];
+                   $this->fDate = $row["fDate"];
+                   $this->dDate = $row["dDate"];
+                   $this->aDate = $row["aDate"];
+                   $this->tStudents = $row["tStudents"];
+                   $this->cityTour = $row["cityTour"];
+                   $this->compoundID = $row["compound"];
+                   $this->communityID = $row["community"];
+               }
+            }
+            return 'ok';
        } catch (Exception $ex) {
-           return 'error';
+           return 'error on variables';
        } 
     }
     
