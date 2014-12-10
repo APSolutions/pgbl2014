@@ -11,7 +11,6 @@ if ($_SERVER["REQUEST_METHOD"] == "GET") {
         $address = "../../ficha.php";
     }
 }
-
 header("Location:$address");
     
     

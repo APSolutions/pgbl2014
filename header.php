@@ -20,8 +20,7 @@ if(isset($_SESSION["position"])){
         if (isset($_SESSION["program"]) && !strcmp($_SESSION["program"],"") == 0){
              $program= $_SESSION["program"];
              $tittle .= " de " .  $program;
-        }
-        
+        }        
     }
 
 

@@ -25,7 +25,7 @@ session_start();
         <?php
         require 'header.php';
         $ficha = $_SESSION["ficha"];
-        $test = $ficha->getFichaData()["id"];
+        $test = $ficha->getVehicles()[0];
         echo $test;
         ?>
     </body>

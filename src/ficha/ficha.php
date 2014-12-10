@@ -14,24 +14,37 @@ class Ficha {
         "type" => "",
         "arrivalTime" => "",
         "tStudents" => ""
-    ));
-    private $vehicles = array();
+    ));    
     private $staff = array(array(
         "id" => "",
         "role" => ""
     ));
+    private $volunteers = array(array(
+        "id" => "",
+        "name" => "",
+        "lastname" => "",
+        "earlyArrival" => "",
+        "ownLeave" => "",
+        "allergies" => "",
+        "diet" => "",
+        "comments" => ""
+    ));
+    private $universities = array();
+    private $vehicles = array();
     //methods
-    public function _construct($param_id){
+    public function __construct($param_id){
         $this->id = $param_id;
         $this->obtainVariables();
         $this->obtainFlights();
-        $this->obtainVehicles();
+        $this->obtainVolunteers();
         $this->obtainStaff();
+        $this->obtainVehicles();
+        $this->obtainUniversities();
     }
     
     private function obtainVariables(){
        try {
-           require_once '../login/connect.php';
+           require '../login/connect.php';
            $query = "CALL get_fichasData('$this->id');";
            $result = $conn->query($query);
            if ($result->num_rows > 0){
@@ -52,64 +65,93 @@ class Ficha {
            return 'error on variables';
        } 
     }
-    
     private function obtainFlights(){
         try {
-            require_once '../login/connect.php';
+            require '../login/connect.php';
             $query = "CALL get_fichasFlights('$this->id');";
             $result = $conn->query($query);
             if ($result->num_rows > 0){
                 $i = 0;
                 while($row = $result->fetch_assoc()){
-                   $this->flights[i]["id"] = $row["flight"];
-                   $this->flights[i]["type"] = $row["fDate"];
-                   $this->flights[i]["arrivalTime"] = $row["dDate"];
-                   $this->flights[i]["tStudents"] = $row["aDate"];
+                   $this->flights[$i]["id"] = $row["flight"];
+                   $this->flights[$i]["type"] = $row["type"];
+                   $this->flights[$i]["arrivalTime"] = $row["arrivalTime"];
+                   $this->flights[$i]["tStudents"] = $row["tStudents"];
                    $i ++;
                }
             }
             return 'ok';
-        } catch (Exception $ex) {
-            print "error";
+        }catch (Exception $ex) {
             return 'error';
         }      
     }
-    
     private function obtainVehicles(){
         try {
-            require_once '../login/connect.php';
+            require '../login/connect.php';
             $query = "CALL get_fichaVehicles('$this->id');";
             $result = $conn->query($query);
             if ($result->num_rows > 0){
                 $i = 0;
                 while($row = $result->fetch_assoc()){
-                   $this->vehicles[i] = $row["vehicle"];
+                   $this->vehicles[$i] = $row["vehicle"];
                    $i ++;
                }
             }
             return 'ok';
         } catch (Exception $ex) {
-            print "error";
             return 'error';
         }
     }
-    
     private function obtainStaff(){
         try {
-            require_once '../login/connect.php';
+            require '../login/connect.php';
             $query = "CALL get_fichaStaff('$this->id');";
             $result = $conn->query($query);
             if ($result->num_rows > 0){
                 $i = 0;
                 while($row = $result->fetch_assoc()){
-                   $this->staff[i]["id"] = $row["staff"];
-                   $this->staff[i]["role"] = $row["role"];
+                   $this->staff[$i]["id"] = $row["staff"];
+                   $this->staff[$i]["role"] = $row["role"];
                    $i ++;
                }
             }
             return 'ok';
         } catch (Exception $ex) {
-            print "error";
+            return 'error';
+        }
+    }
+    private function obtainVolunteers(){
+        try {
+            require '../login/connect.php';
+            $query = "";
+            $result = $conn->query($query);
+            if ($result->num_rows > 0){
+                $i = 0;
+                while($row = $result->fetch_assoc()){
+                   $this->staff[$i]["id"] = $row["staff"];
+                   $this->staff[$i]["role"] = $row["role"];
+                   $i ++;
+               }
+            }
+            return 'ok';
+        } catch (Exception $ex) {
+            return 'error';
+        }
+    }
+    private function obtainUniversities(){
+        try {
+            require '../login/connect.php';
+            $query = "";
+            $result = $conn->query($query);
+            if ($result->num_rows > 0){
+                $i = 0;
+                while($row = $result->fetch_assoc()){
+                   $this->vehicles[$i] = $row["vehicle"];
+                   $i ++;
+               }
+            }
+            return 'ok';
+        } catch (Exception $ex) {
             return 'error';
         }
     }
@@ -127,15 +169,15 @@ class Ficha {
             "communityID" => $this->communityID
         );
     }
-    
+    public function getID() {
+        return $this->id;
+    }
     public function getFlights() {
         return $this->flights;
     }
-    
     public function getVehicles() {
         return $this->vehicles;
     }
-    
     public function getSatff(){
         return $this->staff;
     }
@@ -147,8 +189,7 @@ class Ficha {
         } catch (Exception $ex) {
 
         }
-    }
-    
+    }    
     public function setfDate($param_fDate){
         try{
             $this->fDate = $param_fDate;
@@ -233,5 +274,4 @@ class Ficha {
 
         }
     }
-    
 }
