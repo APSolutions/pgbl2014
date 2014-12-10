@@ -6,9 +6,9 @@ session_start();
 //cargar variables de base de datos
 require '/src/settings/personalQuery.php';
 //variables del formulario
-$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = "";
-$nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = "";
-$nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = "";
+$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $otraCondicionMedica = "";
+$nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = "";
+$nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = $programErr = $emergencyNameErr = $emergencyTelephoneErr = $emergencyAddressErr = $condicionMedicaErr = "";
 $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
 $arregloBorn = array(
         'yearErr' => "",
@@ -30,6 +30,8 @@ $selectedBloodType = $selectedGender = $selectedRol = "selected";
 $selectedBloodType1 = $selectedBloodType2 = $selectedBloodType3 = $selectedBloodType4 = $selectedBloodType5 = $selectedBloodType6 = $selectedBloodType7 = $selectedBloodType8 = $selectedGender1 = $selectedGender2 = "";
 $checkedmaritalstatus = $checkedstaffType = "checked";
 $checkedmaritalstatus1 = $checkedmaritalstatus2 = $checkedmaritalstatus3 = $checkedmaritalstatus4 = $checkedmaritalstatus5 = $checkedstaffType1 = $checkedstaffType2 ="";
+$programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
+$condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
 $flag = $flag2 = TRUE;
 $errorMessage = "";
 
@@ -202,7 +204,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     } 
     if(empty($_POST["career"]) ){
-        $careerErr = "La direccion es requerida!";
+        $careerErr = "La carrera es requerida!";
     }else{
         $careerTemp = cleanInput($_POST["career"]);
         if (!preg_match("/^[a-zA-Z-# ]*$/",$careerTemp)){
@@ -221,10 +223,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $checkedstaffType2 ="checked";
         } 
     }
-     if(empty($_POST["Rol"]) ){
+     if($_POST["rol"] == "" ){
         $rolErr = "El rol del personal es requerido!";
     }else{
-        $rol = cleanInput($_POST["Rol"]); 
+        $rol = cleanInput($_POST["rol"]); 
     }
     
     if(empty($_POST["contDateYear"]) || empty($_POST["contDateMonth"]) || empty($_POST["contDateDay"]) ){
@@ -262,57 +264,99 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             }
         }  
     }
+    if(empty($_POST["ambiente"]) && empty($_POST["humanRights"]) && empty($_POST["medical"]) && empty($_POST["microfinanzas"]) && empty($_POST["negocios"]) && empty($_POST["publicHealth"]) && empty($_POST["profesional"]) ){
+        $programErr = "Este rol se le debe asignar uno o mas programas!";  
+    } else {
+        if (!empty($_POST["ambiente"])){
+            $programAmbienteCh = "checked";
+        }
+        if (!empty($_POST["humanRights"])){
+            $programHumanRightsCh = "checked";
+        }
+        if (!empty($_POST["medical"])){
+            $programMedicalCh = "checked";
+        }
+        if (!empty($_POST["microfinanzas"])){
+            $programMicrofinanceCh = "checked";
+        }
+        if (!empty($_POST["negocios"])){
+            $programBusinessCh = "checked";
+        }
+        if (!empty($_POST["publicHealth"])){
+            $programPublicHealthCh = "checked";
+        }
+        if (!empty($_POST["profesional"])){
+            $programProfesionalCh = "checked";
+        }
+    }
+    if(empty($_POST["emergencyName"]) ){
+        $emergencyNameErr = "El nombre de contacto de emergencia es requerido!";
+    }else{
+        $emergencyNameTemp = cleanInput($_POST["emergencyName"]);
+        if (!preg_match("/^[a-zA-Z-# ]*$/",$emergencyNameTemp)){
+            $emergencyNameErr = "El nombre solo debe incluir letras!";
+        }else{
+            $emergencyName = $emergencyNameTemp; 
+        }
+    } 
+    if(empty($_POST["emergencyTelephone"]) ){
+        $emergencyTelephoneErr = "El teléfono del contacto de emergencia es requerido!";
+    }else{
+        $emergencyTelephoneTemp = cleanInput($_POST["emergencyTelephone"]);
+        if (!preg_match("/^[a-zA-Z-#0-9 ]*$/",$emergencyTelephoneTemp)){
+            $emergencyTelephoneErr = "El telefono solo debe incluir letras y números!";
+        }else{
+            $emergencyTelephone = $emergencyTelephoneTemp; 
+        }
+    } 
+    if(empty($_POST["emergencyAddress"]) ){
+        $emergencyAddressErr = "La dirección del contacto de emergencia es requerido!";
+    }else{
+        $emergencyAddressTemp = cleanInput($_POST["emergencyAddress"]);
+        if (!preg_match("/^[a-zA-Z-#0-9 ]*$/",$emergencyAddressTemp)){
+            $emergencyAddressErr = "La dirección solo debe incluir letras y números!";
+        }else{
+            $emergencyAddress = $emergencyAddressTemp; 
+        }
+    } 
+     if(empty($_POST["diabetes"]) && empty($_POST["hipertension"]) && empty($_POST["asma"]) && empty($_POST["problemasCardiacos"]) && empty($_POST["epilepsia"]) && empty($_POST["naCondicionMedica"]) && empty($_POST["otroCondicionMedica"]) ){
+        $condicionMedicaErr = "Marque una condicion medica o la opcion *ninguna* si no tiene";  
+    } else {
+        if (!empty($_POST["diabetes"])){
+            $condicionDiabetesCh = "checked";
+        }
+        if (!empty($_POST["hipertension"])){
+            $condicionHipertensionCh = "checked";
+        }
+        if (!empty($_POST["asma"])){
+            $condicionAsmaCh = "checked";
+        }
+        if (!empty($_POST["problemasCardiacos"])){
+            $condicionProblemasCardiacosCh = "checked";
+        }
+        if (!empty($_POST["epilepsia"])){
+            $condicionEpilepsiaCh = "checked";
+        }
+        if (!empty($_POST["naCondicionMedica"])){
+            $condicionNaCh = "checked";
+        }
+        if (!empty($_POST["otroCondicionMedica"])){
+            $condicionOtroCh = "checked";
+            if(empty($_POST["otroCondicionMedicaInput"])){
+                $condicionMedicaErr = "Por favor escriba la condición Medica!";
+            }else{
+                if (!preg_match("/^[a-zA-Z-#0-9 ]*$/",$_POST["otroCondicionMedicaInput"])){
+                    $condicionMedicaErr = "La condición Medica solo debe incluir letras y números!";
+                }else{
+                    $otraCondicionMedica = cleanInput($_POST["otroCondicionMedicaInput"]);
+                }
+            }
+        }
+    }
 }
 
-if(!$name == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$bedroom == "" && !$electricity == "" && !$wifi == "" && !$cellphoneSignal == "" && !$ventilation == "" && !$drinkableWater == "" && $flag){
-    require_once 'src/login/connect.php';
-    $query = "CALL insert_compound('$name','$location','$town','$capacity','$bedroom','$electricity','$wifi','$cellphoneSignal','$ventilation','$toiletQuantity','$drinkableWater')";
-    $result= $conn->query($query);
-    if (!$result){
-        echo "<script type='text/javascript'>alert('failed!')</script>";
-    } else{
-        if(!empty($_POST["toiletLetrine"])){
-                $toiletType = cleanInput($_POST["toiletLetrine"]);
-                $query = "CALL insert_compound_toiletType('$name','$toiletType')";
-                $result= $conn->query($query);
-                if (!$result){
-                        $flag2 = FALSE;
-                        $errorMessage = $errorMessage.'Error0: '.$conn->error;
-                    }
-        }
-        if(!empty($_POST["toiletMultiple"])){
-                $toiletType = cleanInput($_POST["toiletMultiple"]);
-                $query = "CALL insert_compound_toiletType('$name','$toiletType')";
-                $result= $conn->query($query);
-                if (!$result){
-                        $flag2 = FALSE;
-                        $errorMessage = $errorMessage.'Error1: '.$conn->error;
-                }   
-        }
-        if(!empty($_POST["toiletSingle"])){
-                $toiletType = cleanInput($_POST["toiletSingle"]);
-                $query = "CALL insert_compound_toiletType('$name','$toiletType')";
-                $result= $conn->query($query);
-                if (!$result){
-                        $flag2 = FALSE;
-                        $errorMessage = $errorMessage.'Error2: '.$conn->error;
-                }  
-        }
-        if (!$flag2){
-            echo "<script type='text/javascript'>alert($errorMessage)</script>";
-        } else{
-            echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
-            $nameTemp = $locationTemp = $townTemp = $capacityTemp = $bedroomTemp = $electricityTemp = $wifiTemp = $cellphoneSignalTemp = $ventilationTemp = $drinkableWaterTemp = $toiletQuantityTemp = $toiletTypeTemp = "";
-            $name = $location = $town = $capacity = $bedroom = $electricity = $wifi = $cellphoneSignal = $ventilation = $toiletQuantity = $drinkableWater = $toiletType = "";
-            $checkedelectricity = $checkedwifi = $checkedcellphonesignal = $checkedventilation = $checkeddrinkablewater = "checked";
-            $checkedelectricity1 = $checkedelectricity2 = $checkedwifi1 = $checkedwifi2 = $checkedcellphonesignal1 = $checkedcellphonesignal2 = $checkedventilation1 = $checkedventilation2 = $checkedventilation3 = $checkeddrinkablewater1 = $checkeddrinkablewater2 = "";
-            $selected = "selected";
-            $selected1 = $selected2 = $selected3 = "";
-            $toiletLetrineCh = $toiletSingleCh = $toiletMultipleCh = "";
-        }    
-    }
-     
-}
+
+
 function cleanInput($data){
     $data = trim($data);
     $data = stripcslashes($data) ;
@@ -369,18 +413,16 @@ function is_leap_year($year){
             permanentRoles = <?php echo json_encode($permanentRoles); ?>;
             temporaryRoles = <?php echo json_encode($temporaryRoles); ?>;
         }
+        
         function get_roles(tipos){            
             if(tipos == 1){
                 var roles = permanentRoles;
             }else{
                 var roles = temporaryRoles;
             }
-            
             var select = document.getElementById('rol');
             var opt = new Array(roles.length);
-            
-            select.innerHTML = "";
-                    
+            select.innerHTML = "";      
             for (i = 0;i < roles.length;i++){
                 if (i == 0) {
                     var option = document.createElement('option');
@@ -394,6 +436,33 @@ function is_leap_year($year){
                 opt[i].innerHTML = roles[i];
                 select.appendChild(opt[i]);
             }
+        }
+        
+        function get_role(){            
+            var selectedstaffType = <?php echo json_encode($staffType); ?> ;
+            if (!selectedstaffType == ""){
+                if(selectedstaffType == 1){
+                    var roles = permanentRoles;
+                }else{
+                    var roles = temporaryRoles;
+                }
+                var select = document.getElementById('rol');
+                var opt = new Array(roles.length);
+                select.innerHTML = "";
+                for (i = 0;i < roles.length;i++){
+                    if (i == 0) {
+                        var option = document.createElement('option');
+                        option.value="";
+                        option.selected="selected";
+                        option.innerHTML = "";
+                        select.appendChild(option);
+                    }
+                    opt[i] = document.createElement('option');
+                    opt[i].value = i;
+                    opt[i].innerHTML = roles[i];
+                    select.appendChild(opt[i]);
+                }
+            } 
         }
         function get_fecha (){
             var dir = document.getElementsByName("staffType");
@@ -422,9 +491,86 @@ function is_leap_year($year){
                 contErr.innerHTML = "";
             }
         }
+         function get_selectedRole(){
+            var selectedRole = <?php echo json_encode($rol); ?> ;
+            if (!selectedRole == ""){
+                var option = document.getElementById('rol').childNodes;
+                for (i=0;i<option.length;i++){
+                    if (option[i].value == selectedRole){
+                        option[i].selected='selected';
+                    }
+                }
+            }
+        }
+        function get_programs (){
+            var option = document.getElementById('rol').childNodes;             
+            var selectedRole = <?php echo json_encode($rol); ?>;
+            if (!selectedRole == ""){
+                for (i=0;i<option.length;i++){
+                    if (option[i].value == selectedRole){
+                        if(option[i].innerHTML == "Coordinador de Programa" || option[i].innerHTML == "Gerente de Programa" || option[i].innerHTML == "PA de Programas" || option[i].innerHTML == "Interpreter" ){
+                            document.getElementById('programs').style.display='block'; 
+                        }
+                    }
+                }
+            }  
+            for(i=0;i<option.length;i++){
+                if(option[i].selected == true){
+                    if(option[i].innerHTML == "Coordinador de Programa" || option[i].innerHTML == "Gerente de Programa" || option[i].innerHTML == "PA de Programas" || option[i].innerHTML == "Interpreter" ){
+                        document.getElementById('programs').style.display='block';  
+                    }
+                    else{
+                        document.getElementById('programs').style.display='none'; 
+                    }
+                }
+            }
+        }
+        function get_otroCondicionMedica(){
+            var checked = document.getElementById('otroCondicionMedica').checked;
+            if (!checked){
+                document.getElementById('labelotrocondicion').style.display='none';
+            }else{
+                document.getElementById('labelotrocondicion').style.display='block';
+            }
+        }
+        function uncheckedCondicionMedica(){
+            var checked = document.getElementById('naCondicionMedica').checked;
+            if(checked){
+                document.getElementById('otroCondicionMedica').checked=false;
+                document.getElementById('diabetes').checked=false;
+                document.getElementById('hipertension').checked=false;
+                document.getElementById('problemasCardiacos').checked=false;
+                document.getElementById('asma').checked=false;
+                document.getElementById('epilepsia').checked=false;
+                document.getElementById('otroCondicionMedica').disabled=true;
+                document.getElementById('diabetes').disabled=true;
+                document.getElementById('hipertension').disabled=true;
+                document.getElementById('problemasCardiacos').disabled=true;
+                document.getElementById('asma').disabled=true;
+                document.getElementById('epilepsia').disabled=true;
+                document.getElementById('labelotrocondicion').style.display='none';
+            }
+            else{
+                document.getElementById('otroCondicionMedica').disabled=false;
+                document.getElementById('diabetes').disabled=false;
+                document.getElementById('hipertension').disabled=false;
+                document.getElementById('problemasCardiacos').disabled=false;
+                document.getElementById('asma').disabled=false;
+                document.getElementById('epilepsia').disabled=false;
+            }
+        }
+        function get_otroIdioma(){
+            var checked = document.getElementById('otroIdioma').checked;
+            if (!checked){
+                document.getElementById('labelotroIdioma').style.display='none';
+            }else{
+                document.getElementById('labelotroIdioma').style.display='block';
+            }
+        }
+      
     </script>
     </head>	           
-    <body id="main_body" onload="set_roles();get_fecha()">
+    <body id="main_body" onload="set_roles();get_fecha();get_role();get_selectedRole();get_programs();get_otroCondicionMedica();uncheckedCondicionMedica()">
         <?php
             require 'header.php';
         ?>
@@ -438,8 +584,8 @@ function is_leap_year($year){
                         <label class="description">Tipo de Personal </label>
                         <span>  
                             <input  name="staffType" type="radio" value="0" style="display:none;" <?php echo $checkedstaffType;?>>
-                            <input  name="staffType"  type="radio" value="1" onclick="get_roles(1);get_fecha();clean_fechaErr(1)" <?php echo $checkedstaffType1;?> >Permanente
-                            <input  name="staffType"  type="radio" value="2" onclick="get_roles(2);get_fecha();clean_fechaErr(2)" <?php echo $checkedstaffType2;?> >Temporal
+                            <input  name="staffType"  type="radio" value="1" onclick="get_roles(1);get_fecha();clean_fechaErr(1);" <?php echo $checkedstaffType1;?> >Permanente
+                            <input  name="staffType"  type="radio" value="2" onclick="get_roles(2);get_fecha();clean_fechaErr(2);" <?php echo $checkedstaffType2;?> >Temporal
                         </span><p class="guidelines" id="guide_7"><small>Permanente para contratos de más de 6 meses o indefinidos. Temporal contratos menores a 6 meses </small></p> 
                         <br><br>
                         <span class="error">
@@ -460,23 +606,6 @@ function is_leap_year($year){
                             <input id="cont_inputAño"  name="contDateYear" class="element text" size="4" maxlength="4" value="<?php echo $contDateYearTemp;?>" type="text">
                             <label for="element_29_3"  id="cont_labelAño">YYYY</label>
                         </span>
-                         <span class="error">
-                        <p class="error" id="contErr"><?php 
-                        $print ="";
-                        if (!$contDateErr == ""){
-                            $print .= $contDateErr."<br>";
-                        }
-                        if (!empty($arregloCont['yearErr'])){
-                            $print .= $arregloCont['yearErr']."<br>";
-                        }
-                        if (!empty($arregloCont['monthErr'])){
-                            $print .= $arregloCont['monthErr']."<br>";
-                        } 
-                        if (!empty($arregloCont['dayErr'])){
-                            $print .= $arregloCont['dayErr'];
-                        }
-                        echo $print;?></p>
-                </span>
                     </li>	
                      <li id="entrevista" style="display:none">
                         <label class="description" for="element_30" id="entrevista_titulo" >Fecha de Entrevista </label>
@@ -492,46 +621,64 @@ function is_leap_year($year){
                             <input id="ent_inputAño"  name="entDateYear" class="element text" size="4" maxlength="4" value="<?php echo $entDateYearTemp;?>" type="text">
                             <label for="element_30_3" id="ent_labelAño" >YYYY</label>
                         </span>
-                         <span class="error">
+                    </li>
+                       <span class="error">
                         <p class="error" id="entErr"><?php 
                         $print ="";
-                        if (!$entDateErr == ""){
+                        if($staffType == 1){
+                            $print .= $contDateErr."<br>";
+                            if (!empty($arregloCont['yearErr'])){
+                                $print .= $arregloCont['yearErr']."<br>";
+                            }
+                            if (!empty($arregloCont['monthErr'])){
+                                $print .= $arregloCont['monthErr']."<br>";
+                            } 
+                            if (!empty($arregloCont['dayErr'])){
+                                $print .= $arregloCont['dayErr'];
+                            }
+                        }
+                        else if ($staffType == 2){
                             $print .= $entDateErr."<br>";
+                            if (!empty($arregloEnt['yearErr'])){
+                                $print .= $arregloEnt['yearErr']."<br>";
+                            }
+                            if (!empty($arregloEnt['monthErr'])){
+                                $print .= $arregloEnt['monthErr']."<br>";
+                            } 
+                            if (!empty($arregloEnt['dayErr'])){
+                                $print .= $arregloEnt['dayErr'];
+                            }
                         }
-                        if (!empty($arregloEnt['yearErr'])){
-                            $print .= $arregloEnt['yearErr']."<br>";
-                        }
-                        if (!empty($arregloEnt['monthErr'])){
-                            $print .= $arregloEnt['monthErr']."<br>";
-                        } 
-                        if (!empty($arregloEnt['dayErr'])){
-                            $print .= $arregloEnt['dayErr'];
-                        }
-                        echo $print;?></p>
-                        
+                        echo $print;?></p>                      
                 </span>
-                    </li>
                     <li id="li_32" >
                 <label class="description" for="element_32">Rol </label>
                 <div>
-                <select class="element select medium" id="rol" name="element_32"> 
-                        <option value="" selected="selected" ></option>
-                </select>          
+                    <select class="element select medium" id="rol" name="rol" onchange="get_programs();"> 
+                        <option value="" selected="selected"></option>
+                </select> 
+                    <br>
+                       <span class="error">
+                            <p class="error"><?php echo $rolErr;?></p>
+                        </span>
                 </div><p class="guidelines" id="guide_32"><small>Cargo del personal</small></p> 
                 </li>		
-                    <li id="li_37" >
+                    <li id="programs" style="display:none">
                 <label class="description" for="element_37">Programas </label>
                 <span>
-                        <input  name="ambiental"  type="checkbox" value="1" />Ambiental
-                        <input  name="derechosHumanos"  type="checkbox" value="1" />Derechos Humanos
-                        <input  name="medical"  type="checkbox" value="1" />Medical
+                        <input  name="ambiente"  type="checkbox" <?php echo $programAmbienteCh;?> value="1" />Ambiental
+                        <input  name="humanRights"  type="checkbox" <?php echo $programHumanRightsCh;?> value="1" />Derechos Humanos
+                        <input  name="medical"  type="checkbox" <?php echo $programMedicalCh;?> value="1" />Medical
                         <br>
-                        <input  name="microfinanzas"  type="checkbox" value="1" />Microfinanzas                           
-                        <input  name="negocios"  type="checkbox" value="1" />Negocios
-                        <input  name="saludPublica"  type="checkbox" value="1" />Salud Publica
-                        <input  name="profesional"  type="checkbox" value="1" />Profesional
+                        <input  name="microfinanzas"  type="checkbox" <?php echo $programMicrofinanceCh;?> value="1" />Microfinanzas                           
+                        <input  name="negocios"  type="checkbox" <?php echo $programBusinessCh;?> value="1" />Negocios
+                        <input  name="publicHealth"  type="checkbox" <?php echo $programPublicHealthCh;?> value="1" />Salud Publica
+                        <input  name="profesional"  type="checkbox" <?php echo $programProfesionalCh;?> value="1" />Profesional
                 </span><p class="guidelines" id="guide_37"><small>Programas en los que esta involucrado</small></p>
-                </li>		
+                 <span class="error">
+                            <p class="error"><?php echo $programErr;?></p>
+                        </span>
+                    </li>		
                     <li id="li_8" >
                 <label class="description" for="element_8">Nombre </label>
                 <div>
@@ -582,15 +729,15 @@ function is_leap_year($year){
                     <li id="li_13" >
                 <label class="description" for="element_13">Fecha de Nacimiento </label>
                 <span>
-                        <input id="element_13_1" name="bornDateDay" class="element text" size="2" maxlength="2" value="<?php echo $bornDateDayTemp;?>" type="text"> /
+                        <input id="day" name="bornDateDay" class="element text" size="2" maxlength="2" value="<?php echo $bornDateDayTemp;?>" type="text" oninput="get_age();"> /
                         <label for="element_13_1">DD</label>
                 </span>
                 <span>
-                        <input id="element_13_2" name="bornDateMonth" class="element text" size="2" maxlength="2" value="<?php echo $bornDateMonthTemp;?>" type="text"> /
+                        <input id="month" name="bornDateMonth" class="element text" size="2" maxlength="2" value="<?php echo $bornDateMonthTemp;?>" type="text" oninput="get_age();"> /
                         <label for="element_13_2">MM</label>
                 </span>
                 <span>
-                        <input id="element_13_3" name="bornDateYear" class="element text" size="4" maxlength="4" value="<?php echo $bornDateYearTemp;?>" type="text">
+                    <input id="year" name="bornDateYear" class="element text" size="4" maxlength="4" value="<?php echo $bornDateYearTemp;?>" type="text" oninput="get_age();">
                         <label for="element_13_3">YYYY</label>
                 </span>
                 <span class="error">
@@ -599,22 +746,22 @@ function is_leap_year($year){
                         if (!$bornDateErr == ""){
                             $print .= $bornDateErr."<br>";
                         }
-                        if (!empty($arreglo['yearErr'])){
-                            $print .= $arreglo['yearErr']."<br>";
+                        if (!empty($arregloBorn['yearErr'])){
+                            $print .= $arregloBorn['yearErr']."<br>";
                         }
-                        if (!empty($arreglo['monthErr'])){
-                            $print .= $arreglo['monthErr']."<br>";
+                        if (!empty($arregloBorn['monthErr'])){
+                            $print .= $arregloBorn['monthErr']."<br>";
                         } 
-                        if (!empty($arreglo['dayErr'])){
-                            $print .= $arreglo['dayErr'];
+                        if (!empty($arregloBorn['dayErr'])){
+                            $print .= $arregloBorn['dayErr'];
                         }
                         echo $print;?></p>
                 </span>
                 </li>		
-                    <li id="li_12" >
+                    <li id="li_12" style="display:none" >
                 <label class="description" for="element_12">Edad </label>
                 <div>
-                        <input id="element_12" name="element_12" class="element text small" type="text" maxlength="255" value="<?php echo $age;?>" disabled/> 
+                        <input id="element_12" name="element_12" class="element text small" type="text" maxlength="255" value="<?php echo $age;?>" disabled /> 
                 </div> 
                 </li>		
                     <li id="li_14" >
@@ -689,20 +836,29 @@ function is_leap_year($year){
                     <li id="li_19" >
                 <label class="description" for="element_19">Nombre </label>
                 <div>
-                        <input id="element_19" name="element_19" class="element text medium" type="text" maxlength="255" value=""/> 
+                        <input id="element_19" name="emergencyName" class="element text medium" type="text" maxlength="255" value="<?php echo $emergencyNameTemp;?>"/> 
                 </div> 
+                  <span class="error">
+                        <p class="error"><?php echo $emergencyNameErr;?></p>
+                     </span>
                 </li>		
                     <li id="li_20" >
                 <label class="description" for="element_20">Telefono </label>
                 <div>
-                        <input id="element_20" name="element_20" class="element text medium" type="text" maxlength="255" value=""/> 
+                        <input id="element_20" name="emergencyTelephone" class="element text medium" type="text" maxlength="255" value="<?php echo $emergencyTelephoneTemp;?>"/> 
                 </div> 
+                  <span class="error">
+                        <p class="error"><?php echo $emergencyTelephoneErr;?></p>
+                     </span>
                 </li>		
                     <li id="li_21" >
                 <label class="description" for="element_21">Dirección </label>
                 <div>
-                        <input id="element_21" name="element_21" class="element text large" type="text" maxlength="255" value=""/> 
+                        <input id="element_21" name="emergencyAddress" class="element text large" type="text" maxlength="255" value="<?php echo $emergencyAddressTemp;?>"/> 
                 </div> 
+                  <span class="error">
+                        <p class="error"><?php echo $emergencyAddressErr;?></p>
+                     </span>
                 </li>		
                     <li class="section_break">
                         <h3>Salud</h3>
@@ -711,24 +867,27 @@ function is_leap_year($year){
                     <li id="li_35" >
                 <label class="description" for="element_35">Condición Médica </label>
                 <span>
-                        <input id="element_35_1" name="diabetes"  type="checkbox" value="1" />Diabetes
-                        <input id="element_35_2" name="hipertension"  type="checkbox" value="1" />Hipertension
-                        <input id="element_35_3" name="asma"  type="checkbox" value="1" />Asma
+                        <input id="diabetes" name="diabetes"  type="checkbox" <?php echo $condicionDiabetesCh;?> value="1" />Diabetes
+                        <input id="hipertension" name="hipertension"  type="checkbox" <?php echo $condicionHipertensionCh;?> value="1" />Hipertension
+                        <input id="asma" name="asma"  type="checkbox" <?php echo $condicionAsmaCh;?> value="1" />Asma
                         <br>
-                        <input id="element_35_4" name="problemasCardiacos"  type="checkbox" value="1" />Problemas Cardiacos
-                        <input id="element_35_5" name="epilepsia"  type="checkbox" value="1" />Epilepsia
+                        <input id="problemasCardiacos" name="problemasCardiacos"  <?php echo $condicionProblemasCardiacosCh;?> type="checkbox" value="1" />Problemas Cardiacos
+                        <input id="epilepsia" name="epilepsia"  type="checkbox" <?php echo $condicionEpilepsiaCh;?> value="1" />Epilepsia
                         <br>
-                        <input id="element_35_6" name="na"  type="checkbox" value="1" />Ninguna de las anteriores
+                        <input id="naCondicionMedica" name="naCondicionMedica"  type="checkbox" <?php echo $condicionNaCh;?> value="1" onclick="uncheckedCondicionMedica()" />Ninguna 
                         <br>
-                        <input id="element_35_7" name="otro"  type="checkbox" value="1" />Otro
+                        <input id="otroCondicionMedica" name="otroCondicionMedica"  type="checkbox" <?php echo $condicionOtroCh;?> value="1" onclick="get_otroCondicionMedica()" />Otro
                 </span> 
                 </li>		
-                    <li id="li_23" >
+                    <li id="labelotrocondicion" style="display:none" >
                         <label class="description" for="element_23">Otro: </label>
                         <div>
-                            <input id="element_23" name="element_23" class="element text medium" type="text" maxlength="255" value=""/> 
+                            <input id="element_23" name="otroCondicionMedicaInput" class="element text medium" type="text" maxlength="255" value="<?php echo $otraCondicionMedica;?>"/> 
                         </div> 
-                    </li>		
+                    </li>
+                     <span class="error">
+                            <p class="error"><?php echo $condicionMedicaErr;?></p>
+                        </span>
                     <li id="li_36" >
                 <label class="description" for="element_36">Alergias </label>
                 <span>
@@ -749,14 +908,14 @@ function is_leap_year($year){
                     <li id="li_38" >
                 <label class="description" for="element_38">Idiomas </label>
                 <span>
-                    <input id="element_38_1" name="ingles"  type="checkbox" value="1" />Ingles                        
-                    <input id="element_38_2" name="frances"  type="checkbox" value="1" />Frances                        
-                    <input id="element_38_3" name="portugues"  type="checkbox" value="1" />Portugues                        
+                    <input id="ingles" name="ingles"  type="checkbox" value="1" />Ingles                        
+                    <input id="frances" name="frances"  type="checkbox" value="1" />Frances                        
+                    <input id="portugues" name="portugues"  type="checkbox" value="1" />Portugues                        
                     <br>
-                    <input id="element_38_4" name="otro"  type="checkbox" value="1" />Otro                     
+                    <input id="otroIdioma" name="otro"  type="checkbox" value="1" onclick="get_otroIdioma()" />Otro                     
                 </span> 
                 </li>		
-                    <li id="li_31" >
+                    <li id="labelotroIdioma" style="display:none" >
                 <label class="description" for="element_31">Otro: </label>
                 <div>
                         <input id="element_31" name="element_31" class="element text medium" type="text" maxlength="255" value=""/> 
