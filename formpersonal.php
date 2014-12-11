@@ -6,9 +6,9 @@ session_start();
 //cargar variables de base de datos
 require '/src/settings/personalQuery.php';
 //variables del formulario
-$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $otraCondicionMedica = "";
+$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $otraCondicionMedica = $alergia = $alergiaInput = $otroIdioma = $contDate = $entDate = "";
 $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = "";
-$nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = $programErr = $emergencyNameErr = $emergencyTelephoneErr = $emergencyAddressErr = $condicionMedicaErr = "";
+$nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = $programErr = $emergencyNameErr = $emergencyTelephoneErr = $emergencyAddressErr = $condicionMedicaErr = $alergiaErr = $idiomaErr = "";
 $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
 $arregloBorn = array(
         'yearErr' => "",
@@ -28,11 +28,13 @@ $arregloEnt = array(
 $bornDateYearErr = $bornDateMonthErr = $bornDateDayErr = "";
 $selectedBloodType = $selectedGender = $selectedRol = "selected";
 $selectedBloodType1 = $selectedBloodType2 = $selectedBloodType3 = $selectedBloodType4 = $selectedBloodType5 = $selectedBloodType6 = $selectedBloodType7 = $selectedBloodType8 = $selectedGender1 = $selectedGender2 = "";
-$checkedmaritalstatus = $checkedstaffType = "checked";
+$checkedmaritalstatus = $checkedstaffType = $checkedalergia = "checked";
 $checkedmaritalstatus1 = $checkedmaritalstatus2 = $checkedmaritalstatus3 = $checkedmaritalstatus4 = $checkedmaritalstatus5 = $checkedstaffType1 = $checkedstaffType2 ="";
+$checkedalergia1 = $checkedalergia2 = "";
 $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
 $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
-$flag = $flag2 = TRUE;
+$idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = "";
+$flag = $flag2 = FALSE;
 $errorMessage = "";
 
 
@@ -243,6 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 $contDateErr = " ";
             } else{
                 $contDate = $contDateYearTemp."-".$contDateMonthTemp."-".$contDateDayTemp;
+                $flag = TRUE;
             }
         }  
     }
@@ -261,6 +264,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 $entDateErr = " ";
             } else{
                 $entDate = $entDateYearTemp."-".$entDateMonthTemp."-".$entDateDayTemp;
+                $flag = TRUE;
             }
         }  
     }
@@ -319,7 +323,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $emergencyAddress = $emergencyAddressTemp; 
         }
     } 
-     if(empty($_POST["diabetes"]) && empty($_POST["hipertension"]) && empty($_POST["asma"]) && empty($_POST["problemasCardiacos"]) && empty($_POST["epilepsia"]) && empty($_POST["naCondicionMedica"]) && empty($_POST["otroCondicionMedica"]) ){
+    if(empty($_POST["diabetes"]) && empty($_POST["hipertension"]) && empty($_POST["asma"]) && empty($_POST["problemasCardiacos"]) && empty($_POST["epilepsia"]) && empty($_POST["naCondicionMedica"]) && empty($_POST["otroCondicionMedica"]) ){
         $condicionMedicaErr = "Marque una condicion medica o la opcion *ninguna* si no tiene";  
     } else {
         if (!empty($_POST["diabetes"])){
@@ -353,10 +357,79 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             }
         }
     }
+    if(($_POST["alergia"] == 0)){
+        $alergiaErr = "Por favor marque si tiene o no alergia!";
+    }else{
+        $alergia = cleanInput($_POST["alergia"]);
+        if($alergia == 1){
+            $checkedalergia1 ="checked"; 
+            if(empty($_POST["alergiaInput"])){
+                $alergiaErr = "Por favor escriba la alergia!";
+            }else{
+                if (!preg_match("/^[a-zA-Z-#, ]*$/",$_POST["alergiaInput"])){
+                    $alergiaErr = "La alergia solo debe incluir letras!";
+                }else{
+                    $alergiaInput = cleanInput($_POST["alergiaInput"]);
+                }
+            }
+        }else{
+            $checkedalergia2 ="checked";
+        }
+    }
+    if(empty($_POST["ingles"]) && empty($_POST["frances"]) && empty($_POST["portugues"]) && empty($_POST["naIdioma"]) && empty($_POST["otroIdioma"])){
+        $idiomaErr = "Marque los conocimientos de idioma o la opcion *ninguno* si solo habla español";   
+    } else {
+        if (!empty($_POST["ingles"])){
+            $idiomaInglesCh = "checked";
+        }
+        if (!empty($_POST["frances"])){
+            $idiomaFrancesCh = "checked";
+        }
+        if (!empty($_POST["portugues"])){
+            $idiomaPortuguesCh = "checked";
+        }
+        if (!empty($_POST["naIdioma"])){
+            $idiomaNaCh = "checked";
+        }
+        if (!empty($_POST["otroIdioma"])){
+            $idiomaOtroCh = "checked";
+            if(empty($_POST["otroIdiomaInput"])){
+                $idiomaErr = "Por favor escriba el otro Idioma!";
+            }else{
+                if (!preg_match("/^[a-zA-Z-# ]*$/",$_POST["otroCondicionMedicaInput"])){
+                    $idiomaErr = "El idioma solo debe incluir letras!";
+                }else{
+                    $otroIdioma = cleanInput($_POST["otroIdiomaInput"]);
+                }
+            }
+        }
+    }
 }
 
-
-
+if(!$name == "" && !$lastname == "" && !$id == "" && !$gender == "" && !$bornDate == "" && !$age == "" && !$citizenship == "" && !$bloodType == "" && !$maritalStatus == "" && !$cellphone == "" && !$email == "" && !$university == "" && !$career == "" && !$address == "" && $flag && !$rol == ""){
+    require 'src/login/connect.php';
+    if ($staffType == 1){
+        $query = "CALL insert_staff('$id','$name','$lastname','$gender','$bornDate','$bloodType','$maritalStatus','$cellphone','$email','$university','$career','$address','$contDate','','$rol','$citizenship','$age')";
+    }else{
+        $query = "CALL insert_staff('$id','$name','$lastname','$gender','$bornDate','$bloodType','$maritalStatus','$cellphone','$email','$university','$career','$address','','$entDate','$rol','$citizenship','$age')";       
+    }
+    $result= $conn->query($query);
+    if (!$result){
+        echo "<script type='text/javascript'>alert('failed')</script>";
+    } else{
+        if(!$emergencyName == "" && !$emergencyTelephone == "" && !$emergencyAddress == ""){
+            $query = "CALL insert_staff_emergencyContact('$id','$emergencyName','$emergencyAddress','$emergencyTelephone')";
+            $result= $conn->query($query);
+            if (!$result){
+                echo "<script type='text/javascript'>alert('failed')</script>";
+            }
+            else{
+               echo "<script type='text/javascript'>alert('submitted successfully!')</script>"; 
+            }
+        }     
+    }
+}
+   
 function cleanInput($data){
     $data = trim($data);
     $data = stripcslashes($data) ;
@@ -397,6 +470,8 @@ function is_leap_year($year){
     return ((($year % 4) == 0) && ((($year % 100) != 0) || (($year %400) == 0)));
 }
 ?>
+
+
 
 <!DOCTYPE html>
 <html>
@@ -567,10 +642,45 @@ function is_leap_year($year){
                 document.getElementById('labelotroIdioma').style.display='block';
             }
         }
-      
+        function uncheckedIdioma(){
+            var checked = document.getElementById('naIdioma').checked;
+            if(checked){
+                document.getElementById('ingles').checked=false;
+                document.getElementById('frances').checked=false;
+                document.getElementById('portugues').checked=false;
+                document.getElementById('otroIdioma').checked=false;
+                document.getElementById('ingles').disabled=true;
+                document.getElementById('frances').disabled=true;
+                document.getElementById('portugues').disabled=true;
+                document.getElementById('otroIdioma').disabled=true;
+                document.getElementById('labelotroIdioma').style.display='none';
+            }
+            else{
+                document.getElementById('ingles').disabled=false;
+                document.getElementById('frances').disabled=false;
+                document.getElementById('portugues').disabled=false;
+                document.getElementById('otroIdioma').disabled=false;
+            }
+        }
+        function get_alergia(tipo){
+            if (tipo == 1){
+                document.getElementById('labelalergia').style.display='block';
+            }
+            else{
+                document.getElementById('labelalergia').style.display='none';
+            }         
+        }
+        function get_alergias(){
+            var alergia = <?php echo json_encode($alergia); ?> ;
+            if (!alergia == ""){
+                if(alergia == 1){
+                    document.getElementById('labelalergia').style.display='block';
+                }
+            } 
+        }
     </script>
     </head>	           
-    <body id="main_body" onload="set_roles();get_fecha();get_role();get_selectedRole();get_programs();get_otroCondicionMedica();uncheckedCondicionMedica()">
+    <body id="main_body" onload="set_roles();get_fecha();get_role();get_selectedRole();get_programs();get_otroCondicionMedica();uncheckedCondicionMedica();get_otroIdioma();uncheckedIdioma();get_alergias();">
         <?php
             require 'header.php';
         ?>
@@ -654,7 +764,7 @@ function is_leap_year($year){
                     <li id="li_32" >
                 <label class="description" for="element_32">Rol </label>
                 <div>
-                    <select class="element select medium" id="rol" name="rol" onchange="get_programs();"> 
+                    <select class="element select large" id="rol" name="rol" onchange="get_programs();"> 
                         <option value="" selected="selected"></option>
                 </select> 
                     <br>
@@ -891,16 +1001,20 @@ function is_leap_year($year){
                     <li id="li_36" >
                 <label class="description" for="element_36">Alergias </label>
                 <span>
-                        <input id="element_36_1" name="alergia"  type="radio" value="1" />Si   
-                        <input id="element_36_2" name="alergia"  type="radio" value="2" />No
+                        <input id="alergia" name="alergia"  type="radio" value="0" style="display:none;" <?php echo $checkedalergia;?>/>
+                        <input id="alergia" name="alergia"  type="radio" value="1" <?php echo $checkedalergia1;?> onclick="get_alergia(1)" />Si   
+                        <input id="alergia" name="alergia"  type="radio" value="2" <?php echo $checkedalergia2;?> onclick="get_alergia(2)"/>No
                 </span> 
-                </li>		
-                    <li id="li_24" >
-                <label class="description" for="element_24">¿Cual? </label>
+                </li>	
+                    <li id="labelalergia" style="display:none" >
+                <label class="description" for="element_24">¿A qué? </label>
                 <div>
-                        <input id="element_24" name="element_24" class="element text medium" type="text" maxlength="255" value=""/> 
+                        <input id="element_24" name="alergiaInput" class="element text large" type="text" maxlength="255" value="<?php echo $alergiaInput;?>"/> 
                 </div> 
-                </li>		
+                </li>	
+                <span class="error">
+                            <p class="error"><?php echo $alergiaErr;?></p>
+                        </span>
                     <li class="section_break">
                         <h3>Conocimiento de Idiomas</h3>
                         <p></p>
@@ -908,19 +1022,24 @@ function is_leap_year($year){
                     <li id="li_38" >
                 <label class="description" for="element_38">Idiomas </label>
                 <span>
-                    <input id="ingles" name="ingles"  type="checkbox" value="1" />Ingles                        
-                    <input id="frances" name="frances"  type="checkbox" value="1" />Frances                        
-                    <input id="portugues" name="portugues"  type="checkbox" value="1" />Portugues                        
+                    <input id="ingles" name="ingles"  type="checkbox" <?php echo $idiomaInglesCh;?> value="1" />Ingles                        
+                    <input id="frances" name="frances"  type="checkbox" <?php echo $idiomaFrancesCh;?> value="1" />Frances 
+                    <input id="portugues" name="portugues"  type="checkbox" <?php echo $idiomaPortuguesCh;?> value="1" />Portugues
                     <br>
-                    <input id="otroIdioma" name="otro"  type="checkbox" value="1" onclick="get_otroIdioma()" />Otro                     
+                    <input id="naIdioma" name="naIdioma"  type="checkbox" <?php echo $idiomaNaCh;?> value="1" onclick="uncheckedIdioma()" />Ninguno  
+                    <br>
+                    <input id="otroIdioma" name="otroIdioma"  type="checkbox" <?php echo $idiomaOtroCh;?> value="1" onclick="get_otroIdioma()" />Otro                     
                 </span> 
                 </li>		
                     <li id="labelotroIdioma" style="display:none" >
                 <label class="description" for="element_31">Otro: </label>
                 <div>
-                        <input id="element_31" name="element_31" class="element text medium" type="text" maxlength="255" value=""/> 
+                        <input id="element_31" name="otroIdiomaInput" class="element text medium" type="text" maxlength="255" value="<?php echo $otroIdioma;?>"/> 
                 </div> 
-                </li>		
+                </li>	
+                 <span class="error">
+                            <p class="error"><?php echo $idiomaErr;?></p>
+                        </span>
                     <li class="section_break">
                         <h3>Educación</h3>
                         <p></p>
