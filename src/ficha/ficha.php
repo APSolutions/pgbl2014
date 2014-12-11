@@ -123,13 +123,19 @@ class Ficha {
     private function obtainVolunteers(){
         try {
             require '../login/connect.php';
-            $query = "";
+            $query = " CALL get_fichaVolunteers($this->id)";
             $result = $conn->query($query);
             if ($result->num_rows > 0){
                 $i = 0;
                 while($row = $result->fetch_assoc()){
-                   $this->staff[$i]["id"] = $row["staff"];
-                   $this->staff[$i]["role"] = $row["role"];
+                   $this->volunteers[$i]["id"] = $row["id"];
+                   $this->volunteers[$i]["name"] = $row["name"];
+                   $this->volunteers[$i]["lastname"] = $row["lastname"];
+                   $this->volunteers[$i]["earlyArrival"] = $row["earlyArrival"];
+                   $this->volunteers[$i]["ownLeave"] = $row["ownLeave"];
+                   $this->volunteers[$i]["allergies"] = $row["allergies"];
+                   $this->volunteers[$i]["diet"] = $row["diet"];
+                   $this->volunteers[$i]["comments"] = $row["comments"];
                    $i ++;
                }
             }
@@ -141,12 +147,12 @@ class Ficha {
     private function obtainUniversities(){
         try {
             require '../login/connect.php';
-            $query = "";
+            $query = "CALL get_fichaUniversities($this->id);";
             $result = $conn->query($query);
             if ($result->num_rows > 0){
                 $i = 0;
                 while($row = $result->fetch_assoc()){
-                   $this->vehicles[$i] = $row["vehicle"];
+                   $this->universities[$i] = $row["name"];
                    $i ++;
                }
             }
