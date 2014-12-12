@@ -4,7 +4,9 @@ require 'src/login/usuario.php';
 
 session_name('Global');
 session_id('pgbl');
-session_start();  
+session_start();
+
+$ficha = $_SESSION["ficha"];
 ?>
 <html>
     <head>
@@ -19,14 +21,26 @@ session_start();
         <link rel="shortcut icon" href="img/favicon.ico"/>
         <!-- CSS scripts-->
         <link rel="stylesheet" type="text/css" href="css/header.css" />
+        <link rel="stylesheet" type="text/css" href="css/ficha.css" />
         <!-- JS scripts-->
     </head>
     <body>
         <?php
         require 'header.php';
-        $ficha = $_SESSION["ficha"];
-        $test = $ficha->getVehicles()[0];
-        echo $test;
         ?>
+        <div class="container">
+            <div class="fichaSection fichaGenerals">
+                <?php
+                $fichaGenerals = $ficha->getFichaData();
+                ?>
+                <span id="fichaID"><?php echo $fichaGenerals["id"]?></span>
+                <span><?php echo $fichaGenerals["program"]?></span>
+                <label> Comunidad </label>
+                <span><?php echo $fichaGenerals["community"]?></span>                
+                <label> Campamento </label>
+                <span><?php echo $fichaGenerals["compound"]?></span>                
+            </div>
+        </div>
+        
     </body>
 </html>

@@ -8,7 +8,7 @@
 class Ficha {
     //atributes
     private $id, $iDate, $fDate, $dDate, $aDate, $tStudents, $cityTour;
-    private $compoundID, $communityID;
+    private $compound, $community, $program;
     private $flights = array(array(
         "id" => "",
         "type" => "",
@@ -54,9 +54,10 @@ class Ficha {
                    $this->dDate = $row["dDate"];
                    $this->aDate = $row["aDate"];
                    $this->tStudents = $row["tStudents"];
-                   $this->cityTour = $row["cityTour"];
-                   $this->compoundID = $row["compound"];
-                   $this->communityID = $row["community"];
+                   $this->cityTour = $row["tour"];
+                   $this->compound = $row["compound"];
+                   $this->community = $row["community"];
+                   $this->program = $row["program"];
                }
             }
             return 'ok';
@@ -170,9 +171,10 @@ class Ficha {
             "dDate" => $this->dDate,
             "aDate" => $this->aDate,
             "tStudents" => $this->tStudents,
-            "cityTour" => $this->cityTour,
-            "compoundID" => $this->compoundID,
-            "communityID" => $this->communityID
+            "tour" => $this->cityTour,
+            "compound" => $this->compound,
+            "community" => $this->community,
+            "program" => $this->program
         );
     }
     public function getID() {
@@ -186,8 +188,14 @@ class Ficha {
     }
     public function getSatff(){
         return $this->staff;
+    }    
+    public function getUniversities(){
+        return $this->universities;
     }
-
+    public function getVolunteers(){
+        return $this->volunteers;
+    }
+     
     public function setiDate($param_iDate){
         try{
             $this->iDate = $param_iDate;
