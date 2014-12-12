@@ -11,9 +11,18 @@ and open the template in the editor.
 .container {
     clear: both;
     width: 90%;
-    max-width: 1024px;
+    min-width: 1024px;
     border: 1px solid;
     margin: 0 auto;
+}
+
+.container a{
+    color: #7a7a7a;
+    text-decoration: none;
+}
+
+.container a:hover{
+    color: #206f9f;
 }
 
 .fichaSection {
@@ -23,15 +32,21 @@ and open the template in the editor.
 }
 
 .fichaGenerals span{
-    color: red;
     display: block;
     width: 100%;
     font-size: 100%;
-    border: 1px solid
 }
 
-.fichaGenerals span#fichaID{
-    
+.ficha-tittle{
     font-size: 200%;
-    text-align: center;
+}
+
+.ficha-program{
+    font-style: oblique;
+    font-weight: 100;
+}
+
+.ficha-places {
+    font-size: 125%;
+    font-weight: 600; 
 }

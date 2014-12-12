@@ -47,12 +47,12 @@ body {
     color: #206f9f;
 }
 
-a {
+header a {
     color: #f0f0f0;
     text-decoration: none;
 }
 
-a:hover {
+header a:hover {
     color: #000;
 }
 
