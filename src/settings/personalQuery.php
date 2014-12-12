@@ -13,9 +13,11 @@
             while($row = $result->fetch_assoc()){
                 if ($row['tipos'] == 1){
                     $permanentRoles[$i] = $row['roles'];
+                    $permanentId[$i] = $row['id'];
                     $i ++;
                 } else{
                     $temporaryRoles[$j] = $row['roles'];
+                    $temporaryId[$j] = $row['id'];
                     $j++;
                 }                
             }

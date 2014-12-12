@@ -6,8 +6,8 @@ session_start();
 //cargar variables de base de datos
 require '/src/settings/personalQuery.php';
 //variables del formulario
-$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $otraCondicionMedica = $alergia = $alergiaInput = $otroIdioma = $contDate = $entDate = "";
-$nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = "";
+$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $condition = $otraCondicionMedica = $alergia = $alergiaInput = $otroIdioma = $contDate = $entDate = $idioma = "";
+$nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
 $nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = $programErr = $emergencyNameErr = $emergencyTelephoneErr = $emergencyAddressErr = $condicionMedicaErr = $alergiaErr = $idiomaErr = "";
 $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
 $arregloBorn = array(
@@ -34,7 +34,8 @@ $checkedalergia1 = $checkedalergia2 = "";
 $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
 $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
 $idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = "";
-$flag = $flag2 = FALSE;
+$flag = FALSE;
+$flag2 = TRUE;
 $errorMessage = "";
 
 
@@ -44,7 +45,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $nameErr = "El nombre del personal es requerido!";
     }else{
         $nameTemp = cleanInput($_POST["name"]);
-        if (!preg_match("/^[a-zA-Z ]*$/",$nameTemp)){
+        if (!preg_match("/^[a-zA-Z. ]*$/",$nameTemp)){
             $nameErr = "El nombre solo debe incluir letras!";
         }else{
             $name = $nameTemp;
@@ -54,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         $lastnameErr = "El apellido del personal es requerido!";
     }else{
         $lastnameTemp = cleanInput($_POST["lastname"]);
-        if (!preg_match("/^[a-zA-Z ]*$/",$lastnameTemp)){
+        if (!preg_match("/^[a-zA-Z. ]*$/",$lastnameTemp)){
             $lastnameErr = "El apellido solo debe incluir letras!";
         }else{
             $lastname = $lastnameTemp;
@@ -415,18 +416,191 @@ if(!$name == "" && !$lastname == "" && !$id == "" && !$gender == "" && !$bornDat
     }
     $result= $conn->query($query);
     if (!$result){
-        echo "<script type='text/javascript'>alert('failed')</script>";
+        echo "<script type='text/javascript'>alert('failed-staff')</script>";
     } else{
         if(!$emergencyName == "" && !$emergencyTelephone == "" && !$emergencyAddress == ""){
             $query = "CALL insert_staff_emergencyContact('$id','$emergencyName','$emergencyAddress','$emergencyTelephone')";
             $result= $conn->query($query);
             if (!$result){
-                echo "<script type='text/javascript'>alert('failed')</script>";
+                echo "<script type='text/javascript'>alert('failed-emergencyContacts')</script>";
             }
-            else{
-               echo "<script type='text/javascript'>alert('submitted successfully!')</script>"; 
-            }
-        }     
+            else{   
+                if (!empty($_POST["ambiente"])){
+                    $program = cleanInput($_POST["ambiente"]);
+                    $query = "CALL insert_staffxprograms('$id','$program')";
+                    $result= $conn->query($query);
+                    if (!$result){
+                        $flag2 = FALSE;                    
+                    }
+                }
+                if (!empty($_POST["humanRights"])){
+                    $program = cleanInput($_POST["humanRights"]);
+                    $query = "CALL insert_staffxprograms('$id','$program')";
+                    $result= $conn->query($query);
+                    if (!$result){
+                        $flag2 = FALSE;                        
+                   }
+                }
+                if (!empty($_POST["medical"])){
+                    $program = cleanInput($_POST["medical"]);
+                    $query = "CALL insert_staffxprograms('$id','$program')";
+                    $result= $conn->query($query);
+                    if (!$result){
+                        $flag2 = FALSE;                      
+                    }
+                }
+                if (!empty($_POST["microfinanzas"])){
+                    $program = cleanInput($_POST["microfinanzas"]);
+                    $query = "CALL insert_staffxprograms('$id','$program')";
+                    $result= $conn->query($query);
+                    if (!$result){
+                        $flag2 = FALSE;                     
+                    }
+                }
+                if (!empty($_POST["negocios"])){
+                    $program = cleanInput($_POST["negocios"]);
+                    $query = "CALL insert_staffxprograms('$id','$program')";
+                    $result= $conn->query($query);
+                    if (!$result){
+                        $flag2 = FALSE;                       
+                    }
+                }
+                if (!empty($_POST["publicHealth"])){
+                    $program = cleanInput($_POST["publicHealth"]);
+                    $query = "CALL insert_staffxprograms('$id','$program')";
+                    $result= $conn->query($query);
+                    if (!$result){
+                        $flag2 = FALSE;                 
+                    }
+                }
+                if (!empty($_POST["profesional"])){
+                    $program = cleanInput($_POST["profesional"]);
+                    $query = "CALL insert_staffxprograms('$id','$program')";
+                    $result= $conn->query($query);
+                    if (!$result){
+                        $flag2 = FALSE;                        
+                    }
+                }
+                if (!$flag2){
+                    echo "<script type='text/javascript'>alert('failed-programas')</script>";
+                } else{
+                    if (empty($_POST["naCondicionMedica"])){                        
+                        if (!empty($_POST["diabetes"])){
+                            $condition = cleanInput($_POST["diabetes"]);
+                            $query = "CALL insert_staff_medicalConditions('$id','$condition')";
+                            $result= $conn->query($query);
+                            if (!$result){
+                                $flag2 = FALSE;                        
+                            }
+                        }
+                        if (!empty($_POST["hipertension"])){
+                            $condition = cleanInput($_POST["hipertension"]);                      
+                            $query = "CALL insert_staff_medicalConditions('$id','$condition')";
+                            $result= $conn->query($query);
+                            if (!$result){
+                                $flag2 = FALSE;                        
+                            }
+                        }
+                        if (!empty($_POST["asma"])){
+                            $condition = cleanInput($_POST["asma"]);
+                            $query = "CALL insert_staff_medicalConditions('$id','$condition')";
+                            $result= $conn->query($query);
+                            if (!$result){
+                                $flag2 = FALSE;                        
+                            }
+                        }
+                        if (!empty($_POST["problemasCardiacos"])){
+                            $condition = cleanInput($_POST["problemasCardiacos"]);
+                            $query = "CALL insert_staff_medicalConditions('$id','$condition')";
+                            $result= $conn->query($query);
+                            if (!$result){
+                                $flag2 = FALSE;                        
+                            }
+                        }
+                        if (!empty($_POST["epilepsia"])){
+                            $condition = cleanInput($_POST["epilepsia"]);              
+                            $query = "CALL insert_staff_medicalConditions('$id','$condition')";
+                            $result= $conn->query($query);
+                            if (!$result){
+                                $flag2 = FALSE;                        
+                            }
+                        }                  
+                        if (!empty($_POST["otroCondicionMedica"])){                     
+                            $query = "CALL insert_staff_medicalConditions('$id','$otraCondicionMedica')";
+                            $result= $conn->query($query);
+                            if (!$result){
+                                $flag2 = FALSE;                        
+                            }
+                        }
+                    }
+                    if (!$flag2){
+                        echo "<script type='text/javascript'>alert('failed-condiciones')</script>";
+                    } else{
+                        if($alergia == 1){
+                            $query = "CALL insert_staff_allergies('$id','$alergiaInput')";
+                            $result= $conn->query($query);
+                            if (!$result){
+                                $flag2 = FALSE;                        
+                            }
+                        }
+                        if(!$flag2){
+                            echo "<script type='text/javascript'>alert('failed-alergias')</script>";
+                        }
+                        else{
+                            if (empty($_POST["naIdioma"])){                        
+                                if (!empty($_POST["ingles"])){
+                                    $idioma = cleanInput($_POST["ingles"]);
+                                    $query = "CALL insert_staff_spokenLanguage('$id','$idioma')";
+                                    $result= $conn->query($query);
+                                    if (!$result){
+                                        $flag2 = FALSE;                        
+                                    }
+                                }
+                                if (!empty($_POST["frances"])){
+                                    $idioma = cleanInput($_POST["frances"]);  
+                                    $query = "CALL insert_staff_spokenLanguage('$id','$idioma')";
+                                    $result= $conn->query($query);
+                                    if (!$result){
+                                        $flag2 = FALSE;                        
+                                    }
+                                }
+                                if (!empty($_POST["portugues"])){
+                                    $idioma = cleanInput($_POST["portugues"]);
+                                    $query = "CALL insert_staff_spokenLanguage('$id','$idioma')";
+                                    $result= $conn->query($query);
+                                    if (!$result){
+                                        $flag2 = FALSE;                        
+                                    }
+                                }                                
+                                if (!empty($_POST["otroIdioma"])){                                      
+                                    $query = "CALL insert_staff_spokenLanguage('$id','$otroIdioma')";
+                                    $result= $conn->query($query);
+                                    if (!$result){
+                                        $flag2 = FALSE;                        
+                                    }
+                                }
+                            }
+                            if(!$flag2){
+                                echo "<script type='text/javascript'>alert('failed-idioma')</script>";
+                            }else{
+                                echo "<script type='text/javascript'>alert('submitted successfully!')</script>"; 
+                                $name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $condition = $otraCondicionMedica = $alergia = $alergiaInput = $otroIdioma = $contDate = $entDate = $idioma = "";
+                                $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
+                                $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
+                                $selectedBloodType = $selectedGender = $selectedRol = "selected";
+                                $checkedmaritalstatus = $checkedstaffType = $checkedalergia = "checked";
+                                $checkedmaritalstatus1 = $checkedmaritalstatus2 = $checkedmaritalstatus3 = $checkedmaritalstatus4 = $checkedmaritalstatus5 = $checkedstaffType1 = $checkedstaffType2 ="";
+                                $checkedalergia1 = $checkedalergia2 = "";
+                                $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
+                                $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
+                                $idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = "";
+                                $selectedBloodType1 = $selectedBloodType2 = $selectedBloodType3 = $selectedBloodType4 = $selectedBloodType5 = $selectedBloodType6 = $selectedBloodType7 = $selectedBloodType8 = $selectedGender1 = $selectedGender2 = "";
+                            }  
+                        }
+                    }                   
+                }
+            }     
+        }
     }
 }
    
@@ -483,17 +657,23 @@ function is_leap_year($year){
     <script type="text/javascript">
         var permanentRoles = new Array();
         var temporaryRoles = new Array();
+        var permanentRolesId = new Array();
+        var temporaryRolesId = new Array();
         
         function set_roles(){
             permanentRoles = <?php echo json_encode($permanentRoles); ?>;
+            permanentRolesId = <?php echo json_encode($permanentId); ?>;
             temporaryRoles = <?php echo json_encode($temporaryRoles); ?>;
+            temporaryRolesId = <?php echo json_encode($temporaryId); ?>;
         }
         
-        function get_roles(tipos){            
+        function get_roles(tipos){      
             if(tipos == 1){
                 var roles = permanentRoles;
+                var id = permanentRolesId;
             }else{
                 var roles = temporaryRoles;
+                var id = temporaryRolesId;
             }
             var select = document.getElementById('rol');
             var opt = new Array(roles.length);
@@ -507,19 +687,21 @@ function is_leap_year($year){
                     select.appendChild(option);
                 }
                 opt[i] = document.createElement('option');
-                opt[i].value = i;
+                opt[i].value = id[i];
                 opt[i].innerHTML = roles[i];
                 select.appendChild(opt[i]);
             }
         }
         
-        function get_role(){            
+        function get_role(){      
             var selectedstaffType = <?php echo json_encode($staffType); ?> ;
             if (!selectedstaffType == ""){
                 if(selectedstaffType == 1){
                     var roles = permanentRoles;
+                    var id = permanentRolesId;
                 }else{
                     var roles = temporaryRoles;
+                    var id = temporaryRolesId;
                 }
                 var select = document.getElementById('rol');
                 var opt = new Array(roles.length);
@@ -533,7 +715,7 @@ function is_leap_year($year){
                         select.appendChild(option);
                     }
                     opt[i] = document.createElement('option');
-                    opt[i].value = i;
+                    opt[i].value = id[i];
                     opt[i].innerHTML = roles[i];
                     select.appendChild(opt[i]);
                 }
@@ -585,6 +767,14 @@ function is_leap_year($year){
                     if (option[i].value == selectedRole){
                         if(option[i].innerHTML == "Coordinador de Programa" || option[i].innerHTML == "Gerente de Programa" || option[i].innerHTML == "PA de Programas" || option[i].innerHTML == "Interpreter" ){
                             document.getElementById('programs').style.display='block'; 
+                        }else{
+                            document.getElementById('ambiente').checked = false;
+                            document.getElementById('medical').checked = false;
+                            document.getElementById('humanRights').checked = false;
+                            document.getElementById('microfinanzas').checked = false;
+                            document.getElementById('profesional').checked = false;
+                            document.getElementById('publicHealth').checked = false;
+                            document.getElementById('negocios').checked = false;
                         }
                     }
                 }
@@ -596,6 +786,13 @@ function is_leap_year($year){
                     }
                     else{
                         document.getElementById('programs').style.display='none'; 
+                        document.getElementById('ambiente').checked = false;
+                        document.getElementById('medical').checked = false;
+                        document.getElementById('humanRights').checked = false;
+                        document.getElementById('microfinanzas').checked = false;
+                        document.getElementById('profesional').checked = false;
+                        document.getElementById('publicHealth').checked = false;
+                        document.getElementById('negocios').checked = false;
                     }
                 }
             }
@@ -694,8 +891,8 @@ function is_leap_year($year){
                         <label class="description">Tipo de Personal </label>
                         <span>  
                             <input  name="staffType" type="radio" value="0" style="display:none;" <?php echo $checkedstaffType;?>>
-                            <input  name="staffType"  type="radio" value="1" onclick="get_roles(1);get_fecha();clean_fechaErr(1);" <?php echo $checkedstaffType1;?> >Permanente
-                            <input  name="staffType"  type="radio" value="2" onclick="get_roles(2);get_fecha();clean_fechaErr(2);" <?php echo $checkedstaffType2;?> >Temporal
+                            <input  name="staffType"  type="radio" value="1" onclick="get_roles(1);get_fecha();clean_fechaErr(1);get_programs()" <?php echo $checkedstaffType1;?> >Permanente
+                            <input  name="staffType"  type="radio" value="2" onclick="get_roles(2);get_fecha();clean_fechaErr(2);get_programs()" <?php echo $checkedstaffType2;?> >Temporal
                         </span><p class="guidelines" id="guide_7"><small>Permanente para contratos de más de 6 meses o indefinidos. Temporal contratos menores a 6 meses </small></p> 
                         <br><br>
                         <span class="error">
@@ -776,14 +973,14 @@ function is_leap_year($year){
                     <li id="programs" style="display:none">
                 <label class="description" for="element_37">Programas </label>
                 <span>
-                        <input  name="ambiente"  type="checkbox" <?php echo $programAmbienteCh;?> value="1" />Ambiental
-                        <input  name="humanRights"  type="checkbox" <?php echo $programHumanRightsCh;?> value="1" />Derechos Humanos
-                        <input  name="medical"  type="checkbox" <?php echo $programMedicalCh;?> value="1" />Medical
+                        <input id="ambiente" name="ambiente"  type="checkbox" <?php echo $programAmbienteCh;?> value="4" />Ambiental
+                        <input id="humanRights" name="humanRights"  type="checkbox" <?php echo $programHumanRightsCh;?> value="5" />Derechos Humanos
+                        <input id="medical" name="medical"  type="checkbox" <?php echo $programMedicalCh;?> value="6" />Medical/Dental
                         <br>
-                        <input  name="microfinanzas"  type="checkbox" <?php echo $programMicrofinanceCh;?> value="1" />Microfinanzas                           
-                        <input  name="negocios"  type="checkbox" <?php echo $programBusinessCh;?> value="1" />Negocios
-                        <input  name="publicHealth"  type="checkbox" <?php echo $programPublicHealthCh;?> value="1" />Salud Publica
-                        <input  name="profesional"  type="checkbox" <?php echo $programProfesionalCh;?> value="1" />Profesional
+                        <input id="microfinanzas" name="microfinanzas"  type="checkbox" <?php echo $programMicrofinanceCh;?> value="7" />Microfinanzas                           
+                        <input id="negocios" name="negocios"  type="checkbox" <?php echo $programBusinessCh;?> value="2" />Negocios
+                        <input id="publicHealth" name="publicHealth"  type="checkbox" <?php echo $programPublicHealthCh;?> value="8" />Salud Publica
+                        <input id="profesional" name="profesional"  type="checkbox" <?php echo $programProfesionalCh;?> value="10" />Profesional
                 </span><p class="guidelines" id="guide_37"><small>Programas en los que esta involucrado</small></p>
                  <span class="error">
                             <p class="error"><?php echo $programErr;?></p>
@@ -977,16 +1174,16 @@ function is_leap_year($year){
                     <li id="li_35" >
                 <label class="description" for="element_35">Condición Médica </label>
                 <span>
-                        <input id="diabetes" name="diabetes"  type="checkbox" <?php echo $condicionDiabetesCh;?> value="1" />Diabetes
-                        <input id="hipertension" name="hipertension"  type="checkbox" <?php echo $condicionHipertensionCh;?> value="1" />Hipertension
-                        <input id="asma" name="asma"  type="checkbox" <?php echo $condicionAsmaCh;?> value="1" />Asma
+                        <input id="diabetes" name="diabetes"  type="checkbox" <?php echo $condicionDiabetesCh;?> value="Diabetes" />Diabetes
+                        <input id="hipertension" name="hipertension"  type="checkbox" <?php echo $condicionHipertensionCh;?> value="Hipertension" />Hipertension
+                        <input id="asma" name="asma"  type="checkbox" <?php echo $condicionAsmaCh;?> value="Asma" />Asma
                         <br>
-                        <input id="problemasCardiacos" name="problemasCardiacos"  <?php echo $condicionProblemasCardiacosCh;?> type="checkbox" value="1" />Problemas Cardiacos
-                        <input id="epilepsia" name="epilepsia"  type="checkbox" <?php echo $condicionEpilepsiaCh;?> value="1" />Epilepsia
+                        <input id="problemasCardiacos" name="problemasCardiacos"  <?php echo $condicionProblemasCardiacosCh;?> type="checkbox" value="Problemas Cardiacos" />Problemas Cardiacos
+                        <input id="epilepsia" name="epilepsia"  type="checkbox" <?php echo $condicionEpilepsiaCh;?> value="Epilepsia" />Epilepsia
                         <br>
-                        <input id="naCondicionMedica" name="naCondicionMedica"  type="checkbox" <?php echo $condicionNaCh;?> value="1" onclick="uncheckedCondicionMedica()" />Ninguna 
+                        <input id="naCondicionMedica" name="naCondicionMedica"  type="checkbox" <?php echo $condicionNaCh;?> value="ninguna" onclick="uncheckedCondicionMedica()" />Ninguna 
                         <br>
-                        <input id="otroCondicionMedica" name="otroCondicionMedica"  type="checkbox" <?php echo $condicionOtroCh;?> value="1" onclick="get_otroCondicionMedica()" />Otro
+                        <input id="otroCondicionMedica" name="otroCondicionMedica"  type="checkbox" <?php echo $condicionOtroCh;?> value="otro" onclick="get_otroCondicionMedica()" />Otro
                 </span> 
                 </li>		
                     <li id="labelotrocondicion" style="display:none" >
@@ -1022,13 +1219,13 @@ function is_leap_year($year){
                     <li id="li_38" >
                 <label class="description" for="element_38">Idiomas </label>
                 <span>
-                    <input id="ingles" name="ingles"  type="checkbox" <?php echo $idiomaInglesCh;?> value="1" />Ingles                        
-                    <input id="frances" name="frances"  type="checkbox" <?php echo $idiomaFrancesCh;?> value="1" />Frances 
-                    <input id="portugues" name="portugues"  type="checkbox" <?php echo $idiomaPortuguesCh;?> value="1" />Portugues
+                    <input id="ingles" name="ingles"  type="checkbox" <?php echo $idiomaInglesCh;?> value="Ingles" />Ingles                        
+                    <input id="frances" name="frances"  type="checkbox" <?php echo $idiomaFrancesCh;?> value="Frances" />Frances 
+                    <input id="portugues" name="portugues"  type="checkbox" <?php echo $idiomaPortuguesCh;?> value="Portugues" />Portugues
                     <br>
-                    <input id="naIdioma" name="naIdioma"  type="checkbox" <?php echo $idiomaNaCh;?> value="1" onclick="uncheckedIdioma()" />Ninguno  
+                    <input id="naIdioma" name="naIdioma"  type="checkbox" <?php echo $idiomaNaCh;?> value="ninguno" onclick="uncheckedIdioma()" />Ninguno  
                     <br>
-                    <input id="otroIdioma" name="otroIdioma"  type="checkbox" <?php echo $idiomaOtroCh;?> value="1" onclick="get_otroIdioma()" />Otro                     
+                    <input id="otroIdioma" name="otroIdioma"  type="checkbox" <?php echo $idiomaOtroCh;?> value="otro" onclick="get_otroIdioma()" />Otro                     
                 </span> 
                 </li>		
                     <li id="labelotroIdioma" style="display:none" >
