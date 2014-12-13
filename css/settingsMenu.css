@@ -1,0 +1,27 @@
+
+.btn {
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 28px;
+  background: #3498DB;
+  font-family: Georgia;
+  float: right;
+  color: #ffffff;
+  font-size: 14px;
+  text-shadow: none;
+  border-radius: 3px;
+  box-shadow: none;
+  padding: 7px 15px 8px 15px;
+  text-decoration: none;
+  transition: 0.25s;
+  width: 200px;
+  display: block;
+  
+  margin: 0 auto;
+}
+
+.btn:hover {
+  background-color: #2980B9;
+  
+}
+
