@@ -7,6 +7,9 @@ session_id('pgbl');
 session_start();
 
 $ficha = $_SESSION["ficha"];
+$fichaID = $ficha->getID();
+$communities = $ficha->getCommunities();
+$compounds = $ficha->getCompounds();
 ?>
 <html>
     <head>
@@ -23,8 +26,19 @@ $ficha = $_SESSION["ficha"];
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/ficha.css" />
         <!-- JS scripts-->
+        <script src="js/ficha.js"></script>
+        <script type="text/javascript">
+            function getCommunities(){
+                var a = <?php echo json_encode($communities)?>;
+                return a;
+            }
+            function getCompounds(){
+                var a = <?php echo json_encode($compounds)?>;
+                return a;
+            }
+        </script>
     </head>
-    <body>
+    <body onload="loadData(getCommunities(),getCompounds());">
         <?php
         require 'header.php';
         ?>
@@ -33,20 +47,23 @@ $ficha = $_SESSION["ficha"];
                 <?php
                 $fichaGenerals = $ficha->getFichaData();
                 ?>
-                <h2 class="ficha-tittle"><?php echo $fichaGenerals["id"]?>
+                <h2 class="ficha-tittle"><?php echo $fichaID;?>
                     <span class="ficha-program"><?php echo $fichaGenerals["program"]?></span>
                 </h2>
                 <h2 class="ficha-places"> Comunidad </h2>
-                <a href="" class="ficha-places-data">
-                    <span><?php echo $fichaGenerals["community"]?></span>
+                <a class="ficha-places-data" id="selectedCommunity" onclick="loadCommunities()">
+                    <span id="selectedCommunityName"><?php echo $fichaGenerals["community"]?></span>
+                    <ul class="cbp-tm-submenu" id="communityList">
+                        
+                    </ul>
                 </a>
                 <h2 class="ficha-places"> Campamento </h2>
-                <a href="" class="ficha-places-data">
-                    <span><?php echo $fichaGenerals["compound"]?></span>
-                </a>
-                <!--
-                http://tympanus.net/Blueprints/TooltipMenu/#
-                -->
+                <a class="ficha-places-data" id="selectedCompound" onclick="loadCompounds()">
+                    <span id="selectedCompoundName"><?php echo $fichaGenerals["compound"]?></span>
+                    <ul class="cbp-tm-submenu" id="compoundList">
+                        
+                    </ul>
+                </a>                
             </div>
         </div>
     </body>

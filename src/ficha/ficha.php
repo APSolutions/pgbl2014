@@ -60,10 +60,8 @@ class Ficha {
                    $this->program = $row["program"];
                }
             }
-            return 'ok';
        } catch (Exception $ex) {
-           print "error";
-           return 'error on variables';
+           //in error case
        } 
     }
     private function obtainFlights(){
@@ -140,13 +138,11 @@ class Ficha {
                    $i ++;
                }
             }
-            return 'ok';
         } catch (Exception $ex) {
-            return 'error';
         }
     }
     private function obtainUniversities(){
-        try {
+        try{
             require '../login/connect.php';
             $query = "CALL get_fichaUniversities($this->id);";
             $result = $conn->query($query);
@@ -194,6 +190,32 @@ class Ficha {
     }
     public function getVolunteers(){
         return $this->volunteers;
+    }
+    public function getCommunities(){
+        $communities = $this->runQuery("CALL get_communities();", "communities");
+        return $communities;
+    }
+    public function getCompounds(){
+        $compounds = $this->runQuery("CALL get_compounds();", "compound");
+        return $compounds;
+    }
+    
+    
+    private function runQuery($query, $rowName){        
+        try{
+            require 'src/login/connect.php';
+            $result = $conn->query($query);
+            if ($result->num_rows > 0){
+                $i = 0;
+                while($row = $result->fetch_assoc()){
+                    $variable[$i] = $row[$rowName];
+                    $i ++;
+               }
+            }
+            return $variable;
+        } catch (Exception $ex){
+            return "Error";
+        }
     }
      
     public function setiDate($param_iDate){
