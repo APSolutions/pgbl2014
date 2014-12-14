@@ -10,6 +10,7 @@ $ficha = $_SESSION["ficha"];
 $fichaID = $ficha->getID();
 $communities = $ficha->getCommunities();
 $compounds = $ficha->getCompounds();
+$fichaGenerals = $ficha->getFichaData();
 ?>
 <html>
     <head>
@@ -28,8 +29,6 @@ $compounds = $ficha->getCompounds();
         <link rel="stylesheet" type="text/css" href="css/normalize.css"/>
         <!-- JS scripts-->
         <script src="js/ficha.js"></script>
-        <script src="js/classie.js"></script>
-        <script src="js/selectFx.js"></script>
         <script type="text/javascript">
             function getCommunities(){
                 var a = <?php echo json_encode($communities)?>;
@@ -39,37 +38,29 @@ $compounds = $ficha->getCompounds();
                 var a = <?php echo json_encode($compounds)?>;
                 return a;
             }
-            function setup(){
-                (function() {
-                    [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
-                        new SelectFx(el);
-                    } );
-                })();
+            function selectedCommunity(){
+                var a = <?php echo json_encode($fichaGenerals["community"])?>;
+                return a;
             }
+            function selectedCompound(){
+                var a = <?php echo json_encode($fichaGenerals["compound"])?>;
+                return a;
+            }                
         </script>
     </head>
-    <body onload="loadData(getCommunities(),getCompounds()),loadCommunities(),loadCompounds(),setup();">
+    <body onload="loadData(getCommunities(),getCompounds());loadCommunities(selectedCommunity());loadCompounds(selectedCommunity());">
         <?php
         require 'header.php';
         ?>
         <div class="container">
             <div class="fichaSection fichaGenerals">
-                <?php
-                $fichaGenerals = $ficha->getFichaData();
-                ?>
                 <h2 class="ficha-tittle"><?php echo $fichaID;?>
                     <span class="ficha-program"><?php echo $fichaGenerals["program"]?></span>
                 </h2>
                 <h2 class="ficha-places"> Comunidad </h2>
-                <section>
-                    <select class="cs-select cs-skin-slide" id="communityList">
-                    </select>
-                </section>
-                <h2 class="ficha-places"> Campamento </h2>
-                <section>
-                    <select class="cs-select cs-skin-slide" id="compoundList">
-                    </select>
-                </section>            
+                <select class="cs-select" id="communityList"></select>
+                <h2 class="ficha-places"> Campamento </h2>                
+                <select class="cs-select" id="compoundList"></select>                            
             </div>
         </div>        
     </body>
