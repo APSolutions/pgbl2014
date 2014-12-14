@@ -13,20 +13,15 @@ function loadCommunities(){
         var list = document.getElementById("communityList");
         var item = [];
         for (var i = 0; i < comunities.length; i++){
-           item[i] = document.createElement('li');
-           var link = document.createElement('a');
-           link.id = "community"+i;
-           link.className = "communitiesRecord";
-           link.innerHTML = comunities[i];
-           item[i].appendChild(link);
+           item[i] = document.createElement('option');
+           item[i].id = "community"+i;
+           item[i].className = "communitiesRecord";
+           item[i].setAttribute("onclick", "changeCommunity('community"+i+"')",false); 
+           item[i].value = comunities[i];
+           item[i].innerHTML = comunities[i];
            list.appendChild(item[i]);
         }
         comunitiesLoaded = true;
-        
-        var element= document.getElementsByClassName('communitiesRecord');
-        for(var i=0; i < element.length; i++){
-            element[i].setAttribute("onclick", "changeCommunity('community"+i+"')",false);   
-        }
     }    
 }
 
@@ -35,33 +30,24 @@ function loadCompounds(){
         var list = document.getElementById("compoundList");
         var item = [];
         for (var i = 0; i < compounds.length; i++){
-           item[i] = document.createElement('li');
-           var link = document.createElement('a');
-           link.id = "compound"+i;
-           link.className = "compoundsRecord";
-           link.innerHTML = compounds[i];
-           item[i].appendChild(link);
+           item[i] = document.createElement('option');
+           item[i].id = "compound"+i;
+           item[i].className = "compoundsRecord";
+           item[i].setAttribute("onclick", "changeCompound('compound"+i+"')",false); 
+           item[i].value = compounds[i];
+           item[i].innerHTML = compounds[i];
            list.appendChild(item[i]);
         }
         compoundsLoaded = true;
-        
-        var element= document.getElementsByClassName('compoundsRecord');
-        for(var i=0; i < element.length; i++){
-            element[i].setAttribute("onclick", "changeCompound('compound"+i+"')",false);   
-        }
     }    
 }
 
 function changeCommunity(param_community){
-   var oldCommunity = document.getElementById("selectedCommunityName");
-   var newCommunity = document.getElementById(param_community).innerHTML;
-   oldCommunity.innerHTML = newCommunity;
+   alert(param_community);
 }
 
 function changeCompound(param_compound){
-   var oldCompound = document.getElementById("selectedCompoundName");
-   var newCompound = document.getElementById(param_compound).innerHTML;
-   oldCompound.innerHTML = newCompound;
+   alert(param_compound);
 }
 
 

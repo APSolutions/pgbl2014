@@ -25,8 +25,11 @@ $compounds = $ficha->getCompounds();
         <!-- CSS scripts-->
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/ficha.css" />
+        <link rel="stylesheet" type="text/css" href="css/normalize.css"/>
         <!-- JS scripts-->
         <script src="js/ficha.js"></script>
+        <script src="js/classie.js"></script>
+        <script src="js/selectFx.js"></script>
         <script type="text/javascript">
             function getCommunities(){
                 var a = <?php echo json_encode($communities)?>;
@@ -36,9 +39,16 @@ $compounds = $ficha->getCompounds();
                 var a = <?php echo json_encode($compounds)?>;
                 return a;
             }
+            function setup(){
+                (function() {
+                    [].slice.call( document.querySelectorAll( 'select.cs-select' ) ).forEach( function(el) {	
+                        new SelectFx(el);
+                    } );
+                })();
+            }
         </script>
     </head>
-    <body onload="loadData(getCommunities(),getCompounds());">
+    <body onload="loadData(getCommunities(),getCompounds()),loadCommunities(),loadCompounds(),setup();">
         <?php
         require 'header.php';
         ?>
@@ -51,20 +61,16 @@ $compounds = $ficha->getCompounds();
                     <span class="ficha-program"><?php echo $fichaGenerals["program"]?></span>
                 </h2>
                 <h2 class="ficha-places"> Comunidad </h2>
-                <a class="ficha-places-data" id="selectedCommunity" onclick="loadCommunities()">
-                    <span id="selectedCommunityName"><?php echo $fichaGenerals["community"]?></span>
-                    <ul class="cbp-tm-submenu" id="communityList">
-                        
-                    </ul>
-                </a>
+                <section>
+                    <select class="cs-select cs-skin-slide" id="communityList">
+                    </select>
+                </section>
                 <h2 class="ficha-places"> Campamento </h2>
-                <a class="ficha-places-data" id="selectedCompound" onclick="loadCompounds()">
-                    <span id="selectedCompoundName"><?php echo $fichaGenerals["compound"]?></span>
-                    <ul class="cbp-tm-submenu" id="compoundList">
-                        
-                    </ul>
-                </a>                
+                <section>
+                    <select class="cs-select cs-skin-slide" id="compoundList">
+                    </select>
+                </section>            
             </div>
-        </div>
+        </div>        
     </body>
 </html>
