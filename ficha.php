@@ -6,6 +6,10 @@ session_name('Global');
 session_id('pgbl');
 session_start();
 
+$position=$_SESSION["position"] = "Detalle de la Ficha";
+$_SESSION["action"] = "";
+$_SESSION["program"] = "";
+
 $ficha = $_SESSION["ficha"];
 $fichaID = $ficha->getID();
 $communities = $ficha->getCommunities();
@@ -62,21 +66,28 @@ $fichaGenerals = $ficha->getFichaData();
                 <h2 class="ficha-places"> Campamento </h2>                
                 <select class="cs-select" id="compoundList"></select>                            
             </div>
-            <div class="fichaSection fichaTransportation">
+            <div class="fichaSection fichaFlights">
                 <div class="flights">
-                    <h2 class="ficha-places">Vuelos</h2>
-                    <h3>Total de Estudiantes</h3><span>10</span> 
-                </div>
+                    <h2 class="ficha-tittle">Vuelos</h2>
+                    <table id="tableFlights">
+                        <tr>
+                            <td><h4>Vuelo</h4></td>
+                            <td><h4>Fecha y Hora</h4></td>
+                            <td><h4>Estudiantes</h4></td>
+                        </tr>
+                    </table>                    
+                </div>                
+            </div>
+            <div class="fichaSection fichaTransportation">
                 <div class="busses">
-                    <h2 class="ficha-places">Transporte</h2>
+                    <h2 class="ficha-tittle">Transporte</h2>
                 </div>
-                <div class="totals">
-                    <h2 class="ficha-places">Tour por la ciudad</h2>
-                    <select class="cs-select">
-                        <option value="0" selected>No</option>
-                        <option value="1">Si</option>
-                    </select>
-                </div>
+                <h2 class="ficha-places">Tour por la ciudad</h2>
+                <select class="cs-select">
+                    <option value="0" selected>No</option>
+                    <option value="1">Si</option>
+                </select>
+                <h3>Total de Estudiantes</h3><span>10</span> 
             </div>
             <div class="fichaSection fichaStaff">
                 <h2 class="ficha-tittle">Staff</h2>
