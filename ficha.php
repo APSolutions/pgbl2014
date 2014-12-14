@@ -62,6 +62,42 @@ $fichaGenerals = $ficha->getFichaData();
                 <h2 class="ficha-places"> Campamento </h2>                
                 <select class="cs-select" id="compoundList"></select>                            
             </div>
+            <div class="fichaSection fichaTransportation">
+                <div class="flights">
+                    <h2 class="ficha-places">Vuelos</h2>
+                    <h3>Total de Estudiantes</h3><span>10</span> 
+                </div>
+                <div class="busses">
+                    <h2 class="ficha-places">Transporte</h2>
+                </div>
+                <div class="totals">
+                    <h2 class="ficha-places">Tour por la ciudad</h2>
+                    <select class="cs-select">
+                        <option value="0" selected>No</option>
+                        <option value="1">Si</option>
+                    </select>
+                </div>
+            </div>
+            <div class="fichaSection fichaStaff">
+                <h2 class="ficha-tittle">Staff</h2>
+            </div>
+            <div class="fichaSection fichaVolunteers" style="clear: both;">
+                <h2 class="ficha-tittle">Voluntarios</h2>
+                <div class="volunteers">
+                    <table id="tableVolunteers">
+                        <tr>
+                            <td><h4>Identificación</h4></td>
+                            <td><h4>Nombre</h4></td>
+                            <td><h4>Apellido</h4></td>
+                            <td><h4>Llega antes</h4></td>
+                            <td><h4>Se retira solo</h4></td>
+                            <td><h4>Alergias</h4></td>
+                            <td><h4>Dieta</h4></td>
+                            <td><h4>Comentarios</h4></td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
         </div>        
     </body>
 </html>

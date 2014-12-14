@@ -17,8 +17,6 @@ function loadCommunities(param_community){
         for (var i = 0; i < comunities.length; i++){
            item[i] = document.createElement('option');
            item[i].id = "community"+i;
-           item[i].className = "communitiesRecord";
-           item[i].setAttribute("onclick", "changeCommunity('community"+i+"')",false); 
            item[i].value = comunities[i];
            item[i].innerHTML = comunities[i];
            if (comunities[i] === param_community){
@@ -37,8 +35,6 @@ function loadCompounds(param_compound){
         for (var i = 0; i < compounds.length; i++){
            item[i] = document.createElement('option');
            item[i].id = "compound"+i;
-           item[i].className = "compoundsRecord";
-           item[i].setAttribute("onclick", "changeCompound('compound"+i+"')",false); 
            item[i].value = compounds[i];
            item[i].innerHTML = compounds[i];
            if (compounds[i] === param_compound){
@@ -49,13 +45,4 @@ function loadCompounds(param_compound){
         compoundsLoaded = true;
     }    
 }
-
-function changeCommunity(param_community){
-   alert(param_community);
-}
-
-function changeCompound(param_compound){
-   alert(param_compound);
-}
-
 

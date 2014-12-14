@@ -61,6 +61,8 @@ and open the template in the editor.
     border: none;
     height: 4%;
     -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
     font-weight: 500;
     font-size: 125%;
     min-height: 30px;
@@ -68,4 +70,25 @@ and open the template in the editor.
 
 .cs-select option:checked{
     color: #206f9f;
+}
+
+/******************************************************************************/
+
+/******************************************************************************/
+
+/******************************************************************************/
+.fichaVolunteers{
+    width: 100%;
+}
+
+.volunteers {
+    border: 1px solid;
+    }
+
+.volunteers table{
+    float: left;
+}
+
+.volunteers table td{
+    padding: 1em;
 }
