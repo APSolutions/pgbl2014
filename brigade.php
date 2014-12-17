@@ -33,10 +33,16 @@ $_SESSION["position"] = "Formulario de Brigada";
                 <h2>Datos de la Brigada</h2>
                 <h3>ID Asignado:</h3><span id="fichaID"></span>
                 
-                <form id="frm" class="required" method="post" action="">
-                    <select id="selectUniversity" required></select>
+                <form id="frmRequired" class="required" method="post" action="">
+                    <label for="selectUniversity">Universidad</label>
+                    <select id="selectUniversity" required>
+                        <option value="none" selected>none</option>
+                    </select>
                     <input id="btnAdd" type="button" value="Add"/>
-                    <select id="selectProgram" required></select>
+                    <label for="selectProgram">Programa</label>
+                    <select id="selectProgram" required>
+                        <option value="none" selected>none</option>
+                    </select>
                 </form>
             </div>
             <div class="flights">
