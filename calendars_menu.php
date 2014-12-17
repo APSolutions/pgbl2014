@@ -6,6 +6,7 @@ session_start();
 $_SESSION["position"] = "Calendarios";
 $_SESSION["action"] = "";
 $_SESSION["program"] = "";
+$_SESSION["calendar"] = "";
 ?>
 <!DOCTYPE html>
 <!--
@@ -43,7 +44,7 @@ and open the template in the editor.
                         </a>
                     </li>
                     <li>
-                        <a href="#" name="CBrigradas" onclick="locator(event.currentTarget)">
+                        <a href="<?php echo "src/webrouter.php?position=Calendario de Brigadas"?>" name="Calendario de Brigradas" >
                             <span class="mm-history"></span>
                             <h3 class="cbp-ig-title">Calendarios de Brigradas</h3>
                             <span class="cbp-ig-category">short description</span>

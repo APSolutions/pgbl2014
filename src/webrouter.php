@@ -38,7 +38,7 @@
             $address = "formuniversidad.php";
         }else if($position == "Vehiculos"){
             $address = "formvehiculo.php";
-        }
+        } 
     }else if(!empty($program)){
         if($position == "Fichas"){
             $address = "fichasList.php";
@@ -78,6 +78,10 @@
         else if($position=="Personal" || $position=="Comunidades" || $position=="Campamentos" || $position=="Inventario de Comida" || $position=="Equipos de Cocina" || $position=="Inventario de Medicinas" || $position=="Equipos de Seguridad" || $position=="Vehiculos" || $position=="Roles" || $position=="Universidades"){      
             $address ="settingsMenu.php";
         } 
+        //From calendars_menu
+        else if ($position == "Calendario de Brigadas"){
+            $address ="brigades_calendar.php";
+        }
     }
        
     header('location:../'.$address);
