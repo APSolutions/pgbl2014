@@ -47,6 +47,10 @@ body {
     color: #206f9f;
 }
 
+a {
+    text-decoration: none;    
+}
+
 header a {
     color: #f0f0f0;
     text-decoration: none;
