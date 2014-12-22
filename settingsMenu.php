@@ -3,6 +3,7 @@ require 'src/login/usuario.php';
 session_name('Global');
 session_id('pgbl');
 session_start();
+require '/src/settings/viewAndEdit.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -17,6 +18,10 @@ session_start();
         <link rel="shortcut icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
         <link rel="stylesheet" type="text/css" href="css/settingsMenu.css" media="all">
+        <script type="text/javascript">
+            var comunidades = new Array();
+            
+        </script>
     </head>
     <body>
         <div class="main_body">
@@ -37,8 +42,23 @@ session_start();
                             <button class="btn" name="Eliminar">Eliminar</button>
             </a>   
         </div>     
-        <!-- DC DataGrid Start -->
-
-        <!-- DC DataGrid End -->
+        <table class="vista">
+            <tr>
+                <?php
+                    for ($i=0; $i<count($aHeader); $i++) {
+                    echo "<td>".$aHeader[$i]."</td>";                       
+                    }
+                ?>
+            </tr> 
+            <?php
+                for($i=0;$i<count($aContenido);$i++){
+                    echo"<tr>";
+                    for($j=0;$j<$col;$j++){
+                        echo "<td>".$aContenido[$i][$j]."</td>";
+                    }
+                    echo"</tr>";
+                }
+            ?>
+        </table>
     </body>
 </html>
