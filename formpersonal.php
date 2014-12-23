@@ -1260,7 +1260,7 @@ function is_leap_year($year){
                      </span>
                 </li>
                     <li class="buttons">                
-                        <input id="saveForm" type="submit" class="button_text" name="submit" value="submit"/>
+                        <input id="saveForm" type="submit" class="button_text" name="submit" value="submit" />
                     </li>
                 </ul>
             </form>	

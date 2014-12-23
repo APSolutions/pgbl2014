@@ -1,4 +1,21 @@
 
+#wrapper {
+  margin-right: 200px;
+}
+#content {
+  float: left;
+  width: 100%;
+  background-color: #ffffff;
+}
+#menu {
+  float: right;
+  width: 200px;
+  margin-right: -200px;
+  background-color: #ffffff;
+}
+#cleared {
+  clear: both;
+}
 .btn {
   -webkit-border-radius: 28;
   -moz-border-radius: 28;
@@ -15,15 +32,23 @@
   transition: 0.25s;
   width: 200px;
 }
-
 .btn:hover {
   background-color: #2980B9;
   
 }
-
-.menu {
-    float: right;
-    margin-top: 10%;
-    margin-right: 15%;
+.vista{
+    border: 1px solid black;
+    border-collapse: collapse;
+    width: 50%;
+    height: 50px;
 }
+td{
+    padding: 5px;
+    border: 1px solid grey;
+    text-align: center;
+    vertical-align: center;
+}
+
+
+
 
