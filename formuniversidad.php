@@ -3,9 +3,17 @@ require 'src/login/usuario.php';
 session_name('Global');
 session_id('pgbl');
 session_start();
+require 'src/settings/Edit.php';
+if ($ename != "" && $ecountry != "" && $ecity != ""){
+    $universityTemp = $ename;
+    $countryTemp = $ecountry;
+    $locationTemp = $ecity;
+}else{
+    $universityTemp = $countryTemp = $locationTemp = "";
+}
+
 //variables del formulario
 $university = $country = $location = "";
-$universityTemp = $countryTemp = $locationTemp = "";
 $universityErr = $countryErr = $locationErr = "";
 //asignacion de variables
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
@@ -41,7 +49,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 }
 if(!$university == "" && !$country == "" && !$location == ""){
-    require_once 'src/login/connect.php';
+    require 'src/login/connect.php';
     $query = "CALL insert_university('$university','$country','$location')";
     $result= $conn->query($query);
     if (!$result){
@@ -72,8 +80,17 @@ function cleanInput($data){
         <link rel="shortcut icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
         <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
+        <script type="text/javascript">
+            function disableName(){
+                var ename = "";
+                ename = <?php echo json_encode($ename); ?>;
+                if (!ename == ""){
+                    document.getElementById('university').disabled = true;
+                }
+            }
+        </script>
     </head>
-    <body id="main_body" >
+    <body id="main_body" onload="disableName();">
         <?php
             require 'header.php';
         ?>

@@ -6,6 +6,7 @@ session_start();
 //cargar variables de base de datos
 require '/src/settings/personalQuery.php';
 //variables del formulario
+$llave = $_SESSION["primaryKeyConf"];
 $name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $condition = $otraCondicionMedica = $alergia = $alergiaInput = $otroIdioma = $contDate = $entDate = $idioma = "";
 $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
 $nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = $programErr = $emergencyNameErr = $emergencyTelephoneErr = $emergencyAddressErr = $condicionMedicaErr = $alergiaErr = $idiomaErr = "";
@@ -748,7 +749,7 @@ function is_leap_year($year){
                 contErr.innerHTML = "";
             }
         }
-         function get_selectedRole(){
+        function get_selectedRole(){
             var selectedRole = <?php echo json_encode($rol); ?> ;
             if (!selectedRole == ""){
                 var option = document.getElementById('rol').childNodes;

@@ -3,13 +3,40 @@ require 'src/login/usuario.php';
 session_name('Global');
 session_id('pgbl');
 session_start();
-require '/src/settings/viewAndEdit.php';
-$row ="";
+require 'src/settings/viewAndEdit.php';
+$position = $_SESSION["position"];
+$_SESSION["primaryKeyConf"] = "empty";
+$row = $llavePrimaria = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if($_POST["row"] != ""){
         $row=$_POST["row"];
     }
 }
+if ($row != ""){
+    if ($position == "Personal"){
+        $_SESSION["primaryKeyConf"] = $aContenido[$row][1];
+    }else if ($position == "Comunidades"){
+        $_SESSION["primaryKeyConf"] = $aContenido[$row][1];
+    }elseif ($position == "Campamentos"){
+       $_SESSION["primaryKeyConf"] = $aContenido[$row][0];
+    }else if ($position == "Inventario de Comida"){
+        print "Inventario de Comida";
+    }else if ($position == "Equipos de Cocina"){
+        print "Equipos de Cocina";
+    }else if ($position == "Inventario de Medicinas"){
+        print "Inventario de Medicinas";
+    }else if ($position == "Equipos de Seguridad"){
+        print "Equipos de Seguridad";
+    }else if ($position == "Vehiculos"){
+        $_SESSION["primaryKeyConf"] = $aContenido[$row][1];
+    }else if ($position == "Roles"){
+        print "Roles";
+    }else{
+        $_SESSION["primaryKeyConf"] = $aContenido[$row][0];
+    }
+    header("location:src/webrouter.php?position=$position+&action=Editar");
+}
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -124,7 +151,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
                 </a>
                 <br><br>
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" name="Editar">
-                        <input id="edit" type="text" name="row" value="cualquier cosa" hidden /> 
+                        <input id="edit" type="text" name="row" value="" hidden /> 
                         <input id="bedit" type="submit" class="button_text" name="Editar" value="Editar" />
                 </form>   
                 <br><br>
