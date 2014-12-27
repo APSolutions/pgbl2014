@@ -1,5 +1,6 @@
 <?php
 require 'src/login/usuario.php';
+require 'src/brigade/brigade.php';
 
 session_name('Global');
 session_id('pgbl');
@@ -23,24 +24,39 @@ $_SESSION["position"] = "Formulario de Brigada";
         <!-- CSS scripts-->
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/normalize.css"/>
+        <link rel="stylesheet" type="text/css" href="css/brigade.css"/>
+        <!-- CSS scripts-->
+        <script type="text/javascript" src="js/brigade.js"></script>
+        <script type="text/javascript">
+            function init(){
+                disableForm("frmFlights");
+                disableForm("frmVolunteers");
+                var programsID = <?php echo json_encode(loadPrograms()["id"]);?>;
+                var programsName = <?php echo json_encode(loadPrograms()["program"]);?>;
+                loadPrograms(programsID,programsName);
+                var universityID = <?php echo json_encode(loadUniveristies()["id"]);?>;
+                var universityName = <?php echo json_encode(loadUniveristies()["univesity"]);?>;
+                loadUniversities(universityID,universityName);
+            }
+        </script>
     </head>
-    <body>
+    <body onload="init()">
         <?php
         require 'header.php';
         ?>
         <div class="container">
-            <div class="required">
-                <h2>Datos de la Brigada</h2>
+            <h2>Datos de la Brigada</h2>
+            <div class="required">                
                 <h3>ID Asignado:</h3><span id="fichaID"></span>
                 
                 <form id="frmRequired" class="required" method="post" action="">
                     <label for="selectUniversity">Universidad</label>
-                    <select id="selectUniversity" required>
+                    <select id="selectUniversity" class="cs-select" required>
                         <option value="none" selected>none</option>
                     </select>
-                    <input id="btnAdd" type="button" value="Add"/>
+                    <input id="btnAdd" type="button" value="Add" onclick="selectRequire(1)"/>
                     <label for="selectProgram">Programa</label>
-                    <select id="selectProgram" required>
+                    <select id="selectProgram" class="cs-select" required onclick="selectRequire(0)">
                         <option value="none" selected>none</option>
                     </select>
                 </form>
@@ -48,7 +64,7 @@ $_SESSION["position"] = "Formulario de Brigada";
             <div class="flights">
                 <h2>Vuelos</h2>
                 
-                <form id="frmFlights" class="required" method="post" action="" >
+                <form id="frmFlights" class="required" method="post" action="">
                     <input type="text" name="flightNumber" required/>
                     <input type="date" name="flightDate" required/>
                     <input type="time" name="flightTime" required/>
