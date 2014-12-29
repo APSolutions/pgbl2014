@@ -8,13 +8,12 @@
     $configuracion = $_SESSION["position"];
     $result = FALSE;
     $ename = $ecountry = $ecity = "";
-    
     if ($configuracion == "Personal"){
-       
+
     }else if ($configuracion == "Comunidades"){
-       
+
     }elseif ($configuracion == "Campamentos"){
-    
+
     }else if ($configuracion == "Inventario de Comida"){
         print "Inventario de Comida";
     }else if ($configuracion == "Equipos de Cocina"){
@@ -24,7 +23,7 @@
     }else if ($configuracion == "Equipos de Seguridad"){
         print "Equipos de Seguridad";
     }else if ($configuracion == "Vehiculos"){
-     
+
     }else if ($configuracion == "Roles"){
         print "Roles";
     }else{
@@ -40,5 +39,4 @@
             $ecity = $row['city'];
         }
     }
-    
 

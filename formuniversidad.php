@@ -17,9 +17,9 @@ $university = $country = $location = "";
 $universityErr = $countryErr = $locationErr = "";
 //asignacion de variables
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(empty($_POST["university"]) ){
+    if(empty($_POST["university"]) && $ename == ""){
         $universityErr = "El nombre de la universidad es requerido!";
-    }else{
+    }else if ($ename == ""){
         $universityTemp = cleanInput($_POST["university"]);
         if (!preg_match("/^[a-zA-Z0-9 ]*$/",$universityTemp)){
             $universityErr = "El nombre solo debe incluir letras!";
@@ -29,6 +29,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(empty($_POST["country"]) ){
         $countryErr = "El País de la universidad es requerido!";
+        $countryTemp = "";
     }else{
         $countryTemp = cleanInput($_POST["country"]); 
         if (!preg_match("/^[a-zA-Z ]*$/",$countryTemp)){
@@ -39,6 +40,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
     if(empty($_POST["location"]) ){
         $locationErr = "La ubicación de la universidad es requerida!";
+        $locationTemp = "";
     }else{
         $locationTemp = cleanInput($_POST["location"]);
         if (!preg_match("/^[a-zA-Z0-9 ]*$/",$locationTemp)){
@@ -48,16 +50,29 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
 }
-if(!$university == "" && !$country == "" && !$location == ""){
+if(!$university == "" && !$country == "" && !$location == "" && $ename == ""){
     require 'src/login/connect.php';
     $query = "CALL insert_university('$university','$country','$location')";
     $result= $conn->query($query);
     if (!$result){
         echo "<script type='text/javascript'>alert('failed!')</script>";
     } else{
-        echo "<script type='text/javascript'>alert('submitted successfully!')</script>";
         $universityTemp = $countryTemp = $locationTemp = "";
         $university = $country = $location = "";
+        header("location:src/webrouter.php?position=Universidades+&action= ");
+    }
+}else if (!$country == "" && !$location == "" && !$ename == ""){
+    require 'src/login/connect.php';
+    $query = "CALL modify_university('$country','$location','$ename')";
+    $result= $conn->query($query);
+    if (!$result){
+        echo "<script type='text/javascript'>alert('failed!')</script>";
+    } else{
+        $universityTemp = $countryTemp = $locationTemp = "";
+        $university = $country = $location = "";
+        $ename = $ecountry = $ecity = "";
+        $universityErr = $countryErr = $locationErr = "";
+        header("location:src/webrouter.php?position=Universidades+&action= ");
     }
 }
 function cleanInput($data){
@@ -105,7 +120,7 @@ function cleanInput($data){
                         <div>
                             <input id="university" name="university" class="element text medium" type="text" maxlength="255" value="<?php echo $universityTemp;?>"/> 
                             <span>
-                                <p class="error"><?php echo $universityErr;?></p>
+                                <p id="luniversity" class="error"><?php echo $universityErr;?></p>
                             </span>
                         </div><p class="guidelines" id="guide_1"><small>Nombre de la Comunidad</small></p>
                     </li>

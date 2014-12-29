@@ -6,19 +6,26 @@ session_start();
 require 'src/settings/viewAndEdit.php';
 $position = $_SESSION["position"];
 $_SESSION["primaryKeyConf"] = "empty";
-$row = $llavePrimaria = "";
+$row = $llavePrimaria = $eliminar = "";
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if($_POST["row"] != ""){
         $row=$_POST["row"];
     }
+    if($_POST["del"] != ""){
+        $eliminar= $_POST["del"];
+    }
 }
+
 if ($row != ""){
     if ($position == "Personal"){
         $_SESSION["primaryKeyConf"] = $aContenido[$row][1];
+        $llavePrimaria = $aContenido[$row][1];
     }else if ($position == "Comunidades"){
-        $_SESSION["primaryKeyConf"] = $aContenido[$row][1];
+        $_SESSION["primaryKeyConf"] = $aContenido[$row][0];
+        $llavePrimaria = $aContenido[$row][0];
     }elseif ($position == "Campamentos"){
        $_SESSION["primaryKeyConf"] = $aContenido[$row][0];
+       $llavePrimaria = $aContenido[$row][0];
     }else if ($position == "Inventario de Comida"){
         print "Inventario de Comida";
     }else if ($position == "Equipos de Cocina"){
@@ -29,13 +36,53 @@ if ($row != ""){
         print "Equipos de Seguridad";
     }else if ($position == "Vehiculos"){
         $_SESSION["primaryKeyConf"] = $aContenido[$row][1];
+        $llavePrimaria = $aContenido[$row][1];
     }else if ($position == "Roles"){
         print "Roles";
     }else{
         $_SESSION["primaryKeyConf"] = $aContenido[$row][0];
+        $llavePrimaria = $aContenido[$row][0];
     }
-    header("location:src/webrouter.php?position=$position+&action=Editar");
+    
+    if ($eliminar == "false"){
+        header("location:src/webrouter.php?position=$position+&action=Editar");
+    } else{
+        require 'src/login/connect.php'; 
+        if ($position == "Personal"){
+            $query = "CALL disable_staff('$llavePrimaria')";
+            $result= $conn->query($query);
+        }else if ($position == "Comunidades"){
+            $query = "CALL disable_communities('$llavePrimaria')";
+            $result= $conn->query($query);
+        }elseif ($position == "Campamentos"){
+            $query = "CALL disable_compounds('$llavePrimaria')";
+            $result= $conn->query($query);
+        }else if ($position == "Inventario de Comida"){
+            print "Inventario de Comida";
+        }else if ($position == "Equipos de Cocina"){
+            print "Equipos de Cocina";
+        }else if ($position == "Inventario de Medicinas"){
+            print "Inventario de Medicinas";
+        }else if ($position == "Equipos de Seguridad"){
+            print "Equipos de Seguridad";
+        }else if ($position == "Vehiculos"){
+            $query = "CALL disable_vehicles('$llavePrimaria')";
+            $result= $conn->query($query);
+        }else if ($position == "Roles"){
+            print "Roles";
+        }else{
+            $query = "CALL disable_university('$llavePrimaria')";
+            $result= $conn->query($query);
+        }
+        if (!$result){          
+            echo "<script type='text/javascript'>alert('failed')</script>";
+        }else{
+            $row = $llavePrimaria = $eliminar = "";
+            header("location:src/webrouter.php?position=$position+&action= ");
+        }
+    }
 }
+
 
 ?>
 <!DOCTYPE html>
@@ -69,11 +116,13 @@ if ($row != ""){
                     sel = tableRow;
                     pos = index;      
                     document.getElementById('edit').value = pos;
+                    document.getElementById('eliminar').value = pos;
                     sel.style.backgroundColor = '#dcfac9';                
                 }else{
                     sel = tableRow;
                     pos = index; 
                     document.getElementById('edit').value = pos;
+                    document.getElementById('eliminar').value = pos;
                     sel.style.background = '#dcfac9';
                 }
             }  
@@ -97,7 +146,7 @@ if ($row != ""){
                 }                             
             }
             function botonEdithover(resaltar){
-                var botonedit = document.getElementById('edit');              
+                var botonedit = document.getElementById('bedit');              
                 if (pos != ""){
                     if (resaltar){
                         botonedit.style.background = '#2980B9';                     
@@ -107,7 +156,7 @@ if ($row != ""){
                 }                           
             }
             function botonEliminarhover(resaltar){
-                var botoneliminar = document.getElementById('eliminar');              
+                var botoneliminar = document.getElementById('beliminar');              
                 if (pos != ""){
                     if (resaltar){
                         botoneliminar.style.background = '#2980B9';                     
@@ -118,7 +167,7 @@ if ($row != ""){
             }
         </script>
     </head>
-    <body onload="editarEliminar();">
+    <body onload="editarEliminar();botonEdithover(false);botonEliminarhover(false);">
         <div class="main_body">
             <?php
                 require 'header.php';
@@ -152,12 +201,15 @@ if ($row != ""){
                 <br><br>
                 <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" name="Editar">
                         <input id="edit" type="text" name="row" value="" hidden /> 
-                        <input id="bedit" type="submit" class="button_text" name="Editar" value="Editar" />
+                        <input type="text" name="del" value="false" hidden />
+                        <input id="bedit" type="submit" class="button_text" name="Editar" onmouseover="botonEdithover(true);" onmouseout="botonEdithover(false);" value="Editar" />
                 </form>   
-                <br><br>
-                <a href="<?php echo "src/webrouter.php?position=$position+&action=Eliminar"?>" name="Eliminar">
-                                <button id="beliminar" class="btn" name="Eliminar" onmouseover="botonEliminarhover(true);" onmouseout="botonEliminarhover(false);" >Eliminar</button>
-                </a>   
+                <br>
+                <form method="post" action="<?php echo htmlspecialchars($_SERVER["PHP_SELF"]);?>" onsubmit="return confirm('Esta seguro que desea eliminar el registro?')" name="Eliminar">
+                        <input id="eliminar" type="text" name="row" value="" hidden />
+                        <input type="text" name="del" value="true" hidden />
+                        <input id="beliminar" type="submit" class="button_text" name="Eliminar" onmouseover="botonEliminarhover(true);" onmouseout="botonEliminarhover(false);" value="Eliminar" />
+                </form>   
             </div>
             <div id="cleared"></div>
         </div>
