@@ -78,7 +78,7 @@ if ($row != ""){
             echo "<script type='text/javascript'>alert('failed')</script>";
         }else{
             $row = $llavePrimaria = $eliminar = "";
-            header("location:src/webrouter.php?position=$position+&action= ");
+            header("location:src/webrouter.php?position=$position");
         }
     }
 }
