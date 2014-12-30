@@ -46,7 +46,7 @@ $_SESSION["position"] = "Formulario de Brigada";
         ?>
         <div class="container">
             <h2>Datos de la Brigada</h2>
-            <div class="required">                
+            <div class="basics">                
                 <h3>ID Asignado:</h3><span id="fichaID"></span>
                 
                 <form id="frmRequired" class="required" method="post" action="">

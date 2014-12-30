@@ -19,19 +19,26 @@ and open the template in the editor.
     margin: 0 auto;
 }
 
-.required {
-    width: 50%;
+.basics {
+    margin: 1%;
+    width: 45%;
     float: left;
 }
 
 .flights {
-    width: 50%;
+    margin: 1%;
+    width: 45%;
     float: left;
 }
 
 .volunteers {
+    margin: 1%;
     width: 100%;
     clear: both;
+}
+
+.required{
+    width: 100%;
 }
 
 .cs-select {
