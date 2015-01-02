@@ -4,12 +4,43 @@ require 'src/login/usuario.php';
 session_name('Global');
 session_id('pgbl');
 session_start();
+//variables para editar
+require 'src/settings/Edit.php';
+if ($ename != "" && $econtractType != "" && $elessor != "" && $ecapacity != "" && $evyear != "" && $einsuranceCompany != ""  && $einsuranceNumber != "" && $einsuranceType != "" && $econtactPhone != "" && $eid != ""){
+    $checkedcontract = $checkedinsurance = "checked";
+    $checkedcontract1 = $checkedcontract2 = $checkedcontract3 = $checkedinsurance1 = $checkedinsurance2 = "";   
+    $nameTemp = $ename;
+    $contractTypeTemp = $econtractType;
+    $ownerTemp = $elessor;
+    $capacityTemp = $ecapacity;
+    $carYearTemp = $evyear;
+    $insuranceCompanyTemp = $einsuranceCompany;
+    $insuranceNumberTemp = $einsuranceNumber;
+    $insuranceTypeTemp = $einsuranceType;
+    $ownerCellphoneTemp = $econtactPhone;
+    $licencePlateTemp = $eid;
+    if($contractTypeTemp == 1){
+        $checkedcontract1 ="checked"; 
+        }elseif ($contractTypeTemp == 2){
+            $checkedcontract2 ="checked";
+        }else{
+            $checkedcontract3 ="checked";
+        }
+    if($insuranceTypeTemp == 1){
+            $checkedinsurance1 ="checked"; 
+        }else{
+            $checkedinsurance2 ="checked";
+        }
+    
+}else{
+    $nameTemp = $contractTypeTemp = $capacityTemp = $carYearTemp = $licencePlateTemp = $ownerTemp = $ownerCellphoneTemp = $insuranceCompanyTemp = $insuranceNumberTemp = $insuranceTypeTemp = "";
+    $checkedcontract = $checkedinsurance = "checked";
+    $checkedcontract1 = $checkedcontract2 = $checkedcontract3 = $checkedinsurance1 = $checkedinsurance2 = "";   
+}
+
 //variables del formulario
 $name = $contractType = $capacity = $carYear = $licencePlate = $owner = $ownerCellphone = $insuranceCompany = $insuranceNumber = $insuranceType = "";
-$nameTemp = $contractTypeTemp = $capacityTemp = $carYearTemp = $licencePlateTemp = $ownerTemp = $ownerCellphoneTemp = $insuranceCompanyTemp = $insuranceNumberTemp = $insuranceTypeTemp = "";
 $nameErr = $contractTypeErr = $capacityErr = $carYearErr = $licencePlateErr = $ownerErr = $ownerCellphoneErr = $insuranceCompanyErr = $insuranceNumberErr = $insuranceTypeErr = "";
-$checkedcontract = $checkedinsurance = "checked";
-$checkedcontract1 = $checkedcontract2 = $checkedcontract3 = $checkedinsurance1 = $checkedinsurance2 = "";
 //asignacion de variables
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($_POST["name"]) ){
@@ -119,7 +150,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 
 if(!$name == "" && !$contractType == ""  && !$capacity == "" && !$carYear == "" && !$licencePlate == "" && !$owner == "" && !$ownerCellphone == "" && !$insuranceCompany == "" && !$insuranceNumber == "" && !$insuranceType == ""){
-    require_once 'src/login/connect.php';
+    require 'src/login/connect.php';
     $query = "CALL insert_vehicles('$name','$contractType','$capacity','$carYear','$licencePlate','$owner','$ownerCellphone','$insuranceCompany','$insuranceNumber','$insuranceType')";
     $result= $conn->query($query);
     if (!$result){
@@ -130,8 +161,26 @@ if(!$name == "" && !$contractType == ""  && !$capacity == "" && !$carYear == "" 
         $name = $contractType = $capacity = $carYear = $licencePlate = $owner = $ownerCellphone = $insuranceCompany = $insuranceNumber = $insuranceType = "";
         $checkedcontract1 = $checkedcontract2 = $checkedcontract3 = $checkedinsurance1 = $checkedinsurance2 = "";
         $checkedcontract = $checkedinsurance = "checked";
+        header("location:src/webrouter.php?position=Vehiculos+&action= ");
+    }
+} elseif (!$name == "" && !$contractType == ""  && !$capacity == "" && !$carYear == "" && !$eid == "" && !$owner == "" && !$ownerCellphone == "" && !$insuranceCompany == "" && !$insuranceNumber == "" && !$insuranceType == ""){
+    require 'src/login/connect.php';
+    $query = "CALL modify_vehicles('$name','$contractType','$owner','$capacity','$carYear','$insuranceCompany','$insuranceNumber','$insuranceType','$ownerCellphone','$eid')";
+    $result= $conn->query($query);
+    if (!$result){
+        echo "<script type='text/javascript'>alert('failed!')</script>";
+    } else{
+        $nameTemp = $contractTypeTemp = $capacityTemp = $carYearTemp = $licencePlateTemp = $ownerTemp = $ownerCellphoneTemp = $insuranceCompanyTemp = $insuranceNumberTemp = $insuranceTypeTemp = "";
+        $name = $contractType = $capacity = $carYear = $licencePlate = $owner = $ownerCellphone = $insuranceCompany = $insuranceNumber = $insuranceType = "";
+        $checkedcontract1 = $checkedcontract2 = $checkedcontract3 = $checkedinsurance1 = $checkedinsurance2 = "";
+        $checkedcontract = $checkedinsurance = "checked";
+        header("location:src/webrouter.php?position=Vehiculos+&action= ");
     }
 }
+
+    
+    
+    
 function cleanInput($data){
     $data = trim($data);
     $data = stripcslashes($data) ;
@@ -152,8 +201,17 @@ and open the template in the editor.
 <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
 <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
 <!--<script type="text/javascript" src="../js/viewformuniversidad.js"></script>-->
+<script type="text/javascript">
+    function disableName(){
+        var eid = "";
+        eid = <?php echo json_encode($eid); ?>;
+        if (!eid == ""){
+            document.getElementById('licencePlate').disabled = true;
+        }
+    }
+</script>
 </head>
-<body id="main_body" >
+<body id="main_body" onload="disableName();">
         <?php
         require 'header.php';
         ?>

@@ -73,7 +73,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 
 if(!$name == "" && !$location == "" && $flag){
-    require_once 'src/login/connect.php';
+    require 'src/login/connect.php';
     $query = "CALL insert_community('$name','$location','$commMembers')";
     $result= $conn->query($query);
     if (!$result){
