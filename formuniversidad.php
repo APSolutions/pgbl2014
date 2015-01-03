@@ -3,6 +3,7 @@ require 'src/login/usuario.php';
 session_name('Global');
 session_id('pgbl');
 session_start();
+//variables para editar
 require 'src/settings/Edit.php';
 if ($ename != "" && $ecountry != "" && $ecity != ""){
     $universityTemp = $ename;

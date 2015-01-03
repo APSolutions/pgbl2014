@@ -3,29 +3,99 @@ require 'src/login/usuario.php';
 session_name('Global');
 session_id('pgbl');
 session_start();
+//variables para editar
+require 'src/settings/Edit.php';
+if ($ename != "" && $elocation != "" && $ecity != "" && $ecapacity != "" && $ebedrooms != "" && $eelectricity != ""  && $ewifi != "" && $esignal != "" && $eventilation != "" && $etoilet != "" && $edrinkablew != ""){
+    $checkedelectricity = $checkedwifi = $checkedcellphonesignal = $checkedventilation = $checkeddrinkablewater = "checked";
+    $checkedelectricity1 = $checkedelectricity2 = $checkedwifi1 = $checkedwifi2 = $checkedcellphonesignal1 = $checkedcellphonesignal2 = $checkedventilation1 = $checkedventilation2 = $checkedventilation3 = $checkeddrinkablewater1 = $checkeddrinkablewater2 = "";
+    $selected = "selected";
+    $selected1 = $selected2 = $selected3 = "";
+    $flag = $flag2 = TRUE;   
+    $toiletLetrineCh = $toiletSingleCh = $toiletMultipleCh = "";
+    $nameTemp = $ename;
+    $locationTemp = $elocation;
+    $townTemp = $ecity;
+    $capacityTemp = $ecapacity;
+    $bedroomTemp = $ebedrooms;
+    $electricityTemp = $eelectricity;
+    $wifiTemp = $ewifi;
+    $cellphoneSignalTemp = $esignal;
+    $ventilationTemp = $eventilation;
+    $toiletQuantityTemp = $etoilet;
+    $drinkableWaterTemp = $edrinkablew;
+    if($locationTemp == "Darien"){
+        $selected1 ="selected"; 
+    }elseif ($locationTemp == "Panamá Este"){
+        $selected2 ="selected";
+    }else {
+        $selected3 = "selected";  
+    }
+    if($electricityTemp == 1){
+        $checkedelectricity1 ="checked"; 
+    }else{
+        $checkedelectricity2 ="checked";
+    }
+    if($wifiTemp == 1){
+        $checkedwifi1 ="checked"; 
+    }else{
+        $checkedwifi2 ="checked";
+    }
+    if($cellphoneSignalTemp == 1){
+        $checkedcellphonesignal1 ="checked"; 
+    }else{
+        $checkedcellphonesignal2 ="checked";
+    }
+    if($ventilationTemp == "Aire Acondicionado"){
+        $checkedventilation1 ="checked"; 
+    }else if($ventilationTemp == "Abanico"){
+        $checkedventilation2 ="checked"; 
+    }else{
+        $checkedventilation3 ="checked";
+    }
+    if($drinkableWaterTemp == 1){
+        $checkeddrinkablewater1 ="checked"; 
+    }else{
+        $checkeddrinkablewater2 ="checked";
+    }
+    for ($i=0;$i<count($etoiletType);$i++){
+        for($j=0;$j<$col;$j++){
+            if  ($etoiletType[$i][$j] == "Servicio Comunal"){
+                $toiletMultipleCh = "checked";
+            }elseif ($etoiletType[$i][$j] == "Letrina"){
+                $toiletLetrineCh = "checked";
+            }elseif ($etoiletType[$i][$j] == "Servicio Individual"){
+                $toiletSingleCh = "checked";
+            }
+        }
+    }
+    
+
+}else{
+    $nameTemp = $locationTemp = $townTemp = $capacityTemp = $bedroomTemp = $electricityTemp = $wifiTemp = $cellphoneSignalTemp = $ventilationTemp = $toiletQuantityTemp = $drinkableWaterTemp = "";
+    $checkedelectricity = $checkedwifi = $checkedcellphonesignal = $checkedventilation = $checkeddrinkablewater = "checked";
+    $checkedelectricity1 = $checkedelectricity2 = $checkedwifi1 = $checkedwifi2 = $checkedcellphonesignal1 = $checkedcellphonesignal2 = $checkedventilation1 = $checkedventilation2 = $checkedventilation3 = $checkeddrinkablewater1 = $checkeddrinkablewater2 = "";
+    $selected = "selected";
+    $selected1 = $selected2 = $selected3 = "";
+    $flag = $flag2 = TRUE;   
+    $toiletLetrineCh = $toiletSingleCh = $toiletMultipleCh = "";
+}
+
 //variables del formulario
 $name = $location = $town = $capacity = $bedroom = $electricity = $wifi = $cellphoneSignal = $ventilation = $toiletQuantity = $drinkableWater = $accomodation = $toiletType = "";
-$nameTemp = $locationTemp = $townTemp = $capacityTemp = $bedroomTemp = $electricityTemp = $wifiTemp = $cellphoneSignalTemp = $ventilationTemp = $toiletQuantityTemp = $drinkableWaterTemp = $toiletTypeTemp ="";
 $nameErr = $locationErr = $townErr = $capacityErr = $bedroomErr = $electricityErr = $wifiErr = $cellphoneSignalErr = $ventilationErr = $toiletQuantityErr = $drinkableWaterErr = $toiletTypeErr = "";
-$checkedelectricity = $checkedwifi = $checkedcellphonesignal = $checkedventilation = $checkeddrinkablewater = "checked";
-$checkedelectricity1 = $checkedelectricity2 = $checkedwifi1 = $checkedwifi2 = $checkedcellphonesignal1 = $checkedcellphonesignal2 = $checkedventilation1 = $checkedventilation2 = $checkedventilation3 = $checkeddrinkablewater1 = $checkeddrinkablewater2 = "";
-$selected = "selected";
-$selected1 = $selected2 = $selected3 = "";
-$flag = $flag2 = TRUE;
 $errorMessage = "";
-$toiletLetrineCh = $toiletSingleCh = $toiletMultipleCh = "";
 
 //asignacion de variables
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(empty($_POST["name"]) ){
+    if(empty($_POST["name"]) && $ename == "" ){
         $nameErr = "El nombre del campamento es requerido!";
-    }else{
+    }elseif ($ename == ""){
         $nameTemp = cleanInput($_POST["name"]);
         if (!preg_match("/^[a-zA-Z0-9 ]*$/",$nameTemp)){
             $nameErr = "El nombre solo debe incluir letras!";
         }else{
             $name = $nameTemp;
-        }
+        }       
     }
     if($_POST["location"] == "" ){
         $locationErr = "La provincia del campamento es requerida!";
@@ -115,7 +185,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $checkedventilation2 ="checked"; 
         } else{
             $ventilationTemp = "Ninguno";
-            $checkedcellphonesignal3 ="checked";
+            $checkedventilation3 ="checked";
         }
         $ventilation = $ventilationTemp;
     }
@@ -152,7 +222,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 }
 if(!$name == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$bedroom == "" && !$electricity == "" && !$wifi == "" && !$cellphoneSignal == "" && !$ventilation == "" && !$drinkableWater == "" && $flag){
-    require_once 'src/login/connect.php';
+    require 'src/login/connect.php';
     $query = "CALL insert_compound('$name','$location','$town','$capacity','$bedroom','$electricity','$wifi','$cellphoneSignal','$ventilation','$toiletQuantity','$drinkableWater')";
     $result= $conn->query($query);
     if (!$result){
@@ -197,9 +267,35 @@ if(!$name == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$be
             $selected1 = $selected2 = $selected3 = "";
             $toiletLetrineCh = $toiletSingleCh = $toiletMultipleCh = "";
         }    
+    }    
+}elseif(!$ename == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$bedroom == "" && !$electricity == "" && !$wifi == "" && !$cellphoneSignal == "" && !$ventilation == "" && !$drinkableWater == "" && $flag){
+    require 'src/login/connect.php';
+    $query = "CALL modify_compound('$ename','$location','$town','$capacity','$bedroom','$electricity','$wifi','$cellphoneSignal','$ventilation','$toiletQuantity','$drinkableWater')";
+    $result= $conn->query($query);
+    if (!$result){
+        echo "<script type='text/javascript'>alert('failed!')</script>";
+    } else{
+        for ($i=0;$i<count($etoiletType);$i++){
+            for($j=0;$j<$col;$j++){
+                if ($toiletMultipleCh == "checked" && $etoiletType[$i][$j] != "Servicio Comunal"){
+                    $query = "CALL insert_compound_toiletType('$ename','Servicio Comunal')";
+                    $result= $conn->query($query);
+                }
+                if ($toiletSingleCh == "checked" && $etoiletType[$i][$j] != "Servicio Individual"){
+                    $query = "CALL insert_compound_toiletType('$ename','Servicio Individual')";
+                    $result= $conn->query($query);
+                }
+                if ($toiletLetrineCh == "checked" && $etoiletType[$i][$j] != "Letrina"){
+                    $query = "CALL insert_compound_toiletType('$ename','Letrina')";
+                    $result= $conn->query($query);
+                }              
+            }
+        }
+        header("location:src/webrouter.php?position=Campamentos+&action= ");
     }
-     
 }
+
+
 function cleanInput($data){
     $data = trim($data);
     $data = stripcslashes($data) ;
@@ -215,8 +311,17 @@ function cleanInput($data){
     <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
     <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
 <!--<script type="text/javascript" src="../js/viewformcampamento.js"></script> -->
+    <script type="text/javascript">
+        function disableName(){
+            var ename = "";
+            ename = <?php echo json_encode($ename); ?>;
+            if (!ename == ""){
+                document.getElementById('name').disabled = true;
+            }
+        }
+    </script>
     </head>	           
-    <body id="main_body" >
+    <body id="main_body" onload="disableName();" >
             <?php
                 require 'header.php';
             ?>
@@ -333,10 +438,10 @@ function cleanInput($data){
 		<span>
 			<input id="name2_1" name="toiletLetrine" class="element checkbox" type="checkbox" <?php echo $toiletLetrineCh;?> value="Letrina" />
                 <label class="choice" for="name2_1">Letrina</label>
-                <input id="name2_2" name="toiletMultiple" class="element checkbox" type="checkbox" <?php echo $toiletMultipleCh;?>  value="Baño Comunal" />
-                <label class="choice" for="name2_2">Baño Comunal</label>
-                <input id="name2_3" name="toiletSingle" class="element checkbox" type="checkbox" <?php echo $toiletSingleCh;?> value="Baño Individual" />
-                <label class="choice" for="name2_3">Baño Individual</label>
+                <input id="name2_2" name="toiletMultiple" class="element checkbox" type="checkbox" <?php echo $toiletMultipleCh;?>  value="Servicio Comunal" />
+                <label class="choice" for="name2_2">Servicio Comunal</label>
+                <input id="name2_3" name="toiletSingle" class="element checkbox" type="checkbox" <?php echo $toiletSingleCh;?> value="Servicio Individual" />
+                <label class="choice" for="name2_3">Servicio Individual</label>
                 <span class="error">
                     <p class="error"><?php echo $toiletTypeErr;?></p>
                 </span>

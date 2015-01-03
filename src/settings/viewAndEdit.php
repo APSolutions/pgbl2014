@@ -73,6 +73,15 @@
             $col = count($row);
             for($j=0;$j<$col;$j++){
                 $aContenido[$i][$j] = $row[$j];
+                if ($configuracion == "Vehiculos" && $j == 3){
+                    if ($aContenido[$i][$j] == 1){
+                        $aContenido[$i][$j] = "Propio";
+                    }elseif ($aContenido[$i][$j] == 2){
+                        $aContenido[$i][$j] = "Arrendadora";
+                    }else{
+                        $aContenido[$i][$j] = "Contrato";
+                    }
+                }
             }
             $i ++;
         }
