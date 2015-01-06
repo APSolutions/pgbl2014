@@ -6,6 +6,8 @@
     $_SESSION["position"] = "Calendario de Brigadas";
     $_SESSION["action"] = "";
     $_SESSION["program"] = "";
+    
+    require 'src/calendars/set-events.php';
 ?>
     
 <!DOCTYPE html>
