@@ -23,7 +23,7 @@ while($rs = $result->fetch_assoc()) {
     if ($outp != "[") {$outp .= ",";}
     $outp .= '{"id":"' .    $rs["id"] .         '",';
     $outp .= '"title":"' .  $rs["program"] . " - " . $title . " (" .$rs["totalStudents"] .')",';
-    $outp .= '"url":"www.google.com",';
+    $outp .= '"url":"src/calendars/setFichaData.php?brigadeID='.$rs["id"] .'",';
     $outp .= '"start":"' .  $rs["startingDate"] .    '",'; 
     $outp .= '"end":"' .    $rs["endDate"] .    '"}'; 
 }
