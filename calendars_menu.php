@@ -27,7 +27,6 @@ and open the template in the editor.
         <link rel="stylesheet" type="text/css" href="css/header.css" />
         <link rel="stylesheet" type="text/css" href="css/logistic_menu/component.css" />
         <script src="js/logistic_menu/modernizr.custom.js"></script>
-        <script src="js/header.js"></script>
     </head>
     <body>
         <div class="container">

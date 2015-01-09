@@ -47,23 +47,28 @@ $_SESSION["position"] = "Formulario de Brigada";
         <div class="container">
             <h2>Datos de la Brigada</h2>
             <div class="basics">                
-                <h3>ID Asignado:</h3><span id="fichaID"><?php echo $_SESSION["brigadeID"]?></span>
+                <h3>ID Asignado: <span id="fichaID" class="current-value"><?php echo $_SESSION["brigadeID"]?></span></h3>
                 
                 <form id="frmRequired" class="required" method="post" action="">
-                    <label for="selectUniversity">Universidad</label>
+                    
+                    <h3>
+                        <label for="selectProgram">Programa: </label>
+                        <span id="program-content"></span>
+                        <button class="add-update"><span class="icon-update"></span></button>
+                    </h3>
+                    <select id="selectProgram" class="cs-select" required onclick="selectRequire(0)" hidden>
+                        <option value="none" selected>none</option>
+                    </select>
+                    
+                    <h3><label for="selectUniversity">Universidad/es</label><button class="add-update"><span class="icon-add"></span></button></h3>
                     <select id="selectUniversity" class="cs-select" required>
                         <option value="none" selected>none</option>
                     </select>
-                    <input id="btnAdd" type="button" value="Add" onclick="selectRequire(1)"/>
-                    <label for="selectProgram">Programa</label>
-                    <select id="selectProgram" class="cs-select" required onclick="selectRequire(0)">
-                        <option value="none" selected>none</option>
-                    </select>
+                    <input id="btnAdd" type="button" value="Add" onclick="selectRequire(1)"/>                    
                 </form>
             </div>
             <div class="flights">
-                <h2>Vuelos</h2>
-                
+                <h2>Vuelos</h2>                
                 <form id="frmFlights" class="required" method="post" action="">
                     <input type="text" name="flightNumber" required/>
                     <input type="date" name="flightDate" required/>

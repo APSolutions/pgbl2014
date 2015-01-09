@@ -57,3 +57,25 @@ and open the template in the editor.
 .cs-select option:checked{
     color: #206f9f;
 }
+
+
+.current-value{
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 400;
+}
+
+.add-update{
+    text-decoration: none;
+    font-style: normal;
+    font-weight: 400;
+    float: right;
+}
+
+.icon-add:before {
+    content: "\002B";
+}
+
+.icon-update:before {
+    content: "\21BB";
+}
