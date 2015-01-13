@@ -54,9 +54,8 @@ $_SESSION["position"] = "Formulario de Brigada";
                     <h3>
                         <label for="selectProgram">Programa: </label>
                         <span id="program-content"></span>
-                        <button class="add-update"><span class="icon-update"></span></button>
                     </h3>
-                    <select id="selectProgram" class="cs-select" required onclick="selectRequire(0)" hidden>
+                    <select id="selectProgram" class="cs-select" required onclick="selectRequire(0)">
                         <option value="none" selected>none</option>
                     </select>
                     
