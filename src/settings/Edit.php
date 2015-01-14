@@ -10,11 +10,23 @@
     $ename = $ecountry = $ecity = "";
     $econtractType = $elessor = $ecapacity = $evyear = $einsuranceCompany = $einsuranceNumber = $einsuranceType = $econtactPhone = $eid = "";
     $elocation = $ebedrooms = $eelectricity = $ewifi = $esignal = $eventilation = $etoilet = $edrinkablew = "";
+    $emembers = "";
     $etoiletType = array() ; 
     if ($configuracion == "Personal"){
 
     }else if ($configuracion == "Comunidades"){
-       
+        require 'src/login/connect.php';
+        $query = "CALL edit_community('$primary')";
+        $result= $conn->query($query);
+        if (!$result){          
+            echo "<script type='text/javascript'>alert('failed')</script>";
+        }else{
+            $row = $result->fetch_assoc();
+            $ename = $row['name'];
+            $elocation = $row['location'];
+            $emembers = $row['comm_members'];
+        }
+        require 'src/login/connect.php';
     }elseif ($configuracion == "Campamentos"){
         require 'src/login/connect.php';  
         $query = "CALL edit_compound('$primary')";

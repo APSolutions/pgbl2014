@@ -3,15 +3,29 @@ require 'src/login/usuario.php';
 session_name('Global');
 session_id('pgbl');
 session_start();
+//variables para editar
+require 'src/settings/Edit.php';
+if ($ename != "" && $elocation != "" && $emembers != ""){  
+    $nameTemp = $locationTemp = $commMembersTemp = $programTemp ="";   
+    $selected = "selected";
+    $selected1 = $selected2 = $selected3 = "";
+    $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
+    $flag = $flag2 = TRUE;
+    
+} else{
+    $nameTemp = $locationTemp = $commMembersTemp = $programTemp ="";   
+    $selected = "selected";
+    $selected1 = $selected2 = $selected3 = "";
+    $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
+    $flag = $flag2 = TRUE;
+}
+
 //variables del formulario
 $name = $location = $commMembers = $program = "";
-$nameTemp = $locationTemp = $commMembersTemp = $programTemp ="";
 $nameErr = $locationErr = $commMembersErr = $programErr ="";
-$selected = "selected";
-$selected1 = $selected2 = $selected3 = "";
-$programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
-$flag = $flag2 = TRUE;
 $errorMessage = "";
+
+
 //asignacion de variables
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
     if(empty($_POST["name"]) ){
