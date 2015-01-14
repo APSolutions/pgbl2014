@@ -7,6 +7,12 @@ session_id('pgbl');
 session_start();
 
 $_SESSION["position"] = "Formulario de Brigada";
+
+if (isset($_SESSION["brigadeID"])){
+    $brigadeID = $_SESSION["brigadeID"];
+}else {
+    $brigadeID = "None";
+}
 ?>
 
 <!DOCTYPE html>
@@ -31,12 +37,10 @@ $_SESSION["position"] = "Formulario de Brigada";
             function init(){
                 disableForm("frmFlights");
                 disableForm("frmVolunteers");
-                var programsID = <?php echo json_encode(loadPrograms()["id"]);?>;
-                var programsName = <?php echo json_encode(loadPrograms()["program"]);?>;
-                loadPrograms(programsID,programsName);
-                var universityID = <?php echo json_encode(loadUniveristies()["id"]);?>;
-                var universityName = <?php echo json_encode(loadUniveristies()["univesity"]);?>;
-                loadUniversities(universityID,universityName);
+                var brigadeID =  <?php echo json_encode($brigadeID) ?>;
+                if (brigadeID !== ""){
+                    hideiTem("selectProgram");
+                }                    
             }
         </script>
     </head>
@@ -47,16 +51,19 @@ $_SESSION["position"] = "Formulario de Brigada";
         <div class="container">
             <h2>Datos de la Brigada</h2>
             <div class="basics">                
-                <h3>ID Asignado: <span id="fichaID" class="current-value"><?php echo $_SESSION["brigadeID"]?></span></h3>
+                <h3>ID Asignado: <span id="fichaID" class="current-value"><?php echo $brigadeID?></span></h3>
                 
                 <form id="frmRequired" class="required" method="post" action="">
                     
                     <h3>
                         <label for="selectProgram">Programa: </label>
-                        <span id="program-content"></span>
+                        <span id="program-content">
+                            <?php require 'src/brigade/getProgram.php';?>
+                        </span>
                     </h3>
                     <select id="selectProgram" class="cs-select" required onclick="selectRequire(0)">
-                        <option value="none" selected>none</option>
+                        <option value="" selected></option>
+                        <?php require 'src/brigade/getProgramsList.php';?>
                     </select>
                     
                     <h3><label for="selectUniversity">Universidad/es</label><button class="add-update"><span class="icon-add"></span></button></h3>

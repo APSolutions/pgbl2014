@@ -6,7 +6,7 @@
     $_SESSION["position"] = "Calendario de Brigadas";
     $_SESSION["action"] = "";
     $_SESSION["program"] = "";
-    
+    $_SESSION["brigadeID"] = "";
     require 'src/calendars/set-events.php';
 ?>
     
@@ -92,6 +92,7 @@
 	</div>
 	<div id='loading'>loading...</div>
 	<div id='calendar'></div>
+        <a href="brigade.php"><button>Agregar Brigada</button></a>
         </div>
     </body>
 </html>

@@ -33,26 +33,7 @@ function selectRequire(variable){
     }
 }
 
-function loadPrograms(ids,programs){
-    var list = document.getElementById("selectProgram");
-    var item = [];
-    for (var i = 0; i < programs.length; i++){
-       item[i] = document.createElement('option');
-       item[i].id = "program"+ids[i];
-       item[i].value = programs[i];
-       item[i].innerHTML = programs[i];
-       list.appendChild(item[i]);
-    }  
-}
-
-function loadUniversities(ids,universities){
-    var list = document.getElementById("selectUniversity");
-    var item = [];
-    for (var i = 0; i < universities.length; i++){
-       item[i] = document.createElement('option');
-       item[i].id = "university"+ids[i];
-       item[i].value = universities[i];
-       item[i].innerHTML = universities[i];
-       list.appendChild(item[i]);
-    }  
+function hideiTem(id){
+    var element = document.getElementById(id);
+    element.setAttribute("hidden","");
 }
