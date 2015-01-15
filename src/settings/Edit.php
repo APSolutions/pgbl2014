@@ -12,6 +12,7 @@
     $elocation = $ebedrooms = $eelectricity = $ewifi = $esignal = $eventilation = $etoilet = $edrinkablew = "";
     $emembers = "";
     $etoiletType = array() ; 
+    $ecommunityProgram = array();
     if ($configuracion == "Personal"){
 
     }else if ($configuracion == "Comunidades"){
@@ -27,6 +28,20 @@
             $emembers = $row['comm_members'];
         }
         require 'src/login/connect.php';
+        $query = "CALL edit_communityPrograms('$primary')";
+        $result= $conn->query($query);
+        if (!$result){          
+            echo "<script type='text/javascript'>alert('failed')</script>";
+        }else{
+            $i = 0;
+            while ($row = $result->fetch_assoc()){
+                $col = count($row);
+                for($j=0;$j<$col;$j++){
+                    $ecommunityProgram[$i][$j] = $row['program'];
+                }
+                $i ++;
+            }
+        }     
     }elseif ($configuracion == "Campamentos"){
         require 'src/login/connect.php';  
         $query = "CALL edit_compound('$primary')";

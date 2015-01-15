@@ -11,6 +11,36 @@ if ($ename != "" && $elocation != "" && $emembers != ""){
     $selected1 = $selected2 = $selected3 = "";
     $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
     $flag = $flag2 = TRUE;
+    $nameTemp = $ename;
+    $locationTemp = $elocation;
+    $commMembersTemp = $emembers;
+    if($locationTemp == "Darien"){
+           $selected1 ="selected"; 
+    }elseif($locationTemp == "Panama Este"){
+        $selected2 ="selected";
+    }else{
+        $selected3 = "selected";  
+    }
+    for ($i=0;$i<count($ecommunityProgram);$i++){
+        for($j=0;$j<$col;$j++){
+            if  ($ecommunityProgram[$i][$j] == 2){
+                $programBusinessCh = "checked";
+            }elseif ($ecommunityProgram[$i][$j] == 4){
+                $programAmbienteCh = "checked";
+            }elseif ($ecommunityProgram[$i][$j] == 5){
+                $programHumanRightsCh = "checked";
+            }elseif ($ecommunityProgram[$i][$j] == 6){
+                $programMedicalCh = "checked";
+            }elseif ($ecommunityProgram[$i][$j] == 7){
+                $programMicrofinanceCh = "checked";
+            }elseif ($ecommunityProgram[$i][$j] == 8){
+                $programPublicHealthCh = "checked";
+            }elseif ($ecommunityProgram[$i][$j] == 10){
+                $programProfesionalCh = "checked";
+            }
+        }
+    }
+   
     
 } else{
     $nameTemp = $locationTemp = $commMembersTemp = $programTemp ="";   
@@ -28,9 +58,9 @@ $errorMessage = "";
 
 //asignacion de variables
 if ($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(empty($_POST["name"]) ){
-        $nameErr = "El nombre de la comunidad es requerido!";
-    }else{
+    if(empty($_POST["name"]) && $ename == "" ){
+        $nameErr = "El nombre del campamento es requerido!";
+    }elseif ($ename == ""){
         $nameTemp = cleanInput($_POST["name"]);
         if (!preg_match("/^[a-zA-Z0-9 ]*$/",$nameTemp)){
             $nameErr = "El nombre solo debe incluir letras!";
@@ -64,29 +94,43 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     } else {
         if (!empty($_POST["ambiente"])){
             $programAmbienteCh = "checked";
+        }else{
+            $programAmbienteCh = "";
         }
         if (!empty($_POST["humanRights"])){
             $programHumanRightsCh = "checked";
+        }else{
+            $programHumanRightsCh = "";
         }
         if (!empty($_POST["medical"])){
             $programMedicalCh = "checked";
+        }else{
+            $programMedicalCh = "";
         }
         if (!empty($_POST["microfinanzas"])){
             $programMicrofinanceCh = "checked";
+        }else{
+            $programMicrofinanceCh = "";
         }
         if (!empty($_POST["negocios"])){
             $programBusinessCh = "checked";
+        }else{
+            $programBusinessCh = "";
         }
         if (!empty($_POST["publicHealth"])){
             $programPublicHealthCh = "checked";
+        }else{
+            $programPublicHealthCh= "";
         }
         if (!empty($_POST["profesional"])){
             $programProfesionalCh = "checked";
+        }else{
+            $programProfesionalCh = "";
         }
     }
 }
 
-if(!$name == "" && !$location == "" && $flag){
+if(!$name == "" && !$location == "" && !$commMembers && $flag){
     require 'src/login/connect.php';
     $query = "CALL insert_community('$name','$location','$commMembers')";
     $result= $conn->query($query);
@@ -166,10 +210,88 @@ if(!$name == "" && !$location == "" && $flag){
             $selected = "selected";
             $selected1 = $selected2 = $selected3 = "";
             $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
+            header("location:src/webrouter.php?position=Comunidades+&action= ");     
         }    
     }
      
+}elseif (!$ename == "" && !$location == "" && !$commMembers == "" && $flag){
+    require 'src/login/connect.php';
+    $query = "CALL modify_community('$ename','$location','$commMembers')";
+    $result= $conn->query($query);
+    if (!$result){
+        echo "<script type='text/javascript'>alert('failed!')</script>";
+    }else{
+        for ($i=0;$i<count($ecommunityProgram);$i++){
+            for($j=0;$j<$col;$j++){
+                if ($programBusinessCh == "checked" && $ecommunityProgram[$i][$j] != 2){
+                    $query = "CALL insert_communityxprogram('$ename','2')";
+                    $result= $conn->query($query);
+                }
+                if ($programAmbienteCh == "checked" && $ecommunityProgram[$i][$j] != 4){
+                    $query = "CALL insert_communityxprogram('$ename','4')";
+                    $result= $conn->query($query);
+                }
+                if ($programHumanRightsCh == "checked" && $ecommunityProgram[$i][$j] != 5){
+                    $query = "CALL insert_communityxprogram('$ename','5')";
+                    $result= $conn->query($query);
+                }
+                if ($programMedicalCh == "checked" && $ecommunityProgram[$i][$j] != 6){
+                    $query = "CALL insert_communityxprogram('$ename','6')";
+                    $result= $conn->query($query);
+                }
+                if ($programMicrofinanceCh == "checked" && $ecommunityProgram[$i][$j] != 7){
+                    $query = "CALL insert_communityxprogram('$ename','7')";
+                    $result= $conn->query($query);
+                }
+                if ($programPublicHealthCh == "checked" && $ecommunityProgram[$i][$j] != 8){
+                    $query = "CALL insert_communityxprogram('$ename','8')";
+                    $result= $conn->query($query);
+                }
+                if ($programProfesionalCh == "checked" && $ecommunityProgram[$i][$j] != 10){
+                    $query = "CALL insert_communityxprogram('$ename','10')";
+                    $result= $conn->query($query);
+                }
+                if ($ecommunityProgram[$i][$j] == 2 && $programBusinessCh != "checked"){
+                    $query = "CALL delete_communityxprograms('$ename','2')";
+                    $result= $conn->query($query);
+                }
+                if ($ecommunityProgram[$i][$j] == 4 && $programAmbienteCh != "checked"){
+                    $query = "CALL delete_communityxprograms('$ename','4')";
+                    $result= $conn->query($query);
+                }
+                if ($ecommunityProgram[$i][$j] == 5 && $programHumanRightsCh != "checked"){
+                    $query = "CALL delete_communityxprograms('$ename','5')";
+                    $result= $conn->query($query);
+                }
+                if ($ecommunityProgram[$i][$j] == 6 && $programMedicalCh != "checked"){
+                    $query = "CALL delete_communityxprograms('$ename','6')";
+                    $result= $conn->query($query);
+                }
+                if ($ecommunityProgram[$i][$j] == 7 && $programMicrofinanceCh != "checked"){
+                    $query = "CALL delete_communityxprograms('$ename','7')";
+                    $result= $conn->query($query);
+                }
+                if ($ecommunityProgram[$i][$j] == 8 && $programPublicHealthCh != "checked"){
+                    $query = "CALL delete_communityxprograms('$ename','8')";
+                    $result= $conn->query($query);
+                }
+                if ($ecommunityProgram[$i][$j] == 10 && $programProfesionalCh != "checked"){
+                    $query = "CALL delete_communityxprograms('$ename','10')";
+                    $result= $conn->query($query);
+                }
+            }
+        }
+        $name = $location = $commMembers = $program = "";
+        $nameTemp = $locationTemp = $commMembersTemp = $programTemp ="";
+        $nameErr = $locationErr = $commMembersErr = $programErr ="";
+        $selected = "selected";
+        $selected1 = $selected2 = $selected3 = "";
+        $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
+        header("location:src/webrouter.php?position=Comunidades+&action= ");
+    }   
 }
+          
+
 function cleanInput($data){
     $data = trim($data);
     $data = stripcslashes($data) ;
@@ -185,8 +307,17 @@ function cleanInput($data){
 <link rel="stylesheet" type="text/css" href="css/forms.css" media="all">
 <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
 <!--<script type="text/javascript" src="../js/viewformcomunidad.js"></script>-->
+<script>
+    function disableName(){
+            var ename = "";
+            ename = <?php echo json_encode($ename); ?>;
+            if (!ename == ""){
+                document.getElementById('name').disabled = true;
+            }
+    }
+</script>
 </head>
-<body id="main_body" >
+<body id="main_body" onload="disableName();" >
 	<?php
         require 'header.php';
         ?>
