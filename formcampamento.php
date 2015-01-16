@@ -68,8 +68,7 @@ if ($ename != "" && $elocation != "" && $ecity != "" && $ecapacity != "" && $ebe
             }
         }
     }
-    
-
+   
 }else{
     $nameTemp = $locationTemp = $townTemp = $capacityTemp = $bedroomTemp = $electricityTemp = $wifiTemp = $cellphoneSignalTemp = $ventilationTemp = $toiletQuantityTemp = $drinkableWaterTemp = "";
     $checkedelectricity = $checkedwifi = $checkedcellphonesignal = $checkedventilation = $checkeddrinkablewater = "checked";
@@ -212,12 +211,18 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     } else {
         if (!empty($_POST["toiletLetrine"])){
             $toiletLetrineCh = "checked";
+        } else{
+            $toiletLetrineCh = "";
         }
         if (!empty($_POST["toiletSingle"])){
             $toiletSingleCh = "checked";
+        } else{
+            $toiletSingleCh = "";
         }
         if (!empty($_POST["toiletMultiple"])){
             $toiletMultipleCh = "checked";
+        }else{
+           $toiletMultipleCh = ""; 
         }
     }
 }
@@ -266,6 +271,7 @@ if(!$name == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$be
             $selected = "selected";
             $selected1 = $selected2 = $selected3 = "";
             $toiletLetrineCh = $toiletSingleCh = $toiletMultipleCh = "";
+            header("location:src/webrouter.php?position=Campamentos+&action= ");
         }    
     }    
 }elseif(!$ename == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$bedroom == "" && !$electricity == "" && !$wifi == "" && !$cellphoneSignal == "" && !$ventilation == "" && !$drinkableWater == "" && $flag){
@@ -288,9 +294,28 @@ if(!$name == "" && !$location == ""  && !$town == "" && !$capacity == "" && !$be
                 if ($toiletLetrineCh == "checked" && $etoiletType[$i][$j] != "Letrina"){
                     $query = "CALL insert_compound_toiletType('$ename','Letrina')";
                     $result= $conn->query($query);
-                }              
+                }
+                if ($etoiletType[$i][$j] == "Servicio Comunal" && $toiletMultipleCh != "checked"){                   
+                    $query = "CALL delete_toiletType('$ename','Servicio Comunal')";
+                    $result= $conn->query($query);
+                }
+                if ($etoiletType[$i][$j] == "Servicio Individual" && $toiletSingleCh != "checked"){
+                    $query = "CALL delete_toiletType('$ename','Servicio Individual')";
+                    $result= $conn->query($query);
+                }
+                if ($etoiletType[$i][$j] == "Letrina" && $toiletLetrineCh != "checked"){
+                    $query = "CALL delete_toiletType('$ename','Letrina')";
+                    $result= $conn->query($query);
+                }
             }
         }
+        $nameTemp = $locationTemp = $townTemp = $capacityTemp = $bedroomTemp = $electricityTemp = $wifiTemp = $cellphoneSignalTemp = $ventilationTemp = $drinkableWaterTemp = $toiletQuantityTemp = $toiletTypeTemp = "";
+        $name = $location = $town = $capacity = $bedroom = $electricity = $wifi = $cellphoneSignal = $ventilation = $toiletQuantity = $drinkableWater = $toiletType = "";
+        $checkedelectricity = $checkedwifi = $checkedcellphonesignal = $checkedventilation = $checkeddrinkablewater = "checked";
+        $checkedelectricity1 = $checkedelectricity2 = $checkedwifi1 = $checkedwifi2 = $checkedcellphonesignal1 = $checkedcellphonesignal2 = $checkedventilation1 = $checkedventilation2 = $checkedventilation3 = $checkeddrinkablewater1 = $checkeddrinkablewater2 = "";
+        $selected = "selected";
+        $selected1 = $selected2 = $selected3 = "";
+        $toiletLetrineCh = $toiletSingleCh = $toiletMultipleCh = "";
         header("location:src/webrouter.php?position=Campamentos+&action= ");
     }
 }
