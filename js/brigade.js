@@ -37,3 +37,45 @@ function hideiTem(id){
     var element = document.getElementById(id);
     element.setAttribute("hidden","");
 }
+
+function addUniversity(){
+    var select = document.getElementById("selectUniversity");
+    var id = select.options[select.selectedIndex].id;
+    var name = select.options[select.selectedIndex].innerHTML;
+    
+    var list = document.getElementById("universitiesList");
+    var toDb = document.getElementById("universitiesAdded");
+    
+    var btnDelete = document.createElement('button');
+    var university = document.createElement('li');
+    var universityToDB = document.createElement('input');
+    
+    university.id = "university-" + (list.childElementCount + 1);
+    university.innerHTML = name + " ";
+    
+    btnDelete.name = id;
+    btnDelete.innerHTML = "X";
+    btnDelete.className = "delete-university";
+    btnDelete.setAttribute('onclick','deleteUniversity('+(list.childElementCount + 1)+')');
+           
+    universityToDB.id = "university-item-" + (list.childElementCount + 1);
+    universityToDB.name = "university-item-" + (list.childElementCount + 1);
+    universityToDB.value = id;
+    universityToDB.setAttribute('hidden','');
+    
+    university.appendChild(btnDelete);
+    list.appendChild(university);
+    toDb.appendChild(universityToDB);
+    
+}
+
+function deleteUniversity(id){
+    var list = document.getElementById("universitiesList");
+    var toDb = document.getElementById("universitiesAdded");
+    
+    var uni = document.getElementById("university-"+id);
+    var uniDb = document.getElementById("university-item-"+id);
+    
+    list.removeChild(uni);
+    toDb.removeChild(uniDb);
+}

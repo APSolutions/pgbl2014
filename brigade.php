@@ -67,14 +67,15 @@ if (isset($_SESSION["brigadeID"])){
                     </select>
                     
                     <h3><label for="selectUniversity">Universidad/es:</label></h3>
-                    <ul class="univesitiesList">
+                    <ul class="univesitiesList" id="universitiesList">
                         <?php require 'src/brigade/getUniversities.php';?>
-                    </ul>  
+                    </ul>
+                    <div id="universitiesAdded"></div>
                     <select id="selectUniversity" class="cs-select" required>
                         <option value="none" selected>none</option>
                         <?php require 'src/brigade/getUniversitiesList.php';?>
                     </select>
-                    <input id="btnAdd" type="button" value="Add" onclick="selectRequire(1)"/>
+                    <input id="btnAdd" type="button" value="Add" onclick="addUniversity()"/>
                     
                     <h3>Fechas</h3>
                     <div class="fecha-inicio"> <label for="brigadeBeginDate">Inicio:</label>
