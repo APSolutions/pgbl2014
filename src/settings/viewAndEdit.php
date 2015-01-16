@@ -7,10 +7,11 @@
     if ($configuracion == "Personal"){
         $aHeader = array(
             '0' => "Nombre",
-            '1' => "Cédula",
-            '2' => "Rol",
-            '3' => "Teléfono",
-            '4' => "Correo Electrónico",
+            '1' => "Apellido",
+            '2' => "Cédula",
+            '3' => "Rol",
+            '4' => "Teléfono",
+            '5' => "Correo Electrónico",
             );
         require_once 'src/login/connect.php';   
         $query = "CALL get_staffConf()";
@@ -44,7 +45,7 @@
         print "Equipos de Seguridad";
     }else if ($configuracion == "Vehiculos"){
         $aHeader = array(
-            '0' => "Nombre",
+            '0' => "Modelo del Auto",
             '1' => "Placa",
             '2' => "Capacidad",
             '3' => "Tipo de Contrato",

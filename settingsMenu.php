@@ -98,6 +98,8 @@ if ($row != ""){
         <link rel="shortcut icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/header.css" media="all">
         <link rel="stylesheet" type="text/css" href="css/settingsMenu.css" media="all">
+        <script type="text/javascript" src="js/settings/tablesorter/jquery-latest.js"></script> 
+        <script type="text/javascript" src="js/settings/tablesorter/jquery.tablesorter.min.js"></script> 
         <script type="text/javascript">
             var sel = pos = "";
             function ChangeColor(tableRow, highLight, index){
@@ -166,8 +168,15 @@ if ($row != ""){
                 }                           
             }
         </script>
+        <script type="text/javascript">
+            $(document).ready(function() 
+            { 
+                $("#vista").tablesorter(); 
+            } 
+            );
+        </script>
     </head>
-    <body onload="editarEliminar();botonEdithover(false);botonEliminarhover(false);">
+    <body onload="editarEliminar();botonEdithover(false);botonEliminarhover(false); ">
         <div class="main_body">
             <?php
                 require 'header.php';
@@ -175,14 +184,17 @@ if ($row != ""){
         </div>
         <div id="wrapper">
             <div id="content">
-                <table class="vista">
+                <table id="vista" class="tablesorter">
+                    <thead>
                     <tr>
                         <?php
                             for ($i=0; $i<count($aHeader); $i++) {
-                            echo "<td>".$aHeader[$i]."</td>";                       
+                            echo "<th>".$aHeader[$i]."</th>";                       
                             }
                         ?>
                     </tr> 
+                    </thead>
+                    <tbody>
                     <?php
                         for($i=0;$i<count($aContenido);$i++){
                             echo "<tr id=\"$i\" onmouseover=\"ChangeColor(this, true, this.id);\" onmouseout=\"ChangeColor(this, false, this.id);\" onclick=\"DoNav(this, this.id);editarEliminar();\" >";
@@ -192,6 +204,7 @@ if ($row != ""){
                             echo"</tr>";
                         }
                     ?>
+                    </tbody>
                 </table>
             </div>
             <div id="menu">

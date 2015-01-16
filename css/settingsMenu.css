@@ -37,13 +37,19 @@
   background-color: #2980B9;
   
 }
-.vista{
+.tablesorter{
     border: 1px solid black;
     border-collapse: collapse;
     width: 50%;
     height: 50px;
 }
 td{
+    padding: 5px;
+    border: 1px solid grey;
+    text-align: center;
+    vertical-align: center;
+}
+th{
     padding: 5px;
     border: 1px solid grey;
     text-align: center;
