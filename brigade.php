@@ -66,11 +66,23 @@ if (isset($_SESSION["brigadeID"])){
                         <?php require 'src/brigade/getProgramsList.php';?>
                     </select>
                     
-                    <h3><label for="selectUniversity">Universidad/es</label><button class="add-update"><span class="icon-add"></span></button></h3>
+                    <h3><label for="selectUniversity">Universidad/es:</label></h3>
+                    <ul class="univesitiesList">
+                        <?php require 'src/brigade/getUniversities.php';?>
+                    </ul>  
                     <select id="selectUniversity" class="cs-select" required>
                         <option value="none" selected>none</option>
+                        <?php require 'src/brigade/getUniversitiesList.php';?>
                     </select>
-                    <input id="btnAdd" type="button" value="Add" onclick="selectRequire(1)"/>                    
+                    <input id="btnAdd" type="button" value="Add" onclick="selectRequire(1)"/>
+                    
+                    <h3>Fechas</h3>
+                    <div class="fecha-inicio"> <label for="brigadeBeginDate">Inicio:</label>
+                        <input type="date" name="brigadeBeginDate" required value="<?php require "src/brigade/beginDate.php";?>"/>
+                    </div>
+                    <div class="fecha-finalizacion"> <label for="brigadeEndingDate">Finalizacion:</label>
+                        <input type="date" name="brigadeEndingDate" required value="<?php require "src/brigade/endingDate.php";?>"/>
+                    </div>
                 </form>
             </div>
             <div class="flights">
