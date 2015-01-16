@@ -596,6 +596,7 @@ if(!$name == "" && !$lastname == "" && !$id == "" && !$gender == "" && !$bornDat
                                 $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
                                 $idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = "";
                                 $selectedBloodType1 = $selectedBloodType2 = $selectedBloodType3 = $selectedBloodType4 = $selectedBloodType5 = $selectedBloodType6 = $selectedBloodType7 = $selectedBloodType8 = $selectedGender1 = $selectedGender2 = "";
+                                header("location:src/webrouter.php?position=Comunidades+&action= ");                                
                             }  
                         }
                     }                   
