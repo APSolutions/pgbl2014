@@ -19,6 +19,7 @@
         $aHeader = array(
             '0' => "Comunidad",
             '1' => "Provincia",
+            '2' => "Población",
             );
         require_once 'src/login/connect.php';   
         $query = "CALL get_communitiesConf()";
