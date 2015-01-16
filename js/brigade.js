@@ -56,8 +56,7 @@ function addUniversity(){
     btnDelete.name = id;
     btnDelete.innerHTML = "X";
     btnDelete.className = "delete-university";
-    btnDelete.setAttribute('onclick','deleteUniversity('+(list.childElementCount + 1)+')');
-           
+    btnDelete.setAttribute('onclick','deleteUniversity('+(list.childElementCount + 1)+')');        
     universityToDB.id = "university-item-" + (list.childElementCount + 1);
     universityToDB.name = "university-item-" + (list.childElementCount + 1);
     universityToDB.value = id;
