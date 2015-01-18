@@ -7,7 +7,6 @@
     $_SESSION["action"] = "";
     $_SESSION["program"] = "";
     $_SESSION["brigadeID"] = "";
-    require 'src/calendars/set-events.php';
 ?>
     
 <!DOCTYPE html>
@@ -29,23 +28,27 @@
         <script src='js/calendars/lib/jquery.min.js'></script>
         <script src='js/calendars/fullcalendar.min.js'></script>
         <script>
+            $(document).ready(function() {
 
-                $(document).ready(function() {
-
-                        $('#calendar').fullCalendar({
-                                eventLimit: true, // allow "more" link when too many events
-                                events: {
-                                        url: 'src/calendars/get-events.php',
-                                        error: function() {
-                                                $('#script-warning').show();
-                                        }
-                                },
-                                loading: function(bool) {
-                                        $('#loading').toggle(bool);
-                                }
-                        });
-
+                $('#calendar').fullCalendar({
+                    header: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'month,agendaWeek,agendaDay'
+                    },
+                    eventLimit: true, // allow "more" link when too many events
+                    events: {
+                        url: 'src/calendars/get-events.php',
+                        error: function() {
+                            $('#script-warning').show();
+                        }
+                    },
+                    loading: function(bool) {
+                        $('#loading').toggle(bool);
+                    }
                 });
+
+            });
 
         </script>
         <style>
@@ -89,7 +92,7 @@
             ?>
         <div id='script-warning'>
             <code>src/calendars/get-events.php</code> must be running.
-	</div>
+	</div>    
 	<div id='loading'>loading...</div>
 	<div id='calendar'></div>
         <a href="brigade.php"><button>Agregar Brigada</button></a>

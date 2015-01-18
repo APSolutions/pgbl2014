@@ -1,28 +1,14 @@
 <?php
-
-require 'src/login/connect.php';
-
+require '../login/connect.php';
 $query = "call get_brigades_calendar_data();";
 $result = $conn->query($query);
 
 $outp = "[";
 
 while($rs = $result->fetch_assoc()) {
-    $title = "";
-    $query = "CALL get_brigades_calendar_universities('".$rs['id']."');";
-    require 'src/login/connect.php';
-    $result1 = $conn->query($query) or die('failed!');;
-    
-    while($rs1 = $result1->fetch_assoc()) {
-        if ($title == ""){
-            $title .= $rs1["name"];
-        }else{
-            $title .= "/ " . $rs1["name"];
-        }
-    }    
     if ($outp != "[") {$outp .= ",";}
     $outp .= '{"id":"' .    $rs["id"] .         '",';
-    $outp .= '"title":"' .  $rs["program"] . " - " . $title . " (" .$rs["totalStudents"] .')",';
+    $outp .= '"title":"' .  $rs["program"] . " - " . $rs["universities"] . " (" .$rs["totalStudents"] .')",';
     $outp .= '"url":"src/calendars/setFichaData.php?brigadeID='.$rs["id"] .'",';
     $outp .= '"start":"' .  $rs["startingDate"] .    '",'; 
     $outp .= '"end":"' .    $rs["endDate"] .    '"}'; 
@@ -30,4 +16,6 @@ while($rs = $result->fetch_assoc()) {
 
 $outp .="]";
 
-file_put_contents('src/calendars/events.json', $outp);
+file_put_contents('events.json',$outp);
+
+header('location:../../brigades_calendar.php');
