@@ -105,27 +105,27 @@ if ($row != ""){
             function ChangeColor(tableRow, highLight, index){
                 if (index != pos){
                     if (highLight){
-                        tableRow.style.backgroundColor = '#F8F8FF';
+                        tableRow.style.backgroundColor = '#e6EEEE';
                     }else{
-                        tableRow.style.backgroundColor = 'white';
+                        tableRow.style.backgroundColor = 'ghostwhite';
                     }                 
                 }
             }
 
             function DoNav(tableRow, index){
                 if (!sel == ""){
-                    sel.style.backgroundColor = 'white';
+                    sel.style.backgroundColor = 'ghostwhite';
                     sel = tableRow;
                     pos = index;      
                     document.getElementById('edit').value = pos;
                     document.getElementById('eliminar').value = pos;
-                    sel.style.backgroundColor = '#dcfac9';                
+                    sel.style.backgroundColor = '#D9EFC2';                
                 }else{
                     sel = tableRow;
                     pos = index; 
                     document.getElementById('edit').value = pos;
                     document.getElementById('eliminar').value = pos;
-                    sel.style.background = '#dcfac9';
+                    sel.style.background = '#D9EFC2';
                 }
             }  
             function editarEliminar(){
@@ -171,10 +171,49 @@ if ($row != ""){
         <script type="text/javascript">
             $(document).ready(function() 
             { 
-                $("#vista").tablesorter(); 
+                $("#vista").tablesorter( {sortList: [[0,0]]} ); 
             } 
             );
         </script>
+        <style>
+            th.headerSortUp { 
+                background-image: url(img/settings/sort_asc.gif);   
+            } 
+            th.headerSortDown { 
+                background-image: url(img/settings/sort_desc.gif); 
+            } 
+            table.tablesorter {
+                font-family: sans-serif;
+                margin:10px 0pt 15px;
+                background-color: ghostwhite; 
+                font-size: 9pt;
+                width: 90%;
+                text-align: left;
+                border-collapse: collapse;
+            }
+            table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+                background-color: #e6EEEE;
+                border: 1px solid #FFF;
+                font-size: 8pt;
+                padding: 4px;
+            }
+            th{
+                padding: 5px;
+                border: 1px solid #FFF;
+                text-align: center;
+                vertical-align: center;
+                background-repeat: no-repeat; 
+                background-position: center right;
+                cursor: pointer; 
+                font-weight: bold;
+                background-image: url(img/settings/bg.gif);
+            }
+            table.tablesorter tbody td {
+                color: #000;
+                padding: 4px;
+                vertical-align: top;
+            }              
+        </style>
     </head>
     <body onload="editarEliminar();botonEdithover(false);botonEliminarhover(false); ">
         <div class="main_body">

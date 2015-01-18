@@ -37,24 +37,14 @@
   background-color: #2980B9;
   
 }
-.tablesorter{
-    border: 1px solid black;
-    border-collapse: collapse;
-    width: 50%;
-    height: 50px;
-}
+
 td{
     padding: 5px;
-    border: 1px solid grey;
+    border: 1px solid #FFF;
     text-align: center;
     vertical-align: center;
 }
-th{
-    padding: 5px;
-    border: 1px solid grey;
-    text-align: center;
-    vertical-align: center;
-}
+
 .button_text{
   -webkit-border-radius: 28;
   -moz-border-radius: 28;
