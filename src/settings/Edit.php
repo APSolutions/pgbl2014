@@ -11,10 +11,49 @@
     $econtractType = $elessor = $ecapacity = $evyear = $einsuranceCompany = $einsuranceNumber = $einsuranceType = $econtactPhone = $eid = "";
     $elocation = $ebedrooms = $eelectricity = $ewifi = $esignal = $eventilation = $etoilet = $edrinkablew = "";
     $emembers = "";
+    $elastname = $esex = $eborndate = $ecitizenship = $ebloodType = $emaritalStatus = $ecellphone = $eemail = $euniversity = $ecareer = $eaddress = $econtractDate = $einterviewDate = $erole = "";
     $etoiletType = array() ; 
     $ecommunityProgram = array();
     if ($configuracion == "Personal"){
-
+        require 'src/login/connect.php';
+        $query = "CALL edit_staff('$primary')";
+        $result= $conn->query($query);
+        if (!$result){          
+            echo "<script type='text/javascript'>alert('failed')</script>";
+        }else{
+            $row = $result->fetch_assoc();
+            $ename = $row['name'];  
+            $elastname = $row['lastname'];
+            $eid = $row['id'];
+            $esex = $row['sex'];
+            $eborndate = $row['bornDate'];
+            $ecitizenship = $row['citizenship'];
+            $ebloodType = $row['bloodType'];
+            $emaritalStatus = $row['maritalStatus'];
+            $ecellphone = $row['cellphoneNumber'];
+            $eemail = $row['email'];
+            $euniversity = $row['university'];
+            $ecareer = $row['career'];
+            $eaddress = $row['address'];
+            $econtractDate = $row['contractDate'];
+            $einterviewDate = $row['interviewDate'];
+            $erole = $row['role'];      
+            require 'src/login/connect.php';
+            $query = "CALL edit_communityPrograms('$primary')";
+            $result= $conn->query($query);
+            if (!$result){          
+                echo "<script type='text/javascript'>alert('failed')</script>";
+            }else{
+                $i = 0;
+                while ($row = $result->fetch_assoc()){
+                    $col = count($row);
+                    for($j=0;$j<$col;$j++){
+                        $ecommunityProgram[$i][$j] = $row['program'];
+                    }
+                    $i ++;
+                }
+            }
+    }
     }else if ($configuracion == "Comunidades"){
         require 'src/login/connect.php';
         $query = "CALL edit_community('$primary')";
