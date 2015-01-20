@@ -18,8 +18,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 
 if ($row != ""){
     if ($position == "Personal"){
-        $_SESSION["primaryKeyConf"] = $aContenido[$row][1];
-        $llavePrimaria = $aContenido[$row][1];
+        $_SESSION["primaryKeyConf"] = $aContenido[$row][2];
+        $llavePrimaria = $aContenido[$row][2];
     }else if ($position == "Comunidades"){
         $_SESSION["primaryKeyConf"] = $aContenido[$row][0];
         $llavePrimaria = $aContenido[$row][0];

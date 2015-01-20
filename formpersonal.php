@@ -5,38 +5,121 @@ session_id('pgbl');
 session_start();
 //cargar variables de base de datos
 require '/src/settings/personalQuery.php';
+require 'src/settings/Edit.php';
+if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate != "" && $ecitizenship != "" && $ebloodType != "" && $emaritalStatus != "" && $ecellphone != "" && $eemail != "" && $euniversity != "" && $ecareer != "" && $eaddress != "" && $econtractDate != "" && $einterviewDate != "" && $erole){
+    $llave = $_SESSION["primaryKeyConf"];
+    $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
+    $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
+    $arregloBorn = array(
+            'yearErr' => "",
+            'monthErr' => "",
+            'dayErr' => "",
+            );
+    $arregloCont = array(
+            'yearErr' => "",
+            'monthErr' => "",
+            'dayErr' => "",
+            );
+    $arregloEnt = array(
+            'yearErr' => "",
+            'monthErr' => "",
+            'dayErr' => "",
+            );
+    $selectedBloodType = $selectedGender = $selectedRol = "selected";
+    $selectedBloodType1 = $selectedBloodType2 = $selectedBloodType3 = $selectedBloodType4 = $selectedBloodType5 = $selectedBloodType6 = $selectedBloodType7 = $selectedBloodType8 = $selectedGender1 = $selectedGender2 = "";
+    $checkedmaritalstatus = $checkedstaffType = $checkedalergia = "checked";
+    $checkedmaritalstatus1 = $checkedmaritalstatus2 = $checkedmaritalstatus3 = $checkedmaritalstatus4 = $checkedmaritalstatus5 = $checkedstaffType1 = $checkedstaffType2 ="";
+    $checkedalergia1 = $checkedalergia2 = "";
+    $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
+    $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
+    $idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = "";
+    $flag = FALSE;
+    $flag2 = TRUE;
+    //asignar variables de Edit
+    $nameTemp = $ename;
+    $lastnameTemp = $elastname;
+    $idTemp = $eid;
+    $bloodTypeTemp = $ebloodType;
+    if($bloodTypeTemp == "A+"){
+        $selectedBloodType1 ="selected"; 
+    } else if ($bloodTypeTemp == "A-"){
+        $selectedBloodType2 ="selected";
+    } else if ($bloodTypeTemp == "B+"){
+        $selectedBloodType3 ="selected";
+    } else if ($bloodTypeTemp == "B-"){
+        $selectedBloodType4 ="selected";
+    } else if ($bloodTypeTemp == "O+"){
+        $selectedBloodType5 ="selected";
+    } else if ($bloodTypeTemp == "O-"){
+        $selectedBloodType6 ="selected";
+    } else if ($bloodTypeTemp == "AB+"){
+        $selectedBloodType7 ="selected";
+    } else {
+        $selectedBloodType8 = "selected";  
+    }
+    list($ebornYear,$ebornMonth,$ebornDay)=explode("-",$eborndate);
+    $bornDateYearTemp = $ebornYear;
+    $bornDateMonthTemp = $ebornMonth;
+    $bornDateDayTemp = $ebornDay;
+    $citizenshipTemp = $ecitizenship;
+    $genderTemp = $esex;
+    if($genderTemp == "1"){
+        $selectedGender1 ="selected"; 
+    } else {
+        $selectedGender2 = "selected";  
+    }
+    $maritalStatusTemp = $emaritalStatus;
+    if($maritalStatusTemp == "Soltero(a)"){
+           $checkedmaritalstatus1 ="checked";
+       }else if ($maritalStatusTemp == "Casado(a)"){
+           $checkedmaritalstatus2 ="checked";
+       }else if ($maritalStatusTemp == "Separado(a)"){
+           $checkedmaritalstatus3 ="checked";          
+       }else if ($maritalStatusTemp == "Viudo(a)"){
+           $checkedmaritalstatus4 ="checked";
+       }else{
+           $checkedmaritalstatus5 ="checked";
+       }
+    $addressTemp = $eaddress;
+    $cellphoneTemp = $ecellphone;
+    $emailTemp = $eemail;
+    $universityTemp = $euniversity;
+    $careerTemp = $ecareer;
+         
+}else{
+        $llave = $_SESSION["primaryKeyConf"];
+    $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
+    $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
+    $arregloBorn = array(
+            'yearErr' => "",
+            'monthErr' => "",
+            'dayErr' => "",
+            );
+    $arregloCont = array(
+            'yearErr' => "",
+            'monthErr' => "",
+            'dayErr' => "",
+            );
+    $arregloEnt = array(
+            'yearErr' => "",
+            'monthErr' => "",
+            'dayErr' => "",
+            );
+    $selectedBloodType = $selectedGender = $selectedRol = "selected";
+    $selectedBloodType1 = $selectedBloodType2 = $selectedBloodType3 = $selectedBloodType4 = $selectedBloodType5 = $selectedBloodType6 = $selectedBloodType7 = $selectedBloodType8 = $selectedGender1 = $selectedGender2 = "";
+    $checkedmaritalstatus = $checkedstaffType = $checkedalergia = "checked";
+    $checkedmaritalstatus1 = $checkedmaritalstatus2 = $checkedmaritalstatus3 = $checkedmaritalstatus4 = $checkedmaritalstatus5 = $checkedstaffType1 = $checkedstaffType2 ="";
+    $checkedalergia1 = $checkedalergia2 = "";
+    $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
+    $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
+    $idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = "";
+    $flag = FALSE;
+    $flag2 = TRUE;
+}
+
 //variables del formulario
-$llave = $_SESSION["primaryKeyConf"];
 $name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $condition = $otraCondicionMedica = $alergia = $alergiaInput = $otroIdioma = $contDate = $entDate = $idioma = "";
-$nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
 $nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = $programErr = $emergencyNameErr = $emergencyTelephoneErr = $emergencyAddressErr = $condicionMedicaErr = $alergiaErr = $idiomaErr = "";
-$bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
-$arregloBorn = array(
-        'yearErr' => "",
-        'monthErr' => "",
-        'dayErr' => "",
-        );
-$arregloCont = array(
-        'yearErr' => "",
-        'monthErr' => "",
-        'dayErr' => "",
-        );
-$arregloEnt = array(
-        'yearErr' => "",
-        'monthErr' => "",
-        'dayErr' => "",
-        );
-$bornDateYearErr = $bornDateMonthErr = $bornDateDayErr = "";
-$selectedBloodType = $selectedGender = $selectedRol = "selected";
-$selectedBloodType1 = $selectedBloodType2 = $selectedBloodType3 = $selectedBloodType4 = $selectedBloodType5 = $selectedBloodType6 = $selectedBloodType7 = $selectedBloodType8 = $selectedGender1 = $selectedGender2 = "";
-$checkedmaritalstatus = $checkedstaffType = $checkedalergia = "checked";
-$checkedmaritalstatus1 = $checkedmaritalstatus2 = $checkedmaritalstatus3 = $checkedmaritalstatus4 = $checkedmaritalstatus5 = $checkedstaffType1 = $checkedstaffType2 ="";
-$checkedalergia1 = $checkedalergia2 = "";
-$programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
-$condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
-$idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = "";
-$flag = FALSE;
-$flag2 = TRUE;
 $errorMessage = "";
 
 
