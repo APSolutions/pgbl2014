@@ -44,7 +44,7 @@ if (isset($_SESSION["brigadeID"])){
             }
         </script>
     </head>
-    <body onload="init()">
+    <body onload="init();">
         <?php
         require 'header.php';
         ?>

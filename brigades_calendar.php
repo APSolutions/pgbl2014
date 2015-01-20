@@ -27,15 +27,19 @@
         <script src='js/calendars/lib/moment.min.js'></script>
         <script src='js/calendars/lib/jquery.min.js'></script>
         <script src='js/calendars/fullcalendar.min.js'></script>
+        <script src='js/calendars/fullcalendar.js'></script>
+        <script src='js/calendars/brigade_calendar.js'></script>
+        <script src='js/calendars/lang-all.js'></script>
         <script>
             $(document).ready(function() {
-
+                
                 $('#calendar').fullCalendar({
                     header: {
                         left: 'prev,next today',
                         center: 'title',
                         right: 'month,agendaWeek,agendaDay'
                     },
+                    firstDay: 6,
                     eventLimit: true, // allow "more" link when too many events
                     events: {
                         url: 'src/calendars/get-events.php',
@@ -49,7 +53,6 @@
                 });
 
             });
-
         </script>
         <style>
             body {
@@ -96,6 +99,10 @@
 	<div id='loading'>loading...</div>
 	<div id='calendar'></div>
         <a href="brigade.php"><button>Agregar Brigada</button></a>
+        <button onclick="setDataProgram()">Agregar Brigada</button>
         </div>
+        <script>
+            setDataProgram();
+        </script>
     </body>
 </html>

@@ -66,6 +66,162 @@ body .fc { /* extra precedence to overcome jqui */
 	background: #ccc;
 }
 
+/******************************************************************************/
+.fc-content[data-program="Business"]{
+    background: rgb(40,48,116);
+}
+.fc-event[data-program="Business"]{
+    background: rgb(40,48,116);
+    border-color: rgb(40,48,116);
+}
+.fc-title[data-program="Business"]{
+    background: rgb(40,48,116);
+}
+.fc-event-container[data-program="Business"]{
+    background: rgb(40,48,116);
+}
+/******************************************************************************/
+.fc-content[data-program="Architecture"]{
+    background: rgb(250,183,25);
+}
+.fc-event[data-program="Architecture"]{
+    background: rgb(250,183,25);
+    border-color: rgb(250,183,25);
+}
+.fc-title[data-program="Architecture"]{
+    background: rgb(250,183,25);
+}
+.fc-event-container[data-program="Architecture"]{
+    background: rgb(250,183,25);
+}
+/******************************************************************************/
+.fc-content[data-program="Dental"]{
+    background: rgb(141,0,183);
+}
+.fc-event[data-program="Dental"]{
+    background: rgb(141,0,183);
+    border-color: rgb(141,0,183);
+}
+.fc-title[data-program="Dental"]{
+    background: rgb(141,0,183);
+}
+.fc-event-container[data-program="Dental"]{
+    background: rgb(141,0,183);
+}
+/******************************************************************************/
+.fc-content[data-program="Environmental"]{
+    background: rgb(135,186,64);
+}
+.fc-event[data-program="Environmental"]{
+    background: rgb(135,186,64);
+    border-color: rgb(135,186,64);
+}
+.fc-title[data-program="Environmental"]{
+    background: rgb(135,186,64);
+}
+.fc-event-container[data-program="Environmental"]{
+    background: rgb(135,186,64);
+}
+/******************************************************************************/
+.fc-content[data-program="Human Rights"]{
+    background: rgb(103,20,73);
+}
+.fc-event[data-program="Human Rights"]{
+    background: rgb(103,20,73);
+    border-color: rgb(103,20,73);
+}
+.fc-title[data-program="Human Rights"]{
+    background: rgb(103,20,73);
+}
+.fc-event-container[data-program="Human Rights"]{
+    background: rgb(103,20,73);
+}
+/******************************************************************************/
+.fc-content[data-program="Medical"]{
+    background: rgb(221,31,38);
+}
+.fc-event[data-program="Medical"]{
+    background: rgb(221,31,38);
+    border-color: rgb(221,31,38);
+}
+.fc-title[data-program="Medical"]{
+    background: rgb(221,31,38);
+}
+.fc-event-container[data-program="Medical"]{
+    background: rgb(221,31,38);
+}
+/******************************************************************************/
+.fc-content[data-program="Microfinance"]{
+    background: rgb(93,154,94);
+}
+.fc-event[data-program="Microfinance"]{
+    background: rgb(93,154,94);
+    border-color: rgb(93,154,94);
+}
+.fc-title[data-program="Microfinance"]{
+    background: rgb(93,154,94);
+}
+.fc-event-container[data-program="Microfinance"]{
+    background: rgb(93,154,94);
+}
+/******************************************************************************/
+.fc-content[data-program="Public Health"]{
+    background: rgb(231,132,59);
+}
+.fc-event[data-program="Public Health"]{
+    background: rgb(231,132,59);
+    border-color: rgb(231,132,59);
+}
+.fc-title[data-program="Public Health"]{
+    background: rgb(231,132,59);
+}
+.fc-event-container[data-program="Public Health"]{
+    background: rgb(231,132,59);
+}
+/******************************************************************************/
+.fc-content[data-program="Water"]{
+    background: rgb(20,154,215);
+}
+.fc-event[data-program="Water"]{
+    background: rgb(20,154,215);
+    border-color: rgb(20,154,215);
+}
+.fc-title[data-program="Water"]{
+    background: rgb(20,154,215);
+}
+.fc-event-container[data-program="Water"]{
+    background: rgb(20,154,215);
+}
+/******************************************************************************/
+.fc-content[data-program="Professional"]{
+    background: rgb(119,136,153);
+}
+.fc-event[data-program="Professional"]{
+    background: rgb(119,136,153);
+    border-color: rgb(119,136,153);
+}
+.fc-title[data-program="Professional"]{
+    background: rgb(119,136,153);
+}
+.fc-event-container[data-program="Professional"]{
+    background: rgb(119,136,153);
+}
+/******************************************************************************/
+.fc-content[data-program="ENGINEERING"]{
+    background: #971f56;
+}
+.fc-event[data-program="Engineering"]{
+    background: #971f56;
+    border-color: #971f56;
+}
+.fc-title[data-program="Engineering"]{
+    background: #971f56;
+}
+.fc-event-container[data-program="Engineering"]{
+    background: #971f56;
+}
+
+
 
 /* Icons (inline elements with styled text that mock arrow icons)
 --------------------------------------------------------------------------------------------------*/
@@ -379,11 +535,6 @@ previous button's border...
 .fc-row .fc-bgevent-skeleton table,
 .fc-row .fc-highlight-skeleton table {
 	height: 100%; /* stretch skeleton to bottom of row */
-}
-
-.fc-row .fc-highlight-skeleton td,
-.fc-row .fc-bgevent-skeleton td {
-	border-color: transparent;
 }
 
 .fc-row .fc-bgevent-skeleton {
