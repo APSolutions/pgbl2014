@@ -28,7 +28,6 @@
         <script src='js/calendars/lib/jquery.min.js'></script>
         <script src='js/calendars/fullcalendar.min.js'></script>
         <script src='js/calendars/fullcalendar.js'></script>
-        <script src='js/calendars/brigade_calendar.js'></script>
         <script src='js/calendars/lang-all.js'></script>
         <script>
             $(document).ready(function() {
@@ -51,7 +50,6 @@
                         $('#loading').toggle(bool);
                     }
                 });
-
             });
         </script>
         <style>
@@ -97,12 +95,8 @@
             <code>src/calendars/get-events.php</code> must be running.
 	</div>    
 	<div id='loading'>loading...</div>
-	<div id='calendar'></div>
+        <div id='calendar'></div>
         <a href="brigade.php"><button>Agregar Brigada</button></a>
-        <button onclick="setDataProgram()">Agregar Brigada</button>
         </div>
-        <script>
-            setDataProgram();
-        </script>
     </body>
 </html>
