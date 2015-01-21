@@ -6,7 +6,7 @@ session_start();
 //cargar variables de base de datos
 require '/src/settings/personalQuery.php';
 require 'src/settings/Edit.php';
-if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate != "" && $ecitizenship != "" && $ebloodType != "" && $emaritalStatus != "" && $ecellphone != "" && $eemail != "" && $euniversity != "" && $ecareer != "" && $eaddress != "" && $econtractDate != "" && $einterviewDate != "" && $erole){
+if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate != "" && $ecitizenship != "" && $ebloodType != "" && $emaritalStatus != "" && $ecellphone != "" && $eemail != "" && $euniversity != "" && $ecareer != "" && $eaddress != "" && $econtractDate != "" && $einterviewDate != "" && $erole && $eename != "" && $eeaddress != "" && $eephoneNumber != ""){
     $llave = $_SESSION["primaryKeyConf"];
     $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
     $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
@@ -33,6 +33,7 @@ if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate !
     $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
     $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
     $idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = "";
+    $otraCondicionMedica = $alergia = $alergiaInput = $otroIdioma = "";
     $flag = FALSE;
     $flag2 = TRUE;
     //asignar variables de Edit
@@ -85,11 +86,64 @@ if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate !
     $emailTemp = $eemail;
     $universityTemp = $euniversity;
     $careerTemp = $ecareer;
-         
+    $emergencyNameTemp = $eename;
+    $emergencyAddressTemp = $eeaddress;
+    $emergencyTelephoneTemp = $eephoneNumber;
+    if (count($estaffmcondition) != 0){
+        for ($i=0;$i<count($estaffmcondition);$i++){
+            for($j=0;$j<$col;$j++){   
+                if ($estaffmcondition[$i][$j] == "Diabetes"){
+                    $condicionDiabetesCh = "checked";
+                }elseif ($estaffmcondition[$i][$j] == "Hipertension"){
+                    $condicionHipertensionCh = "checked";
+                }elseif ($estaffmcondition[$i][$j] == "Asma"){
+                    $condicionAsmaCh = "checked";
+                }elseif ($estaffmcondition[$i][$j] == "Problemas Cardiacos"){
+                    $condicionProblemasCardiacosCh = "checked";
+                }elseif ($estaffmcondition[$i][$j] == "Epilepsia"){
+                    $condicionEpilepsiaCh = "checked";
+                }else{
+                    $condicionOtroCh = "checked";
+                    $otraCondicionMedica = $estaffmcondition[$i][$j];
+                }
+            }
+        }
+    }else{
+        $condicionNaCh = "checked";
+    }
+    if ($ealergia != ""){
+        $checkedalergia1 ="checked"; 
+        $alergia = 1;
+        $alergiaInput = $ealergia;
+    }else{
+        $checkedalergia2 ="checked";
+    }
+    if(count($estaffSpokenLanguage) != 0){
+        for ($i=0;$i<count($estaffSpokenLanguage);$i++){
+            for($j=0;$j<$col;$j++){   
+                if ($estaffSpokenLanguage[$i][$j] == "Frances"){
+                    $idiomaFrancesCh = "checked";
+                }elseif ($estaffSpokenLanguage[$i][$j] == "Ingles"){
+                    $idiomaInglesCh = "checked";
+                }elseif ($estaffSpokenLanguage[$i][$j] == "Portugues"){
+                    $idiomaPortuguesCh = "checked";
+                }else{
+                    $idiomaOtroCh = "checked";
+                    $otroIdioma = $estaffSpokenLanguage[$i][$j];
+                }
+            }
+        }
+    }else{
+        $idiomaNaCh = "checked";
+    }
+    
+    
+    
 }else{
-        $llave = $_SESSION["primaryKeyConf"];
-    $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
+    $llave = $_SESSION["primaryKeyConf"];
+    $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = $otraCondicionMedica = "";
     $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
+    $alergia = $alergiaInput = $otroIdioma = "";
     $arregloBorn = array(
             'yearErr' => "",
             'monthErr' => "",
@@ -118,7 +172,7 @@ if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate !
 }
 
 //variables del formulario
-$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $condition = $otraCondicionMedica = $alergia = $alergiaInput = $otroIdioma = $contDate = $entDate = $idioma = "";
+$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $condition = $contDate = $entDate = $idioma = "";
 $nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = $programErr = $emergencyNameErr = $emergencyTelephoneErr = $emergencyAddressErr = $condicionMedicaErr = $alergiaErr = $idiomaErr = "";
 $errorMessage = "";
 
@@ -679,7 +733,7 @@ if(!$name == "" && !$lastname == "" && !$id == "" && !$gender == "" && !$bornDat
                                 $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
                                 $idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = "";
                                 $selectedBloodType1 = $selectedBloodType2 = $selectedBloodType3 = $selectedBloodType4 = $selectedBloodType5 = $selectedBloodType6 = $selectedBloodType7 = $selectedBloodType8 = $selectedGender1 = $selectedGender2 = "";
-                                header("location:src/webrouter.php?position=Comunidades+&action= ");                                
+                                header("location:src/webrouter.php?position=Staff+&action= ");                                
                             }  
                         }
                     }                   

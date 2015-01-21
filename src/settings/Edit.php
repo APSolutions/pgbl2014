@@ -12,8 +12,11 @@
     $elocation = $ebedrooms = $eelectricity = $ewifi = $esignal = $eventilation = $etoilet = $edrinkablew = "";
     $emembers = "";
     $elastname = $esex = $eborndate = $ecitizenship = $ebloodType = $emaritalStatus = $ecellphone = $eemail = $euniversity = $ecareer = $eaddress = $econtractDate = $einterviewDate = $erole = "";
+    $eename = $eeaddress = $eephoneNumber = $ealergia = "";
     $etoiletType = array() ; 
     $ecommunityProgram = array();
+    $estaffmcondition = array();
+    $estaffSpokenLanguage = array();
     if ($configuracion == "Personal"){
         require 'src/login/connect.php';
         $query = "CALL edit_staff('$primary')";
@@ -37,23 +40,60 @@
             $eaddress = $row['address'];
             $econtractDate = $row['contractDate'];
             $einterviewDate = $row['interviewDate'];
-            $erole = $row['role'];      
-            require 'src/login/connect.php';
-            $query = "CALL edit_communityPrograms('$primary')";
-            $result= $conn->query($query);
-            if (!$result){          
-                echo "<script type='text/javascript'>alert('failed')</script>";
-            }else{
-                $i = 0;
-                while ($row = $result->fetch_assoc()){
-                    $col = count($row);
-                    for($j=0;$j<$col;$j++){
-                        $ecommunityProgram[$i][$j] = $row['program'];
-                    }
-                    $i ++;
+            $erole = $row['role'];          
+        }
+        require 'src/login/connect.php';
+        $query = "CALL edit_staffEmergencyContact('$primary')";
+        $result= $conn->query($query);
+        if (!$result){          
+            echo "<script type='text/javascript'>alert('failed')</script>";
+        }else{
+            $row = $result->fetch_assoc();
+            $eename = $row['name']; 
+            $eeaddress = $row['address'];
+            $eephoneNumber = $row['phoneNumber'];
+        }
+        require 'src/login/connect.php';
+        $query = "CALL edit_staffMedicalCon('$primary')";
+        $result= $conn->query($query);
+        if (!$result){          
+            echo "<script type='text/javascript'>alert('failed')</script>";
+        }else{
+            $i = 0;
+            while ($row = $result->fetch_assoc()){
+                $col = count($row);
+                for($j=0;$j<$col;$j++){
+                    $estaffmcondition[$i][$j] = $row['mcondition'];
                 }
+                $i ++;
             }
-    }
+        }
+        require 'src/login/connect.php';
+        $query = "CALL edit_staffAllergies('$primary')";
+        $result= $conn->query($query);
+        if (!$result){          
+            echo "<script type='text/javascript'>alert('failed')</script>";
+        }else{
+            $row = $result->fetch_assoc();
+            $ealergia = $row['allergy']; 
+        }
+        require 'src/login/connect.php';
+        $query = "CALL edit_staffSpokenLanguage('$primary')";
+        $result= $conn->query($query);
+        if (!$result){          
+            echo "<script type='text/javascript'>alert('failed')</script>";
+        }else{
+            $i = 0;
+            while ($row = $result->fetch_assoc()){
+                $col = count($row);
+                for($j=0;$j<$col;$j++){
+                    $estaffSpokenLanguage[$i][$j] = $row['slanguage'];
+                }
+                $i ++;
+            }
+        }
+        
+       
     }else if ($configuracion == "Comunidades"){
         require 'src/login/connect.php';
         $query = "CALL edit_community('$primary')";
