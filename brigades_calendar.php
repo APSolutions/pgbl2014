@@ -21,7 +21,9 @@
         <meta name="author" content="APSolution" />
         <link rel="shortcut icon" href="img/favicon.ico"/>
         <link rel="stylesheet" type="text/css" href="css/header.css" />
+        <link rel="stylesheet" type="text/css" href="css/calendars/brigade_calendar.css" />
         <link href='css/calendars/fullcalendar.css' rel='stylesheet' />
+        
         <link href='css/calendars/fullcalendar.print.css' rel='stylesheet' media='print' />
         <script src="js/logistic_menu/modernizr.custom.js"></script>     
         <script src='js/calendars/lib/moment.min.js'></script>
@@ -87,16 +89,18 @@
         </style>
     </head>
     <body>
-        <div class="container">
-            <?php
+        <?php
             require 'header.php';
-            ?>
-        <div id='script-warning'>
-            <code>src/calendars/get-events.php</code> must be running.
-	</div>    
-	<div id='loading'>loading...</div>
-        <div id='calendar'></div>
-        <a href="brigade.php"><button>Agregar Brigada</button></a>
+        ?>
+        <div class="container">         
+            <a href="brigade.php" class="add-brigade">
+                <button>Agregar Brigada</button>
+            </a>
+            <div id='script-warning'>
+                <code>src/calendars/get-events.php</code> must be running.
+            </div>    
+            <div id='loading'>loading...</div>
+            <div id='calendar'></div>            
         </div>
     </body>
 </html>

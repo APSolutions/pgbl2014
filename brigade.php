@@ -8,10 +8,10 @@ session_start();
 
 $_SESSION["position"] = "Formulario de Brigada";
 
-if (isset($_SESSION["brigadeID"])){
+if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
     $brigadeID = $_SESSION["brigadeID"];
 }else {
-    $brigadeID = "None";
+    $brigadeID = "Ninguno";
 }
 ?>
 
@@ -36,11 +36,7 @@ if (isset($_SESSION["brigadeID"])){
         <script type="text/javascript">
             function init(){
                 disableForm("frmFlights");
-                disableForm("frmVolunteers");
-                var brigadeID =  <?php echo json_encode($brigadeID) ?>;
-                if (brigadeID !== ""){
-                    hideiTem("selectProgram");
-                }                    
+                disableForm("frmVolunteers");                                  
             }
         </script>
     </head>
@@ -51,22 +47,22 @@ if (isset($_SESSION["brigadeID"])){
         <div class="container">
             <h2>Datos de la Brigada</h2>
             <div class="basics">                
-                <h3>ID Asignado: <span id="fichaID" class="current-value"><?php echo $brigadeID?></span></h3>
+                <div class="brigade-id">
+                    <span class="title">ID Asignado:</span>
+                    <span class="content"><?php echo $brigadeID?></span>
+                </div>
                 
-                <form id="frmRequired" class="required" method="post" action="">
-                    
-                    <h3>
-                        <label for="selectProgram">Programa: </label>
-                        <span id="program-content">
-                            <?php require 'src/brigade/getProgram.php';?>
-                        </span>
-                    </h3>
+                <div class="brigade-program">
+                    <span class="title">Programa:</span>
+                    <span class="content"><?php require 'src/brigade/getProgram.php';?></span>
                     <select id="selectProgram" class="cs-select" required onclick="selectRequire(0)">
                         <option value="" selected></option>
                         <?php require 'src/brigade/getProgramsList.php';?>
                     </select>
-                    
-                    <h3><label for="selectUniversity">Universidad/es:</label></h3>
+                </div>
+                
+                <div class="brigade-universities">
+                    <span class="title">Universidad/es:</span>
                     <ul class="univesitiesList" id="universitiesList">
                         <?php require 'src/brigade/getUniversities.php';?>
                     </ul>
@@ -76,15 +72,23 @@ if (isset($_SESSION["brigadeID"])){
                         <?php require 'src/brigade/getUniversitiesList.php';?>
                     </select>
                     <input id="btnAdd" type="button" value="Add" onclick="addUniversity()"/>
-                    
+                </div>
+                
+                <div class="brigade-dates">
                     <h3>Fechas</h3>
-                    <div class="fecha-inicio"> <label for="brigadeBeginDate">Inicio:</label>
-                        <input type="date" name="brigadeBeginDate" required value="<?php require "src/brigade/beginDate.php";?>"/>
+                    <div class="brigade-begin-date">
+                        <span class="title">Inicio:</span>
+                        <span class="content">
+                            <input type="date" name="brigadeBeginDate" required value="<?php require "src/brigade/beginDate.php";?>"/>
+                        </span>
                     </div>
-                    <div class="fecha-finalizacion"> <label for="brigadeEndingDate">Finalizacion:</label>
-                        <input type="date" name="brigadeEndingDate" required value="<?php require "src/brigade/endingDate.php";?>"/>
+                    <div class="brigade-end-date">
+                        <span class="title">Final:</span>
+                        <span class="content">
+                            <input type="date" name="brigadeEndingDate" required value="<?php require "src/brigade/endingDate.php";?>"/>
+                        </span>
                     </div>
-                </form>
+                </div>
             </div>
             <div class="flights">
                 <h2>Vuelos</h2>                

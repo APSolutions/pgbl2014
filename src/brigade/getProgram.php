@@ -12,8 +12,8 @@ if (isset($_SESSION["brigadeID"])){
     if (!empty($brigadeProgram)){
         echo $brigadeProgram;
     }else {
-        echo 'None';
+        echo 'Ninguno';
     }    
 }else{
-    echo 'None';
+    echo 'Ninguno';
 }

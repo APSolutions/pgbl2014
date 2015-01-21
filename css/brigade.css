@@ -58,24 +58,34 @@ and open the template in the editor.
     color: #206f9f;
 }
 
-
-.current-value{
-    text-decoration: none;
-    font-style: normal;
-    font-weight: 400;
+/******************************************************************************
+-------------------------------Main Brigade Form--------------------------------
+*******************************************************************************/
+.basics div{
+    clear: both;
+    margin: 0.5em;
 }
 
-.add-update{
-    text-decoration: none;
-    font-style: normal;
-    font-weight: 400;
-    float: right;
+.basics .title{
+    margin: 0.25em;
+    float: left;
+    font-size: 18px;
+    font-weight: 600;
+    width: 20%;
 }
 
-.icon-add:before {
-    content: "\002B";
+.basics .content{
+    margin: 0.25em;
+    float: left;
+    width: 60%;
+    color: black;
+    font-size: 16px;
 }
 
-.icon-update:before {
-    content: "\21BB";
+.hide{
+    display: none;
 }
+
+/******************************************************************************
+-------------------------------Main Brigade Form--------------------------------
+*******************************************************************************/
