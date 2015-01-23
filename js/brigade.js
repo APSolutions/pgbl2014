@@ -81,6 +81,10 @@ function deleteUniversity(id){
 
 
 function programClick(){
+    
+}
+
+function updateProgram(){
     /**** Visual options *****/
     var program = document.getElementById("program-content");
     if (program.className === "content"){
@@ -89,4 +93,11 @@ function programClick(){
         program.className = "content";
     }        
     
+    var select = document.getElementById("selectProgram");
+    if (select.className === "cs-select"){
+        select.className += " selecting";
+        select.focus();
+    } else {
+        select.className = "cs-select";
+    }
 }
