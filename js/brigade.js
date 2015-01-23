@@ -78,3 +78,15 @@ function deleteUniversity(id){
     list.removeChild(uni);
     toDb.removeChild(uniDb);
 }
+
+
+function programClick(){
+    /**** Visual options *****/
+    var program = document.getElementById("program-content");
+    if (program.className === "content"){
+        program.className += " hidden";
+    } else {
+        program.className = "content";
+    }        
+    
+}

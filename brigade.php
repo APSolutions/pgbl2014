@@ -54,8 +54,8 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                 
                 <div class="brigade-program">
                     <span class="title">Programa:</span>
-                    <span class="content"><?php require 'src/brigade/getProgram.php';?></span>
-                    <select id="selectProgram" class="cs-select" required onclick="selectRequire(0)">
+                    <span class="content" id="program-content"><?php require 'src/brigade/getProgram.php';?></span>
+                    <select id="selectProgram" class="cs-select" required onclick="programClick()">
                         <option value="" selected></option>
                         <?php require 'src/brigade/getProgramsList.php';?>
                     </select>

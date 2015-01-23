@@ -42,16 +42,18 @@ and open the template in the editor.
 }
 
 .cs-select {
-    color: #7a7a7a;
-    width: 100%;
+    color: black;
     border: none;
-    height: 4%;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    font-weight: 500;
-    font-size: 125%;
+    margin: 0.25em;
+    float: left;
+    font-size: 16px;
     min-height: 30px;
+    width: 15%;
+    transition: width 2s;
+}
+
+.cs-select:active{
+    width: 75%;    
 }
 
 .cs-select option:checked{
@@ -82,7 +84,7 @@ and open the template in the editor.
     font-size: 16px;
 }
 
-.hide{
+.hidden{
     display: none;
 }
 
