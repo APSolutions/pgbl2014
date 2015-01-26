@@ -22,7 +22,7 @@
         $query = "CALL edit_staff('$primary')";
         $result= $conn->query($query);
         if (!$result){          
-            echo "<script type='text/javascript'>alert('failed')</script>";
+            echo "<script type='text/javascript'>alert('failed-editar')</script>";
         }else{
             $row = $result->fetch_assoc();
             $ename = $row['name'];  
@@ -40,7 +40,7 @@
             $eaddress = $row['address'];
             $econtractDate = $row['contractDate'];
             $einterviewDate = $row['interviewDate'];
-            $erole = $row['role'];          
+            //$erole = $row['role'];          
         }
         require 'src/login/connect.php';
         $query = "CALL edit_staffEmergencyContact('$primary')";

@@ -235,13 +235,58 @@ if ($row != ""){
                     </thead>
                     <tbody>
                     <?php
-                        for($i=0;$i<count($aContenido);$i++){
-                            echo "<tr id=\"$i\" onmouseover=\"ChangeColor(this, true, this.id);\" onmouseout=\"ChangeColor(this, false, this.id);\" onclick=\"DoNav(this, this.id);editarEliminar();\" >";
-                            for($j=0;$j<$col;$j++){
-                                echo "<td>".$aContenido[$i][$j]."</td>";
-                            }
+                        if ($position == "Personal"){
+                            for($i=0;$i<count($aContenido);$i++){
+                                echo "<tr id=\"$i\" onmouseover=\"ChangeColor(this, true, this.id);\" onmouseout=\"ChangeColor(this, false, this.id);\" onclick=\"DoNav(this, this.id);editarEliminar();\" >";
+                                for($j=0;$j<$col;$j++){
+                                    if ($j == "3"){
+                                        if ($aContenido[$i][$j] == "1"){
+                                            echo "<td>Director Ejecutivo</td>";
+                                        } elseif ($aContenido[$i][$j] == "2"){
+                                            echo "<td>Director de Operaciones</td>";
+                                        } elseif ($aContenido[$i][$j] == "3"){
+                                            echo "<td>Gerente de Logística</td>";
+                                        } elseif ($aContenido[$i][$j] == "4"){
+                                            echo "<td>Coordinador de Logística</td>";
+                                        } elseif ($aContenido[$i][$j] == "5"){
+                                            echo "<td>Gerente de Transporte</td>";
+                                        } elseif ($aContenido[$i][$j] == "6"){
+                                            echo "<td>Gerente de Seguridad</td>";
+                                        } elseif ($aContenido[$i][$j] == "7"){
+                                            echo "<td>Director de Programas de Desarrollo</td>";
+                                        } elseif ($aContenido[$i][$j] == "8"){
+                                            echo "<td>Director de Programas de Salud</td>";
+                                        } elseif ($aContenido[$i][$j] == "9"){
+                                            echo "<td>Gerente de Programa</td>";
+                                        } elseif ($aContenido[$i][$j] == "10"){
+                                            echo "<td>Coordinador de Programa</td>";
+                                        } elseif ($aContenido[$i][$j] == "11"){
+                                            echo "<td>PA de Programas</td>";
+                                        } elseif ($aContenido[$i][$j] == "12"){
+                                            echo "<td>Promoción y Reclutamiento de Personal</td>";
+                                        } elseif ($aContenido[$i][$j] == "13"){
+                                            echo "<td>Gerente de Desarrollo Comunitario</td>";
+                                        } elseif ($aContenido[$i][$j] == "14"){
+                                            echo "<td>PA de Desarrollo Comunitario</td>";
+                                        } elseif ($aContenido[$i][$j] == "15"){
+                                            echo "<td>Interprete</td>";
+                                        }        
+                                    }else{
+                                        echo "<td>".$aContenido[$i][$j]."</td>";  
+                                    }         
+                                                       
+                                }
                             echo"</tr>";
-                        }
+                            }
+                        }else{
+                            for($i=0;$i<count($aContenido);$i++){
+                                echo "<tr id=\"$i\" onmouseover=\"ChangeColor(this, true, this.id);\" onmouseout=\"ChangeColor(this, false, this.id);\" onclick=\"DoNav(this, this.id);editarEliminar();\" >";
+                                for($j=0;$j<$col;$j++){
+                                    echo "<td>".$aContenido[$i][$j]."</td>";
+                                }
+                            echo"</tr>";
+                            }
+                        }                          
                     ?>
                     </tbody>
                 </table>
