@@ -545,7 +545,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
 }
 
-if(!$name == "" && !$lastname == "" && !$id == "" && !$gender == "" && !$bornDate == "" && !$age == "" && !$citizenship == "" && !$bloodType == "" && !$maritalStatus == "" && !$cellphone == "" && !$email == "" && !$university == "" && !$career == "" && !$address == "" && $flag && !$rol == ""){
+if(!$name == "" && !$lastname == "" && $eid == "" && !$gender == "" && !$bornDate == "" && !$age == "" && !$citizenship == "" && !$bloodType == "" && !$maritalStatus == "" && !$cellphone == "" && !$email == "" && !$university == "" && !$career == "" && !$address == "" && $flag && !$rol == ""){
     require 'src/login/connect.php';
     if ($staffType == 1){
         $query = "CALL insert_staff('$id','$name','$lastname','$gender','$bornDate','$bloodType','$maritalStatus','$cellphone','$email','$university','$career','$address','$contDate','','$rol','$citizenship','$age')";
@@ -720,7 +720,7 @@ if(!$name == "" && !$lastname == "" && !$id == "" && !$gender == "" && !$bornDat
                             }
                             if(!$flag2){
                                 echo "<script type='text/javascript'>alert('failed-idioma')</script>";
-                            }else{
+                            }else{                               
                                 echo "<script type='text/javascript'>alert('submitted successfully!')</script>"; 
                                 $name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $condition = $otraCondicionMedica = $alergia = $alergiaInput = $otroIdioma = $contDate = $entDate = $idioma = "";
                                 $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
@@ -733,7 +733,7 @@ if(!$name == "" && !$lastname == "" && !$id == "" && !$gender == "" && !$bornDat
                                 $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
                                 $idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = "";
                                 $selectedBloodType1 = $selectedBloodType2 = $selectedBloodType3 = $selectedBloodType4 = $selectedBloodType5 = $selectedBloodType6 = $selectedBloodType7 = $selectedBloodType8 = $selectedGender1 = $selectedGender2 = "";
-                                header("location:src/webrouter.php?position=Staff+&action= ");                                
+                                header("location:src/webrouter.php?position=Staff+&action= ");                                   
                             }  
                         }
                     }                   

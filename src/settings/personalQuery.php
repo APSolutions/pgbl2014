@@ -1,11 +1,11 @@
 <?php
     session_name('Global');
     session_id('pgbl');
-    require_once 'src/login/connect.php';   
+    require 'src/login/connect.php';   
     $query = "CALL get_roleNames()";
     $result= $conn->query($query);
     if (!$result){
-        $errorMessage = $errorMessage.'Error2: '.$conn->error;
+        echo "<script type='text/javascript'>alert('failed-lista-roles')</script>";
     } else{
         if ($result->num_rows > 0){
             $i = 0;
