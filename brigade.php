@@ -59,7 +59,7 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                         <option value="" selected></option>
                         <?php require 'src/brigade/getProgramsList.php';?>
                     </select>
-                    <div class="update-field pointer">
+                    <div id="updateProgram" class="update-field pointer">
                         <a class="update-field" onclick="updateProgram()">
                             <span class="icon-update"></span>
                         </a>
@@ -126,7 +126,8 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                     <input type="checkbox" name="volunteerArrive"/>
                     <input type="checkbox" name="volunteerLeave"/>
                 </form>
-            </div>                    
+            </div>
+            <div id="forms-space" class="forms"></div>
         </div>
     </body>
 </html>

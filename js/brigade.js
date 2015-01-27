@@ -85,6 +85,10 @@ function programClick(){
     var program = document.getElementById("program-content");
     
     program.innerHTML = select.options[select.selectedIndex].innerHTML;
+    if (select.selectedIndex > 0){
+        updateProgram();
+        setBasicFormProgram(select.options[select.selectedIndex].value);
+    }    
 }
 
 function updateProgram(){
@@ -99,8 +103,48 @@ function updateProgram(){
     var select = document.getElementById("selectProgram");
     if (select.className === "cs-select"){
         select.className += " selecting";
+        select.selectedIndex = 0;
         select.focus();
     } else {
         select.className = "cs-select";
+    }
+    
+    var update = document.getElementById("updateProgram");
+    if (update.className === "update-field pointer"){
+        update.className = "hidden";
+    } else {
+        update.className = "update-field pointer";
+    }  
+}
+
+function setBasicFormProgram(value){
+    var flag1 = false;
+    var flag2 = false;
+    var place = document.getElementById("forms-space");
+    var basicForm = document.getElementById("basicForm");
+    if (basicForm === null){
+        flag1 = true;
+        basicForm = document.createElement('form');
+        basicForm.id = "basicForm";
+        basicForm.className = "hiddenForms";
+        basicForm.method = "post";
+        basicForm.action = "<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>";
+    }
+    
+    var field = document.getElementById("program-value");
+    if (field === null){
+        flag2 = true;
+        field = document.createElement('input');
+        field.id = "program-value";
+        field.className = "hiddenFields";
+        field.type = "hidden";
+    }
+    
+    field.value = value;
+    
+    alert(field.value);
+    if (flag1 && flag2){        
+        basicForm.appendChild(field);
+        place.appendChild(basicForm);
     }
 }

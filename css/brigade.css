@@ -48,8 +48,8 @@ and open the template in the editor.
     font-size: 16px;
     min-height: 30px;
     visibility: hidden;
-    width: 15%;
-    transition: visibility 0s linear, width 0.25s linear;
+    width: 0%;
+    transition: visibility 0s linear, width 0.1s linear;
 }
 
 .selecting{
@@ -89,7 +89,6 @@ and open the template in the editor.
     margin: 0.26em;
     min-height: 30px;
     float: left;
-    width: 20%;
     color: black;
     font-size: 16px;
 }
@@ -99,6 +98,7 @@ and open the template in the editor.
 }
 
 .update-field {
+    display: block;
     float: right;
     font-size: 20px;
     font-weight: 500;
