@@ -42,25 +42,22 @@ and open the template in the editor.
 }
 
 .cs-select {
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    appearance: none;
-    color: black;
-    border: none;
-    margin: 0.26em;
     float: left;
+    color: black;
+    margin: 0.26em;    
     font-size: 16px;
     min-height: 30px;
-    transition: width 0.6s;
+    visibility: hidden;
     width: 15%;
+    transition: visibility 0s linear, width 0.25s linear;
 }
 
 .selecting{
-    display: block;
+    visibility: visible;  
+    width: 50%;
     -webkit-appearance: normal;
     -moz-appearance: normal;
-    appearance: normal;
-    width: 50%;
+    appearance: normal;    
 }
 
 
@@ -71,7 +68,7 @@ and open the template in the editor.
 /******************************************************************************
 -------------------------------Main Brigade Form--------------------------------
 *******************************************************************************/
-.basics div{
+.basics div.main{
     clear: both;
     margin: 0.5em;
     min-height: 30px;
@@ -106,13 +103,16 @@ and open the template in the editor.
     font-size: 20px;
     font-weight: 500;
     color: #164d6e;
-    min-height: 30px;
+    min-height: 30px;    
+}
+
+.pointer{
+    cursor: pointer;
 }
 
 .update-field:hover{
     color: #99ccea;
 }
-
 
 .icon-update:before{
     content: "\21BB";

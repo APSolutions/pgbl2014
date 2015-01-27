@@ -81,7 +81,10 @@ function deleteUniversity(id){
 
 
 function programClick(){
+    var select = document.getElementById("selectProgram");
+    var program = document.getElementById("program-content");
     
+    program.innerHTML = select.options[select.selectedIndex].innerHTML;
 }
 
 function updateProgram(){

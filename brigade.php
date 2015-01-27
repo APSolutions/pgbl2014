@@ -47,24 +47,26 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
         <div class="container">
             <h2>Datos de la Brigada</h2>
             <div class="basics">                
-                <div class="brigade-id">
+                <div class="brigade-id main">
                     <span class="title">ID Asignado:</span>
                     <span class="content"><?php echo $brigadeID?></span>
                 </div>
                 
-                <div class="brigade-program">
+                <div class="brigade-program main">
                     <span class="title">Programa:</span>
                     <span class="content" id="program-content"><?php require 'src/brigade/getProgram.php';?></span>
                     <select id="selectProgram" class="cs-select" onclick="programClick()">
                         <option value="" selected></option>
                         <?php require 'src/brigade/getProgramsList.php';?>
                     </select>
-                    <a class="update-field" onclick="updateProgram()">
-                        <span class="icon-update"></span>
-                    </a>
+                    <div class="update-field pointer">
+                        <a class="update-field" onclick="updateProgram()">
+                            <span class="icon-update"></span>
+                        </a>
+                    </div>                    
                 </div>
                 
-                <div class="brigade-universities">
+                <div class="brigade-universities main">
                     <span class="title">Universidad/es:</span>
                     <ul class="univesitiesList" id="universitiesList">
                         <?php require 'src/brigade/getUniversities.php';?>
@@ -77,7 +79,7 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                     <input id="btnAdd" type="button" value="Add" onclick="addUniversity()"/>
                 </div>
                 
-                <div class="brigade-dates">
+                <div class="brigade-dates main">
                     <h3>Fechas</h3>
                     <div class="brigade-begin-date">
                         <span class="title">Inicio:</span>
