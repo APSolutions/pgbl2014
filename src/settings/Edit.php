@@ -40,7 +40,7 @@
             $eaddress = $row['address'];
             $econtractDate = $row['contractDate'];
             $einterviewDate = $row['interviewDate'];
-            //$erole = $row['role'];          
+            $erole = $row['rol'];          
         }
         require 'src/login/connect.php';
         $query = "CALL edit_staffEmergencyContact('$primary')";
