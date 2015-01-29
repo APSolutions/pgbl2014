@@ -78,43 +78,120 @@ function setBasicFormProgram(value){
 //******************************************************************************
 
 
+//Functions for universities **************************************************/
+
+function showUniversityList(){
+       
+    var univContent = document.getElementById("univ-content");
+    
+    if (univContent.className === "content"){
+        univContent.className += " hidden";
+    } else {
+        univContent.className = "content";
+    }
+    
+    var univSelect = document.getElementById("selectUniversity");
+    
+    if (univSelect.className === "cs-select"){
+        univSelect.className += " selecting";
+        univSelect.selectedIndex = 0;
+        univSelect.focus();
+    } else {
+        univSelect.className = "cs-select";
+    }
+    
+    var univButton = document.getElementById("addUniv");
+    if (univButton.className === "add-field pointer"){
+        univButton.className = "hidden";
+    } else {
+        univButton.className = "add-field pointer";
+    }
+}
+
 function addUniversity(){
-    var select = document.getElementById("selectUniversity");
-    var id = select.options[select.selectedIndex].id;
-    var name = select.options[select.selectedIndex].innerHTML;
+    var univSelect = document.getElementById("selectUniversity");
+    var univList = document.getElementById("universitiesList");    
+    var univItem = document.createElement("li");
+    var univCancel = document.createElement("span");
+    var univName = univSelect.options[univSelect.selectedIndex].innerHTML;
+    var univID = univSelect.options[univSelect.selectedIndex].value;
     
-    var list = document.getElementById("universitiesList");
-    var toDb = document.getElementById("universitiesAdded");
-    
-    var btnDelete = document.createElement('button');
-    var university = document.createElement('li');
-    var universityToDB = document.createElement('input');
-    
-    university.id = "university-" + (list.childElementCount + 1);
-    university.innerHTML = name + " ";
-    
-    btnDelete.name = id;
-    btnDelete.innerHTML = "X";
-    btnDelete.className = "delete-university";
-    btnDelete.setAttribute('onclick','deleteUniversity('+(list.childElementCount + 1)+')');        
-    universityToDB.id = "university-item-" + (list.childElementCount + 1);
-    universityToDB.name = "university-item-" + (list.childElementCount + 1);
-    universityToDB.value = id;
-    universityToDB.setAttribute('hidden','');
-    
-    university.appendChild(btnDelete);
-    list.appendChild(university);
-    toDb.appendChild(universityToDB);
-    
+    if (univSelect.selectedIndex > 0){
+        univItem.id = "univ"+univID;
+        univItem.innerHTML = univName;
+        univCancel.className = "icon-cancel";
+        univCancel.setAttribute("onclick","deleteUniversity("+univID+")");
+        univItem.appendChild(univCancel);
+        
+        if (univList.innerHTML.indexOf("Ninguno") > -1){
+            univList.innerHTML = "";
+            univList.appendChild(univItem);
+            addUniv(univID);
+        }else if (univList.innerHTML.indexOf(univName) > -1){
+            alert("Esta universidad: "+univName+", ya ha sido agragada.");
+        }else {
+            univList.appendChild(univItem);
+            addUniv(univID);
+        }
+        
+        showUniversityList();
+    }    
 }
 
 function deleteUniversity(id){
-    var list = document.getElementById("universitiesList");
-    var toDb = document.getElementById("universitiesAdded");
+    var univList = document.getElementById("universitiesList");
+    var uni = document.getElementById("univ"+id);
+    var univCount = document.getElementById("univ-count");
+    var frmBas = document.getElementById("bas-frm");
+    var univField = document.getElementById("univ-field-"+id);
     
-    var uni = document.getElementById("university-"+id);
-    var uniDb = document.getElementById("university-item-"+id);
+    if(Number(univCount.value) === 1){
+        alert("La brigada debe tener al menos una universidad.")
+    }else{
+        univList.removeChild(uni);
+        frmBas.removeChild(univField);
+        univCount.value = Number(univCount.value) - 1;
+    }
+}
+
+function addUniv(id){
+    var univCount = document.getElementById("univ-count");
+    var frmBas = document.getElementById("bas-frm");
+    var univRecord = document.createElement("input");
     
-    list.removeChild(uni);
-    toDb.removeChild(uniDb);
+    if (univCount.value === "null"){
+        univCount.value = 1;
+    } else {
+        univCount.value = Number(univCount.value) + 1;
+    }
+    
+    univRecord.type = "hidden";
+    univRecord.name = "univ"+id;
+    univRecord.id = "univ-field-"+id;
+    univRecord.value = id;
+    
+    frmBas.appendChild(univRecord);
+}
+
+//Dates Function
+
+function updateDate(type){
+    var dtop = document.getElementById("dtop");
+    var dted = document.getElementById("dted");
+    var dtopInput = document.getElementById("dtop-input");
+    var dtedInput = document.getElementById("dted-input");
+    var date = new Date(dtop.value);
+    
+    if (type === 0){
+        dtopInput.value = dtop.value;
+    }else{
+        dtedInput.value = dted.value;
+    }
+}
+
+//Save functions
+
+function saveUpdateBasics(){
+    var frmBas = document.getElementById("bas-frm");
+    frmBas.submit();
 }

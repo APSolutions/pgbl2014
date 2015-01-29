@@ -13,6 +13,19 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
 }else {
     $brigadeID = "Ninguno";
 }
+
+if(!empty($_POST)){
+    require 'src/login/connect.php';
+    $date = date('Md',strtotime($_POST["dtop"]));
+    $var1 = $_POST["dtop"];
+    $var2 = $_POST["dted"];
+    $var3 = $_POST["prog"];
+    $query = "INSERT INTO pgbl2014.ficha (id, startingDate, endDate, officeArrivalDate, officeLeaveDate, totalStudents, cityTour, compound, community, program) VALUES ('TEST0?-$date', '$var1', '$var2', NULL, NULL, NULL, NULL, NULL, NULL, '$var3');";
+    $result = $conn->query($query);
+    if (!$result) {
+        die('Invalid query: ' . $conn->error);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -72,19 +85,18 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                 
                 <div class="brigade-universities main">
                     <span class="title">Universidad/es:</span>
-                    <div class="content">
+                    <div class="content" id="univ-content">
                         <ul class="univesitiesList" id="universitiesList">
                             <?php require 'src/brigade/getUniversities.php';?>
                         </ul>
                     </div>
                     <div id="addUniv" class="add-field pointer">
-                        <a class="add-field" onclick="updateProgram()">
+                        <a class="add-field" onclick="showUniversityList()">
                             <span class="icon-add"></span>
                         </a>
-                    </div> 
-                    <div id="universitiesAdded"></div>
-                    <select id="selectUniversity" class="cs-select" required>
-                        <option value="none" selected>none</option>
+                    </div>
+                    <select id="selectUniversity" class="cs-select" onclick="addUniversity()">
+                        <option value="" selected></option>
                         <?php require 'src/brigade/getUniversitiesList.php';?>
                     </select>
                 </div>
@@ -94,17 +106,19 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                     <div>
                         <span class="title">Inicio:</span>
                         <span class="content">
-                            <input type="date" name="brigadeBeginDate" required value="<?php require "src/brigade/beginDate.php";?>"/>
+                            <input type="date" name="dtop" id="dtop" value="<?php require "src/brigade/beginDate.php";?>" onchange="updateDate(0)"/>
                         </span>
                     </div>
                     <div>
                         <span class="title">Final:</span>
                         <span class="content">
-                            <input type="date" name="brigadeEndingDate" required value="<?php require "src/brigade/endingDate.php";?>"/>
+                            <input type="date" name="dted" id="dted" value="<?php require "src/brigade/endingDate.php";?>" onchange="updateDate(1)"/>
                         </span>
                     </div>
                 </div>
-                <button id="bde-save-updt" class="btn-save-updt">Save/Update</button>
+                <div class="btn-save-updt">
+                    <button id="bde-save-updt" onclick="saveUpdateBasics()">Save/Update</button>
+                </div>
             </div>
             <div class="flights">
                 <h2>Vuelos</h2>                
