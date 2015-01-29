@@ -13,5 +13,7 @@ if (isset($_SESSION["brigadeID"])){
             echo '<li id="'.$row["id"].'">'.$row["name"].' <button class="delete-university" name="'.$row["id"].'" onclick="deleteUniversity("'.$i.'")" ">X</button></li>';
             $i ++;
         }
-    }
+    }else{
+        echo 'Ninguno';   
+    }        
 }

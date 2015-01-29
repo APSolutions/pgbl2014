@@ -35,8 +35,8 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
         <script type="text/javascript" src="js/brigade.js"></script>
         <script type="text/javascript">
             function init(){
-                disableForm("frmFlights");
-                disableForm("frmVolunteers");                                  
+                var bdeID = <?php echo json_encode($brigadeID);?>; 
+                setBrigade(bdeID);
             }
         </script>
     </head>
@@ -49,12 +49,16 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
             <div class="basics">                
                 <div class="brigade-id main">
                     <span class="title">ID Asignado:</span>
-                    <span class="content"><?php echo $brigadeID?></span>
+                    <span class="content" id="bde-id">
+                        <?php echo $brigadeID?>
+                    </span>
                 </div>
                 
                 <div class="brigade-program main">
                     <span class="title">Programa:</span>
-                    <span class="content" id="program-content"><?php require 'src/brigade/getProgram.php';?></span>
+                    <span class="content" id="program-content" data-value="1">
+                        <?php require 'src/brigade/getProgram.php';?>
+                    </span>
                     <select id="selectProgram" class="cs-select" onclick="programClick()">
                         <option value="" selected></option>
                         <?php require 'src/brigade/getProgramsList.php';?>
@@ -68,32 +72,39 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                 
                 <div class="brigade-universities main">
                     <span class="title">Universidad/es:</span>
-                    <ul class="univesitiesList" id="universitiesList">
-                        <?php require 'src/brigade/getUniversities.php';?>
-                    </ul>
+                    <div class="content">
+                        <ul class="univesitiesList" id="universitiesList">
+                            <?php require 'src/brigade/getUniversities.php';?>
+                        </ul>
+                    </div>
+                    <div id="addUniv" class="add-field pointer">
+                        <a class="add-field" onclick="updateProgram()">
+                            <span class="icon-add"></span>
+                        </a>
+                    </div> 
                     <div id="universitiesAdded"></div>
                     <select id="selectUniversity" class="cs-select" required>
                         <option value="none" selected>none</option>
                         <?php require 'src/brigade/getUniversitiesList.php';?>
                     </select>
-                    <input id="btnAdd" type="button" value="Add" onclick="addUniversity()"/>
                 </div>
                 
                 <div class="brigade-dates main">
                     <h3>Fechas</h3>
-                    <div class="brigade-begin-date">
+                    <div>
                         <span class="title">Inicio:</span>
                         <span class="content">
                             <input type="date" name="brigadeBeginDate" required value="<?php require "src/brigade/beginDate.php";?>"/>
                         </span>
                     </div>
-                    <div class="brigade-end-date">
+                    <div>
                         <span class="title">Final:</span>
                         <span class="content">
                             <input type="date" name="brigadeEndingDate" required value="<?php require "src/brigade/endingDate.php";?>"/>
                         </span>
                     </div>
                 </div>
+                <button id="bde-save-updt" class="btn-save-updt">Save/Update</button>
             </div>
             <div class="flights">
                 <h2>Vuelos</h2>                
@@ -127,7 +138,20 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                     <input type="checkbox" name="volunteerLeave"/>
                 </form>
             </div>
-            <div id="forms-space" class="forms"></div>
+            <div id="forms-space" class="forms">
+                <form id="bas-frm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+                    <input type="hidden" name="prog" id="prog-input" value="null">
+                    <input type="hidden" name="univ" id="univ-count" value="null">
+                    <input type="hidden" name="dtop" id="dtop-input" value="null">
+                    <input type="hidden" name="dted" id="dted-input" value="null">
+                </form>
+                <form id="flt-frm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+                    <input type="hidden" name="fltQT" id="fltQt-input" value="null">
+                </form>
+                <form id="vol-frm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+                    <input type="hidden" name="volQT" id="volQt-input" value="null">
+                </form>
+            </div>
         </div>
     </body>
 </html>

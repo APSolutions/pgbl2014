@@ -65,6 +65,10 @@ and open the template in the editor.
     color: #206f9f;
 }
 
+.btn-save-updt{
+    clear: both;
+}
+
 /******************************************************************************
 -------------------------------Main Brigade Form--------------------------------
 *******************************************************************************/
@@ -98,25 +102,44 @@ and open the template in the editor.
 }
 
 .update-field {
-    display: block;
     float: right;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 600;
     color: #164d6e;
     min-height: 30px;    
 }
+
+.add-field {
+    float: right;
+    font-size: 32px;
+    font-weight: 100;
+    color: #164d6e;
+    min-height: 30px;    
+}
+
 
 .pointer{
     cursor: pointer;
 }
 
-.update-field:hover{
+.update-field:hover,
+.add-field:hover{
     color: #99ccea;
 }
 
 .icon-update:before{
     content: "\21BB";
 }
+
+.icon-add:before{
+    content: "\002B";
+}
 /******************************************************************************
 -------------------------------Main Brigade Form--------------------------------
 *******************************************************************************/
+
+.univesitiesList {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
