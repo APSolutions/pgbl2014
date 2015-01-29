@@ -10,8 +10,10 @@ if (isset($_SESSION["brigadeID"])){
     if ($result->num_rows > 0){
         $i = 1;
         while($row = $result->fetch_assoc()){            
-            echo '<li id="'.$row["id"].'">'.$row["name"].' <button class="delete-university" name="'.$row["id"].'" onclick="deleteUniversity("'.$i.'")" ">X</button></li>';
+            echo '<li id="univ'.$row["id"].'">'.$row["name"].'<span class="icon-cancel" onclick="deleteUniversity('.$row["id"].')"><span></li>';
             $i ++;
         }
-    }
+    }else{
+        echo 'Ninguno';   
+    }        
 }

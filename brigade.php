@@ -13,6 +13,19 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
 }else {
     $brigadeID = "Ninguno";
 }
+
+if(!empty($_POST)){
+    require 'src/login/connect.php';
+    $date = date('Md',strtotime($_POST["dtop"]));
+    $var1 = $_POST["dtop"];
+    $var2 = $_POST["dted"];
+    $var3 = $_POST["prog"];
+    $query = "INSERT INTO pgbl2014.ficha (id, startingDate, endDate, officeArrivalDate, officeLeaveDate, totalStudents, cityTour, compound, community, program) VALUES ('TEST0?-$date', '$var1', '$var2', NULL, NULL, NULL, NULL, NULL, NULL, '$var3');";
+    $result = $conn->query($query);
+    if (!$result) {
+        die('Invalid query: ' . $conn->error);
+    }
+}
 ?>
 
 <!DOCTYPE html>
@@ -35,8 +48,8 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
         <script type="text/javascript" src="js/brigade.js"></script>
         <script type="text/javascript">
             function init(){
-                disableForm("frmFlights");
-                disableForm("frmVolunteers");                                  
+                var bdeID = <?php echo json_encode($brigadeID);?>; 
+                setBrigade(bdeID);
             }
         </script>
     </head>
@@ -49,12 +62,16 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
             <div class="basics">                
                 <div class="brigade-id main">
                     <span class="title">ID Asignado:</span>
-                    <span class="content"><?php echo $brigadeID?></span>
+                    <span class="content" id="bde-id">
+                        <?php echo $brigadeID?>
+                    </span>
                 </div>
                 
                 <div class="brigade-program main">
                     <span class="title">Programa:</span>
-                    <span class="content" id="program-content"><?php require 'src/brigade/getProgram.php';?></span>
+                    <span class="content" id="program-content" data-value="1">
+                        <?php require 'src/brigade/getProgram.php';?>
+                    </span>
                     <select id="selectProgram" class="cs-select" onclick="programClick()">
                         <option value="" selected></option>
                         <?php require 'src/brigade/getProgramsList.php';?>
@@ -68,31 +85,39 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                 
                 <div class="brigade-universities main">
                     <span class="title">Universidad/es:</span>
-                    <ul class="univesitiesList" id="universitiesList">
-                        <?php require 'src/brigade/getUniversities.php';?>
-                    </ul>
-                    <div id="universitiesAdded"></div>
-                    <select id="selectUniversity" class="cs-select" required>
-                        <option value="none" selected>none</option>
+                    <div class="content" id="univ-content">
+                        <ul class="univesitiesList" id="universitiesList">
+                            <?php require 'src/brigade/getUniversities.php';?>
+                        </ul>
+                    </div>
+                    <div id="addUniv" class="add-field pointer">
+                        <a class="add-field" onclick="showUniversityList()">
+                            <span class="icon-add"></span>
+                        </a>
+                    </div>
+                    <select id="selectUniversity" class="cs-select" onclick="addUniversity()">
+                        <option value="" selected></option>
                         <?php require 'src/brigade/getUniversitiesList.php';?>
                     </select>
-                    <input id="btnAdd" type="button" value="Add" onclick="addUniversity()"/>
                 </div>
                 
                 <div class="brigade-dates main">
                     <h3>Fechas</h3>
-                    <div class="brigade-begin-date">
+                    <div>
                         <span class="title">Inicio:</span>
                         <span class="content">
-                            <input type="date" name="brigadeBeginDate" required value="<?php require "src/brigade/beginDate.php";?>"/>
+                            <input type="date" name="dtop" id="dtop" value="<?php require "src/brigade/beginDate.php";?>" onchange="updateDate(0)"/>
                         </span>
                     </div>
-                    <div class="brigade-end-date">
+                    <div>
                         <span class="title">Final:</span>
                         <span class="content">
-                            <input type="date" name="brigadeEndingDate" required value="<?php require "src/brigade/endingDate.php";?>"/>
+                            <input type="date" name="dted" id="dted" value="<?php require "src/brigade/endingDate.php";?>" onchange="updateDate(1)"/>
                         </span>
                     </div>
+                </div>
+                <div class="btn-save-updt">
+                    <button id="bde-save-updt" onclick="saveUpdateBasics()">Save/Update</button>
                 </div>
             </div>
             <div class="flights">
@@ -127,7 +152,20 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                     <input type="checkbox" name="volunteerLeave"/>
                 </form>
             </div>
-            <div id="forms-space" class="forms"></div>
+            <div id="forms-space" class="forms">
+                <form id="bas-frm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+                    <input type="hidden" name="prog" id="prog-input" value="null">
+                    <input type="hidden" name="univ" id="univ-count" value="null">
+                    <input type="hidden" name="dtop" id="dtop-input" value="null">
+                    <input type="hidden" name="dted" id="dted-input" value="null">
+                </form>
+                <form id="flt-frm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+                    <input type="hidden" name="fltQT" id="fltQt-input" value="null">
+                </form>
+                <form id="vol-frm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
+                    <input type="hidden" name="volQT" id="volQt-input" value="null">
+                </form>
+            </div>
         </div>
     </body>
 </html>
