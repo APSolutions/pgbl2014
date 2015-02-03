@@ -7,11 +7,13 @@ session_id('pgbl');
 session_start();
 
 $_SESSION["position"] = "Formulario de Brigada";
+$brigade = new Brigade();
 
 if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
-    $brigadeID = $_SESSION["brigadeID"];
+    $bdeID = $_SESSION["brigadeID"];
+    $brigade->getBasicData($bdeID);
 }else {
-    $brigadeID = "Ninguno";
+    $bdeID = "Ninguno";
 }
 
 if(!empty($_POST)){
@@ -48,7 +50,7 @@ if(!empty($_POST)){
         <script type="text/javascript" src="js/brigade.js"></script>
         <script type="text/javascript">
             function init(){
-                var bdeID = <?php echo json_encode($brigadeID);?>; 
+                var bdeID = <?php echo json_encode($bdeID);?>; 
                 setBrigade(bdeID);
             }
         </script>
@@ -63,14 +65,14 @@ if(!empty($_POST)){
                 <div class="brigade-id main">
                     <span class="title">ID Asignado:</span>
                     <span class="content" id="bde-id">
-                        <?php echo $brigadeID?>
+                        <?php echo $bdeID?>
                     </span>
                 </div>
                 
                 <div class="brigade-program main">
                     <span class="title">Programa:</span>
-                    <span class="content" id="program-content" data-value="1">
-                        <?php require 'src/brigade/getProgram.php';?>
+                    <span class="content" id="program-content" data-value="<?php echo $brigade->getProgramID();?>">
+                        <?php echo $brigade->getProgram();?>
                     </span>
                     <select id="selectProgram" class="cs-select" onclick="programClick()">
                         <option value="" selected></option>
@@ -97,7 +99,7 @@ if(!empty($_POST)){
                     </div>
                     <select id="selectUniversity" class="cs-select" onclick="addUniversity()">
                         <option value="" selected></option>
-                        <?php require 'src/brigade/getUniversitiesList.php';?>
+                        <?php $brigade->getUniversities();?>
                     </select>
                 </div>
                 
@@ -106,13 +108,13 @@ if(!empty($_POST)){
                     <div>
                         <span class="title">Inicio:</span>
                         <span class="content">
-                            <input type="date" name="dtop" id="dtop" value="<?php require "src/brigade/beginDate.php";?>" onchange="updateDate(0)"/>
+                            <input type="date" name="dtop" id="dtop" value="<?php echo $brigade->getOpeningDate();?>" onchange="updateDate(0)"/>
                         </span>
                     </div>
                     <div>
                         <span class="title">Final:</span>
                         <span class="content">
-                            <input type="date" name="dted" id="dted" value="<?php require "src/brigade/endingDate.php";?>" onchange="updateDate(1)"/>
+                            <input type="date" name="dted" id="dted" value="<?php echo $brigade->getEndingDate();?>" onchange="updateDate(1)"/>
                         </span>
                     </div>
                 </div>
