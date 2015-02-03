@@ -11,12 +11,13 @@
     $econtractType = $elessor = $ecapacity = $evyear = $einsuranceCompany = $einsuranceNumber = $einsuranceType = $econtactPhone = $eid = "";
     $elocation = $ebedrooms = $eelectricity = $ewifi = $esignal = $eventilation = $etoilet = $edrinkablew = "";
     $emembers = "";
-    $elastname = $esex = $eborndate = $ecitizenship = $ebloodType = $emaritalStatus = $ecellphone = $eemail = $euniversity = $ecareer = $eaddress = $econtractDate = $einterviewDate = $erole = "";
+    $elastname = $esex = $eborndate = $ecitizenship = $ebloodType = $emaritalStatus = $ecellphone = $eemail = $euniversity = $ecareer = $eaddress = $econtractDate = $einterviewDate = $etipo = $erol = "";
     $eename = $eeaddress = $eephoneNumber = $ealergia = "";
     $etoiletType = array() ; 
     $ecommunityProgram = array();
     $estaffmcondition = array();
     $estaffSpokenLanguage = array();
+    $erolprogram = array();
     if ($configuracion == "Personal"){
         require 'src/login/connect.php';
         $query = "CALL edit_staff('$primary')";
@@ -39,8 +40,7 @@
             $ecareer = $row['career'];
             $eaddress = $row['address'];
             $econtractDate = $row['contractDate'];
-            $einterviewDate = $row['interviewDate'];
-            $erole = $row['rol'];          
+            $einterviewDate = $row['interviewDate'];         
         }
         require 'src/login/connect.php';
         $query = "CALL edit_staffEmergencyContact('$primary')";
@@ -92,6 +92,31 @@
                 $i ++;
             }
         }
+        require 'src/login/connect.php';
+        $query = "CALL get_staffRole('$primary')";
+        $result= $conn->query($query);
+        if (!$result){          
+            echo "<script type='text/javascript'>alert('failed')</script>";
+        }else{
+            $row = $result->fetch_assoc();
+            $etipo = $row['tipos'];
+            $erol = $row['rol'];
+        }
+        require 'src/login/connect.php';
+        $query = "CALL edit_staffxprograms('$primary')";
+        $result= $conn->query($query);
+        if (!$result){          
+            echo "<script type='text/javascript'>alert('failed')</script>";
+        }else{
+            $i = 0;
+            while ($row = $result->fetch_assoc()){
+                $col = count($row);
+                for($j=0;$j<$col;$j++){
+                    $erolprogram[$i][$j] = $row['program'];
+                }
+                $i ++;
+            }
+        }     
         
        
     }else if ($configuracion == "Comunidades"){

@@ -6,7 +6,7 @@ session_start();
 //cargar variables de base de datos
 require '/src/settings/personalQuery.php';
 require 'src/settings/Edit.php';
-if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate != "" && $ecitizenship != "" && $ebloodType != "" && $emaritalStatus != "" && $ecellphone != "" && $eemail != "" && $euniversity != "" && $ecareer != "" && $eaddress != "" && $econtractDate != "" && $einterviewDate != "" && $erole && $eename != "" && $eeaddress != "" && $eephoneNumber != ""){
+if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate != "" && $ecitizenship != "" && $ebloodType != "" && $emaritalStatus != "" && $ecellphone != "" && $eemail != "" && $euniversity != "" && $ecareer != "" && $eaddress != "" && $econtractDate != "" && $einterviewDate != "" && $erol && $eename != "" && $eeaddress != "" && $eephoneNumber != ""){
     $llave = $_SESSION["primaryKeyConf"];
     $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
     $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
@@ -63,6 +63,14 @@ if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate !
     $bornDateMonthTemp = $ebornMonth;
     $bornDateDayTemp = $ebornDay;
     $citizenshipTemp = $ecitizenship;
+    list($eentYear,$eentMonth,$eentDay)=explode("-",$einterviewDate);
+    $entDateYearTemp = $eentYear;
+    $entDateMonthTemp = $eentMonth;
+    $entDateDayTemp = $eentDay;
+    list($econtYear,$econtMonth,$econtDay)=explode("-",$econtractDate);
+    $contDateYearTemp = $econtYear;
+    $contDateMonthTemp = $econtMonth;
+    $contDateDayTemp = $econtDay;
     $genderTemp = $esex;
     if($genderTemp == "1"){
         $selectedGender1 ="selected"; 
@@ -136,8 +144,31 @@ if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate !
     }else{
         $idiomaNaCh = "checked";
     }
-    print $erole;
-    
+    if($etipo == 1){
+        $checkedstaffType1 ="checked"; 
+    }else{
+        $checkedstaffType2 ="checked";
+    } 
+    $rol = $erol;  
+    for ($i=0;$i<count($erolprogram);$i++){
+        for($j=0;$j<$col;$j++){
+            if  ($erolprogram[$i][$j] == 2){
+                $programBusinessCh = "checked";
+            }elseif ($erolprogram[$i][$j] == 4){
+                $programAmbienteCh = "checked";
+            }elseif ($erolprogram[$i][$j] == 5){
+                $programHumanRightsCh = "checked";
+            }elseif ($erolprogram[$i][$j] == 6){
+                $programMedicalCh = "checked";
+            }elseif ($erolprogram[$i][$j] == 7){
+                $programMicrofinanceCh = "checked";
+            }elseif ($erolprogram[$i][$j] == 8){
+                $programPublicHealthCh = "checked";
+            }elseif ($erolprogram[$i][$j] == 10){
+                $programProfesionalCh = "checked";
+            }
+        }
+    }
     
     
 }else{
@@ -173,7 +204,7 @@ if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate !
 }
 
 //variables del formulario
-$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $rol = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $condition = $contDate = $entDate = $idioma = "";
+$name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $condition = $contDate = $entDate = $idioma = "";
 $nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = $programErr = $emergencyNameErr = $emergencyTelephoneErr = $emergencyAddressErr = $condicionMedicaErr = $alergiaErr = $idiomaErr = "";
 $errorMessage = "";
 
@@ -367,7 +398,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
      if($_POST["rol"] == "" ){
         $rolErr = "El rol del personal es requerido!";
-    }else{
+    }elseif ($erol == ""){
         $rol = cleanInput($_POST["rol"]); 
     }
     
@@ -835,6 +866,7 @@ function is_leap_year($year){
         
         function get_role(){      
             var selectedstaffType = <?php echo json_encode($staffType); ?> ;
+            var tipos = <?php echo json_encode($etipo); ?>;
             if (!selectedstaffType == ""){
                 if(selectedstaffType == 1){
                     var roles = permanentRoles;
@@ -859,7 +891,32 @@ function is_leap_year($year){
                     opt[i].innerHTML = roles[i];
                     select.appendChild(opt[i]);
                 }
-            } 
+            } else if (!tipos == ""){
+                if(tipos == 1){
+                    var roles = permanentRoles;
+                    var id = permanentRolesId;
+                }else{
+                    var roles = temporaryRoles;
+                    var id = temporaryRolesId;
+                }
+                var select = document.getElementById('rol');
+                var opt = new Array(roles.length);
+                select.innerHTML = "";
+                for (i = 0;i < roles.length;i++){
+                    if (i == 0) {
+                        var option = document.createElement('option');
+                        option.value="";
+                        option.selected="selected";
+                        option.innerHTML = "";
+                        select.appendChild(option);
+                    }
+                    opt[i] = document.createElement('option');
+                    opt[i].value = id[i];
+                    opt[i].innerHTML = roles[i];
+                    select.appendChild(opt[i]);
+                }
+            }
+            
         }
         function get_fecha (){
             var dir = document.getElementsByName("staffType");
