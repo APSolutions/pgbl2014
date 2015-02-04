@@ -56,7 +56,7 @@ if(!$university == "" && !$country == "" && !$location == "" && $ename == ""){
     $query = "CALL insert_university('$university','$country','$location')";
     $result= $conn->query($query);
     if (!$result){
-        echo "<script type='text/javascript'>alert('failed!')</script>";
+        echo "<script type='text/javascript'>alert('failed insertar!')</script>";
     } else{
         $universityTemp = $countryTemp = $locationTemp = "";
         $university = $country = $location = "";
@@ -67,7 +67,7 @@ if(!$university == "" && !$country == "" && !$location == "" && $ename == ""){
     $query = "CALL modify_university('$country','$location','$ename')";
     $result= $conn->query($query);
     if (!$result){
-        echo "<script type='text/javascript'>alert('failed!')</script>";
+        echo "<script type='text/javascript'>alert('failed modificar!')</script>";
     } else{
         $universityTemp = $countryTemp = $locationTemp = "";
         $university = $country = $location = "";
