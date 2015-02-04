@@ -7,12 +7,29 @@
 
 //used to set up a current or no brigade
 function setBrigade(bdeID){
+    var dt = new Date();
+    var dd = dt.getDate();
+    var dd2 = dt.getDate();
+    var mm = dt.getMonth()+1;
+    var yyyy = dt.getFullYear();
     
+    if (dd < 10){
+        dd = "0" + dd;
+    }
+    if (mm < 10){
+        mm = "0" + mm;
+    }
+    
+    var dtop = "" + yyyy + "-" + (dt.getMonth()+1) + "-" + dt.getDate();
+    var dted = "" + yyyy + "-" + (dt.getMonth()+1) + "-" + (dt.getDate()+7);   
     if (bdeID === "Ninguno"){
         //For new brigade
         //For the main form
         //sets the button save
-        document.getElementById("bde-save-updt").innerHTML = "Save";        
+        document.getElementById("bde-save-updt").innerHTML = "Save";
+        document.getElementById("dtop").min = dtop;
+        document.getElementById("dted").min = dted;
+        
     }else{
         //For existing brigade
         //For the main form
@@ -181,7 +198,7 @@ function updateDate(type){
     var dtopInput = document.getElementById("dtop-input");
     var dtedInput = document.getElementById("dted-input");
     var date = new Date(dtop.value);
-    
+    date.setDate(date.getDate() + 7)
     if (type === 0){
         dtopInput.value = dtop.value;
     }else{
