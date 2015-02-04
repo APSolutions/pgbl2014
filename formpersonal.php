@@ -4,7 +4,6 @@ session_name('Global');
 session_id('pgbl');
 session_start();
 //cargar variables de base de datos
-require '/src/settings/personalQuery.php';
 require 'src/settings/Edit.php';
 if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate != "" && $ecitizenship != "" && $ebloodType != "" && $emaritalStatus != "" && $ecellphone != "" && $eemail != "" && $euniversity != "" && $ecareer != "" && $eaddress != "" && $econtractDate != "" && $einterviewDate != "" && $erol && $eename != "" && $eeaddress != "" && $eephoneNumber != ""){
     $llave = $_SESSION["primaryKeyConf"];
@@ -172,10 +171,9 @@ if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate !
     
     
 }else{
-    $llave = $_SESSION["primaryKeyConf"];
-    $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = $otraCondicionMedica = "";
+     $llave = $_SESSION["primaryKeyConf"];
+    $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
     $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
-    $alergia = $alergiaInput = $otroIdioma = "";
     $arregloBorn = array(
             'yearErr' => "",
             'monthErr' => "",
@@ -199,11 +197,13 @@ if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate !
     $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
     $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
     $idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = "";
+    $otraCondicionMedica = $alergia = $alergiaInput = $otroIdioma = "";
     $flag = FALSE;
     $flag2 = TRUE;
 }
 
 //variables del formulario
+require '/src/settings/personalQuery.php';
 $name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $condition = $contDate = $entDate = $idioma = "";
 $nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = $programErr = $emergencyNameErr = $emergencyTelephoneErr = $emergencyAddressErr = $condicionMedicaErr = $alergiaErr = $idiomaErr = "";
 $errorMessage = "";
@@ -231,9 +231,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
             $lastname = $lastnameTemp;
         }
     }
-     if(empty($_POST["id"]) ){
+     if(empty($_POST["id"]) && $eid == ""){
         $idErr = "La cédula/pasaporte del personal es requerida!";
-    }else{
+    }elseif ($eid ==""){
         $idTemp = cleanInput($_POST["id"]);
         if (!preg_match("/^[a-zA-Z0-9- ]*$/",$idTemp)){
             $idErr = "La cédula/pasaporte solo debe incluir letras y números!";
@@ -398,7 +398,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
     }
      if($_POST["rol"] == "" ){
         $rolErr = "El rol del personal es requerido!";
-    }elseif ($erol == ""){
+    }elseif (!$erol == ""){
         $rol = cleanInput($_POST["rol"]); 
     }
     
@@ -440,8 +440,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         }  
     }
     if(empty($_POST["ambiente"]) && empty($_POST["humanRights"]) && empty($_POST["medical"]) && empty($_POST["microfinanzas"]) && empty($_POST["negocios"]) && empty($_POST["publicHealth"]) && empty($_POST["profesional"]) ){
+        $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
         $programErr = "Este rol se le debe asignar uno o mas programas!";  
     } else {
+        $programAmbienteCh = $programHumanRightsCh = $programMedicalCh = $programMicrofinanceCh = $programBusinessCh = $programPublicHealthCh = $programProfesionalCh = "";
         if (!empty($_POST["ambiente"])){
             $programAmbienteCh = "checked";
         }
@@ -495,8 +497,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     } 
     if(empty($_POST["diabetes"]) && empty($_POST["hipertension"]) && empty($_POST["asma"]) && empty($_POST["problemasCardiacos"]) && empty($_POST["epilepsia"]) && empty($_POST["naCondicionMedica"]) && empty($_POST["otroCondicionMedica"]) ){
+        $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
         $condicionMedicaErr = "Marque una condicion medica o la opcion *ninguna* si no tiene";  
     } else {
+        $condicionDiabetesCh = $condicionHipertensionCh = $condicionAsmaCh = $condicionProblemasCardiacosCh = $condicionEpilepsiaCh = $condicionNaCh = $condicionOtroCh = "";
         if (!empty($_POST["diabetes"])){
             $condicionDiabetesCh = "checked";
         }
@@ -529,8 +533,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
     if(($_POST["alergia"] == 0)){
+        $alergiaInput = "";
         $alergiaErr = "Por favor marque si tiene o no alergia!";
     }else{
+        $alergiaInput = "";
         $alergia = cleanInput($_POST["alergia"]);
         if($alergia == 1){
             $checkedalergia1 ="checked"; 
@@ -548,8 +554,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
         }
     }
     if(empty($_POST["ingles"]) && empty($_POST["frances"]) && empty($_POST["portugues"]) && empty($_POST["naIdioma"]) && empty($_POST["otroIdioma"])){
+        $idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = $otroIdioma = "";
         $idiomaErr = "Marque los conocimientos de idioma o la opcion *ninguno* si solo habla español";   
     } else {
+        $idiomaInglesCh = $idiomaFrancesCh = $idiomaPortuguesCh = $idiomaNaCh = $idiomaOtroCh = $otroIdioma = "";
         if (!empty($_POST["ingles"])){
             $idiomaInglesCh = "checked";
         }
@@ -578,6 +586,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST"){
 }
 
 if(!$name == "" && !$lastname == "" && $eid == "" && !$gender == "" && !$bornDate == "" && !$age == "" && !$citizenship == "" && !$bloodType == "" && !$maritalStatus == "" && !$cellphone == "" && !$email == "" && !$university == "" && !$career == "" && !$address == "" && $flag && !$rol == ""){
+    print "entra aqui?";
     require 'src/login/connect.php';
     if ($staffType == 1){
         $query = "CALL insert_staff('$id','$name','$lastname','$gender','$bornDate','$bloodType','$maritalStatus','$cellphone','$email','$university','$career','$address','$contDate','','$rol','$citizenship','$age')";
@@ -773,6 +782,8 @@ if(!$name == "" && !$lastname == "" && $eid == "" && !$gender == "" && !$bornDat
             }     
         }
     }
+} elseif ($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate != "" && $ecitizenship != "" && $ebloodType != "" && $emaritalStatus != "" && $ecellphone != "" && $eemail != "" && $euniversity != "" && $ecareer != "" && $eaddress != "" && $econtractDate != "" && $einterviewDate != "" && $erol && $eename != "" && $eeaddress != "" && $eephoneNumber != ""){
+    print "modificaR!!!";
 }
    
 function cleanInput($data){
@@ -835,7 +846,7 @@ function is_leap_year($year){
             permanentRoles = <?php echo json_encode($permanentRoles); ?>;
             permanentRolesId = <?php echo json_encode($permanentId); ?>;
             temporaryRoles = <?php echo json_encode($temporaryRoles); ?>;
-            temporaryRolesId = <?php echo json_encode($temporaryId); ?>;
+            temporaryRolesId = <?php echo json_encode($temporaryId); ?>;          
         }
         
         function get_roles(tipos){      
@@ -1072,9 +1083,17 @@ function is_leap_year($year){
                 }
             } 
         }
+        function disableId(){
+            var eid = "";
+            eid = <?php echo json_encode($eid); ?>;
+            if (!eid == ""){
+                document.getElementById('ced').disabled = true;
+            }
+        }
+    
     </script>
     </head>	           
-    <body id="main_body" onload="set_roles();get_fecha();get_role();get_selectedRole();get_programs();get_otroCondicionMedica();uncheckedCondicionMedica();get_otroIdioma();uncheckedIdioma();get_alergias();">
+    <body id="main_body" onload="set_roles();get_fecha();get_role();get_selectedRole();get_programs();get_otroCondicionMedica();uncheckedCondicionMedica();get_otroIdioma();uncheckedIdioma();get_alergias();disableId(); ">
         <?php
             require 'header.php';
         ?>
@@ -1205,7 +1224,7 @@ function is_leap_year($year){
                     <li id="li_10" >
                 <label class="description" for="element_10">Cédula/Pasaporte </label>
                 <div>
-                        <input id="element_10" name="id" class="element text medium" type="text" maxlength="255" value="<?php echo $idTemp;?>"/> 
+                        <input id="ced" name="id" class="element text medium" type="text" maxlength="255" value="<?php echo $idTemp;?>"/> 
                 </div> 
                  <span class="error">
                             <p class="error"><?php echo $idErr;?></p>
