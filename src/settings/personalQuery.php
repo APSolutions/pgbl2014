@@ -1,7 +1,7 @@
 <?php
     session_name('Global');
     session_id('pgbl');
-    require 'src/login/connect.php';   
+    require_once 'src/login/connect.php';   
     $query = "CALL get_roleNames()";
     $result= $conn->query($query);
     if (!$result){
