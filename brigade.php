@@ -9,10 +9,14 @@ session_start();
 $_SESSION["position"] = "Formulario de Brigada";
 $brigade = new Brigade();
 
+
 if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
+    //Configures data for existing brigades
     $bdeID = $_SESSION["brigadeID"];
     $brigade->getBasicData($bdeID);
+    $brigade->getUniversitiesData($bdeID);
 }else {
+    //Configures data for a new brigade
     $bdeID = "Ninguno";
 }
 
@@ -89,7 +93,7 @@ if(!empty($_POST)){
                     <span class="title">Universidad/es:</span>
                     <div class="content" id="univ-content">
                         <ul class="univesitiesList" id="universitiesList">
-                            <?php require 'src/brigade/getUniversities.php';?>
+                            <?php $brigade->getUniversities();?>
                         </ul>
                     </div>
                     <div id="addUniv" class="add-field pointer">
@@ -99,7 +103,7 @@ if(!empty($_POST)){
                     </div>
                     <select id="selectUniversity" class="cs-select" onclick="addUniversity()">
                         <option value="" selected></option>
-                        <?php $brigade->getUniversities();?>
+                        <?php require 'src/brigade/getUniversitiesList.php';?>
                     </select>
                 </div>
                 

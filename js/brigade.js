@@ -5,13 +5,15 @@
  */
 //**************************Basic Data Manipulation*****************************
 
-//used to set up a current or no brigade
-function setBrigade(bdeID){
+function setDate(type){
     var dt = new Date();
     var dd = dt.getDate();
-    var dd2 = dt.getDate();
     var mm = dt.getMonth()+1;
     var yyyy = dt.getFullYear();
+    
+    if (type === 1){
+        dd += 7;
+    }
     
     if (dd < 10){
         dd = "0" + dd;
@@ -20,8 +22,17 @@ function setBrigade(bdeID){
         mm = "0" + mm;
     }
     
-    var dtop = "" + yyyy + "-" + (dt.getMonth()+1) + "-" + dt.getDate();
-    var dted = "" + yyyy + "-" + (dt.getMonth()+1) + "-" + (dt.getDate()+7);   
+    return ""+ yyyy + "-" + mm + "-" + dd + "";
+}
+
+//used to set up a current or no brigade
+function setBrigade(bdeID){
+    
+    var dtop = setDate(0);
+    var dted = setDate(1);
+    
+    alert(dtop);
+    
     if (bdeID === "Ninguno"){
         //For new brigade
         //For the main form

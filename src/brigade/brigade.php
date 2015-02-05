@@ -27,10 +27,13 @@ class Brigade{
         require 'src/login/connect.php';
         $query = "CALL get_brigade_universities('$bdeID');";
         $result = $conn->query($query);
-        $row = $result->fetch_assoc();
         if ($result->num_rows > 0){
-            while($row = $result->fetch_assoc()){            
-                $this->univ[$row["id"]] = $row["name"];
+            $i = 0;
+            $this->univ = array();
+            while($row = $result->fetch_assoc()){
+                $this->univ[$i]["id"] = $row["id"];
+                $this->univ[$i]["name"] = $row["name"];
+                $i++;                
             }
         }
     }
@@ -95,9 +98,14 @@ class Brigade{
     
     function getUniversities(){
         if ($this->univ === "Ninguno"){
-            return $this->univ;
+            echo $this->univ; 
         }else{
-            echo '<li id="univ'.$row["id"].'">'.$row["name"].'<span class="icon-cancel" onclick="deleteUniversity('.$row["id"].')"><span></li>';
+            $i = 0;            
+            foreach ($this->univ as $value) {
+                echo '<li id="univ'.$value["id"].'">'.$value["name"].'<span class="icon-cancel" onclick="deleteUniversity('.$value["id"].')"><span></li>';
+                $i++;
+            }
+            
         }
         
     }
