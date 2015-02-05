@@ -1,10 +1,11 @@
 <?php
-require 'src/login/usuario.php';
+require_once 'src/login/usuario.php';
 session_name('Global');
 session_id('pgbl');
 session_start();
 //cargar variables de base de datos
-require 'src/settings/Edit.php';
+require_once 'src/settings/Edit.php';
+require_once '/src/settings/personalQuery.php';
 if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate != "" && $ecitizenship != "" && $ebloodType != "" && $emaritalStatus != "" && $ecellphone != "" && $eemail != "" && $euniversity != "" && $ecareer != "" && $eaddress != "" && $econtractDate != "" && $einterviewDate != "" && $erol && $eename != "" && $eeaddress != "" && $eephoneNumber != ""){
     $llave = $_SESSION["primaryKeyConf"];
     $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
@@ -171,7 +172,7 @@ if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate !
     
     
 }else{
-     $llave = $_SESSION["primaryKeyConf"];
+    $llave = $_SESSION["primaryKeyConf"];
     $nameTemp = $lastnameTemp = $idTemp = $bloodTypeTemp = $citizenshipTemp = $genderTemp = $maritalStatusTemp = $addressTemp = $cellphoneTemp = $emailTemp = $universityTemp = $careerTemp = $emergencyNameTemp = $emergencyTelephoneTemp = $emergencyAddressTemp = $rolTemp = "";
     $bornDateYearTemp = $bornDateMonthTemp = $bornDateDayTemp = $age = $contDateYearTemp = $contDateMonthTemp = $contDateDayTemp = $entDateYearTemp = $entDateMonthTemp = $entDateDayTemp = "";
     $arregloBorn = array(
@@ -203,7 +204,6 @@ if($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate !
 }
 
 //variables del formulario
-require '/src/settings/personalQuery.php';
 $name = $lastname = $id = $bloodType = $bornDate = $citizenship = $gender = $maritalStatus = $address = $cellphone = $email = $university = $career = $staffType = $program = $emergencyName = $emergencyTelephone = $emergencyAddress = $condition = $contDate = $entDate = $idioma = "";
 $nameErr = $lastnameErr = $idErr = $bloodTypeErr = $bornDateErr = $citizenshipErr = $genderErr = $maritalStatusErr = $addressErr = $cellphoneErr = $emailErr = $universityErr = $careerErr = $staffTypeErr = $rolErr = $contDateErr = $entDateErr = $programErr = $emergencyNameErr = $emergencyTelephoneErr = $emergencyAddressErr = $condicionMedicaErr = $alergiaErr = $idiomaErr = "";
 $errorMessage = "";
@@ -783,7 +783,7 @@ if(!$name == "" && !$lastname == "" && $eid == "" && !$gender == "" && !$bornDat
         }
     }
 } elseif ($ename != "" && $elastname != "" && $eid != "" && $esex != "" && $eborndate != "" && $ecitizenship != "" && $ebloodType != "" && $emaritalStatus != "" && $ecellphone != "" && $eemail != "" && $euniversity != "" && $ecareer != "" && $eaddress != "" && $econtractDate != "" && $einterviewDate != "" && $erol && $eename != "" && $eeaddress != "" && $eephoneNumber != ""){
-    print "modificaR!!!";
+    
 }
    
 function cleanInput($data){
@@ -841,12 +841,11 @@ function is_leap_year($year){
         var temporaryRoles = new Array();
         var permanentRolesId = new Array();
         var temporaryRolesId = new Array();
-        
         function set_roles(){
             permanentRoles = <?php echo json_encode($permanentRoles); ?>;
             permanentRolesId = <?php echo json_encode($permanentId); ?>;
             temporaryRoles = <?php echo json_encode($temporaryRoles); ?>;
-            temporaryRolesId = <?php echo json_encode($temporaryId); ?>;          
+            temporaryRolesId = <?php echo json_encode($temporaryId); ?>;  
         }
         
         function get_roles(tipos){      
@@ -1090,7 +1089,7 @@ function is_leap_year($year){
                 document.getElementById('ced').disabled = true;
             }
         }
-    
+    // 
     </script>
     </head>	           
     <body id="main_body" onload="set_roles();get_fecha();get_role();get_selectedRole();get_programs();get_otroCondicionMedica();uncheckedCondicionMedica();get_otroIdioma();uncheckedIdioma();get_alergias();disableId(); ">
