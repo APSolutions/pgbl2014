@@ -19,7 +19,7 @@
         $program = 5;
     } elseif($_SESSION["program"] == "Derechos Humanos"){
         $program = 6;
-    }elseif($_SESSION["program"] == "Medico"){
+    }elseif($_SESSION["program"] == "Medica"){
         $program = 7;
     }elseif($_SESSION["program"] == "Microfinanzas"){
         $program = 8;

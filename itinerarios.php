@@ -47,9 +47,16 @@ $_SESSION["program"] = "";
                         </a>
                     </li>
                     <li>
-                        <a href="<?php echo "src/webrouter.php?position=Itinerarios&program=Medico/Dental"?>" name="medical" >
+                        <a href="<?php echo "src/webrouter.php?position=Itinerarios&program=Medica"?>" name="medical" >
                             <span class="cbp-ig-icon icon-programs-medical"></span>
-                            <h3 class="cbp-ig-title">Medico/Dental</h3>
+                            <h3 class="cbp-ig-title">Medica</h3>
+                            <span class="cbp-ig-category">short description</span>
+                        </a>
+                    </li>
+                    <li>
+                        <a href="<?php echo "src/webrouter.php?position=Itinerarios&program=Dental"?>" name="dental" >
+                            <span class="cbp-ig-icon icon-programs-medical"></span>
+                            <h3 class="cbp-ig-title">Dental</h3>
                             <span class="cbp-ig-category">short description</span>
                         </a>
                     </li>

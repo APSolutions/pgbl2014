@@ -1,0 +1,28 @@
+
+
+@font-face {
+  font-family: "untitled-font-3";
+  src:url("../fonts/dental/untitled-font-3.eot");
+  src:url("../fonts/dental/untitled-font-3.eot#iefix") format("embedded-opentype"),
+    url("../fonts/dental/untitled-font-3.woff") format("woff"),
+    url("../fonts/dental/untitled-font-3.ttf") format("truetype"),
+    url("..fonts/dental/untitled-font-3.svg") format("svg");
+  font-weight: normal;
+  font-style: normal;
+
+}
+
+[class^="icon-programs-dental"]:before,[class*=" icon-programs-dental"]:before {
+  font-family: "untitled-font-3";
+  font-size: 1.5em;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  content: "\5894";
+}
+
