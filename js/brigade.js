@@ -301,6 +301,8 @@ function validateBasics(){
 function saveUpdateBasics(){
     var frmBas = document.getElementById("bas-frm");
     
-    validateBasics();
-    //frmBas.submit();
+    if (validateBasics()){
+        frmBas.submit();
+    }
+    
 }
