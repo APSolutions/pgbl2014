@@ -38,8 +38,52 @@ class Brigade{
         }
     }
     
+    /*Other functions*/
+    function setBrigadeID($prog, $dtop){          
+        switch ($prog) {
+            case 1:
+                $progAB = "ARC";
+                break;
+            case 2:
+                $progAB = "BUS";
+                break;
+            case 3:
+                $progAB = "DEN";
+                break;
+            case 4:
+                $progAB = "ENG";
+                break;
+            case 5:
+                $progAB = "ENV";
+                break;
+            case 6:
+                $progAB = "HRB";
+                break;
+            case 7:
+                $progAB = "MED";
+                break;
+            case 8:
+                $progAB = "MFB";
+                break;
+            case 9:
+                $progAB = "PRO";
+                break;
+            case 10:
+                $progAB = "PHB";
+                break;
+            case 11:
+                $progAB = "H2O";
+                break;
+        }
+        
+        
+        
+        return $progAB . $count . "-" . $month . $year;
+    }    
+    
     /*Functions to save and update data*/
     function saveBasics($prog, $univ, $dtop, $dted) {
+        $bdeID = setBrigadeID($prog,$dtop);
         
         if (true) {
             return 1;

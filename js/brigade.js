@@ -240,7 +240,7 @@ function addUniv(id){
         univCount.value = Number(univCount.value) + 1;
     }
     
-    univRecord.type = "text";
+    univRecord.type = "hidden";
     univRecord.className = "univ-recs";
     univRecord.name = "univ"+id;
     univRecord.id = "univ-field-"+id;
@@ -302,5 +302,5 @@ function saveUpdateBasics(){
     var frmBas = document.getElementById("bas-frm");
     
     validateBasics();
-    frmBas.submit();
+    //frmBas.submit();
 }
