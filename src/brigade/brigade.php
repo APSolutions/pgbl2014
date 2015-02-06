@@ -39,7 +39,7 @@ class Brigade{
     }
     
     /*Functions to save and update data*/
-    function saveBasics($program, $universities, $openingDate, $endingDate) {
+    function saveBasics($prog, $univ, $dtop, $dted) {
         
         if (true) {
             return 1;
@@ -102,7 +102,7 @@ class Brigade{
         }else{
             $i = 0;            
             foreach ($this->univ as $value) {
-                echo '<li id="univ'.$value["id"].'">'.$value["name"].'<span class="icon-cancel" onclick="deleteUniversity('.$value["id"].')"><span></li>';
+                echo '<li id="univ'.$i.'" class="univ-item" data-id="'.$value["id"].'">'.$value["name"].'<span class="icon-cancel" onclick="deleteUniversity('.$i.')"><span></li>';
                 $i++;
             }
             

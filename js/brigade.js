@@ -7,13 +7,15 @@
 
 function setDate(type){
     var dt = new Date();
-    var dd = dt.getDate();
-    var mm = dt.getMonth()+1;
-    var yyyy = dt.getFullYear();
-    
+    var dn = new Date(dt);
+        
     if (type === 1){
-        dd += 7;
+        dn.setDate(dt.getDate() + 7);
     }
+    
+    var dd = dn.getDate();
+    var mm = dn.getMonth()+1;
+    var yy = dn.getFullYear();
     
     if (dd < 10){
         dd = "0" + dd;
@@ -22,7 +24,26 @@ function setDate(type){
         mm = "0" + mm;
     }
     
-    return ""+ yyyy + "-" + mm + "-" + dd + "";
+    return ""+ yy + "-" + mm + "-" + dd + "";
+}
+
+function setMinDate(date){
+    var dt = new Date(date);
+    var dn = new Date(dt);
+    
+    dn.setDate(dt.getDate() + 7);
+    
+    var dd = dn.getDate();
+    var mm = dn.getMonth()+1;
+    var yy = dn.getFullYear();
+    
+    if (dd < 10){
+        dd = "0" + dd;
+    }
+    if (mm < 10){
+        mm = "0" + mm;
+    }
+    return ""+ yy + "-" + mm + "-" + dd + "";
 }
 
 //used to set up a current or no brigade
@@ -31,15 +52,14 @@ function setBrigade(bdeID){
     var dtop = setDate(0);
     var dted = setDate(1);
     
-    alert(dtop);
-    
+    document.getElementById("dtop").min = dtop;
+    document.getElementById("dted").min = dted;
+        
     if (bdeID === "Ninguno"){
         //For new brigade
         //For the main form
         //sets the button save
-        document.getElementById("bde-save-updt").innerHTML = "Save";
-        document.getElementById("dtop").min = dtop;
-        document.getElementById("dted").min = dted;
+        document.getElementById("bde-save-updt").innerHTML = "Save";        
         
     }else{
         //For existing brigade
@@ -50,6 +70,12 @@ function setBrigade(bdeID){
         //set the program in the form
         var prog = document.getElementById("program-content").getAttribute("data-value");
         document.getElementById("prog-input").value = prog;
+        //set current universities for post save
+        var univList = document.getElementsByClassName("univ-item");
+        
+        for (var i = 0; i < univList.length; i++){
+            addUniv(i);
+        }
     }
 }
 
@@ -87,6 +113,8 @@ function updateProgram(){
 function programClick(){
     var select = document.getElementById("selectProgram");
     var program = document.getElementById("program-content");
+    
+    document.getElementById("prog-error").innerHTML = "";
     
     //Sets the program to show
     program.innerHTML = select.options[select.selectedIndex].innerHTML;
@@ -143,23 +171,28 @@ function addUniversity(){
     var univCancel = document.createElement("span");
     var univName = univSelect.options[univSelect.selectedIndex].innerHTML;
     var univID = univSelect.options[univSelect.selectedIndex].value;
+    var univCount = document.getElementsByClassName("univ-item").length;
+    
+    document.getElementById("univ-error").innerHTML = "";
     
     if (univSelect.selectedIndex > 0){
-        univItem.id = "univ"+univID;
+        univItem.id = "univ"+univCount;
+        univItem.className = "univ-item";
+        univItem.setAttribute("data-id", univID);
         univItem.innerHTML = univName;
         univCancel.className = "icon-cancel";
-        univCancel.setAttribute("onclick","deleteUniversity("+univID+")");
+        univCancel.setAttribute("onclick","deleteUniversity("+univCount+")");
         univItem.appendChild(univCancel);
         
         if (univList.innerHTML.indexOf("Ninguno") > -1){
             univList.innerHTML = "";
             univList.appendChild(univItem);
-            addUniv(univID);
+            addUniv(univCount);
         }else if (univList.innerHTML.indexOf(univName) > -1){
             alert("Esta universidad: "+univName+", ya ha sido agragada.");
         }else {
             univList.appendChild(univItem);
-            addUniv(univID);
+            addUniv(univCount);
         }
         
         showUniversityList();
@@ -180,12 +213,26 @@ function deleteUniversity(id){
         frmBas.removeChild(univField);
         univCount.value = Number(univCount.value) - 1;
     }
+    
+    //Rearrange  universities list
+    var univList = document.getElementsByClassName("univ-item");
+    var univRecs = document.getElementsByClassName("univ-recs");
+    var univCBut = document.getElementsByClassName("icon-cancel");
+    if (univList.length === univRecs.length){
+        for (var i = 0; i < univList.length; i++){
+            univList.item(i).id = "univ"+i;
+            univCBut.item(i).setAttribute("onclick","deleteUniversity("+i+")");
+            univRecs.item(i).id = "univ-field-"+i;
+            univRecs.item(i).name = "univ"+i;
+        }
+    }
 }
 
 function addUniv(id){
     var univCount = document.getElementById("univ-count");
     var frmBas = document.getElementById("bas-frm");
     var univRecord = document.createElement("input");
+    var univData = document.getElementById("univ"+id).getAttribute("data-id");
     
     if (univCount.value === "null"){
         univCount.value = 1;
@@ -193,33 +240,67 @@ function addUniv(id){
         univCount.value = Number(univCount.value) + 1;
     }
     
-    univRecord.type = "hidden";
+    univRecord.type = "text";
+    univRecord.className = "univ-recs";
     univRecord.name = "univ"+id;
     univRecord.id = "univ-field-"+id;
-    univRecord.value = id;
+    univRecord.value = univData;
     
     frmBas.appendChild(univRecord);
 }
 
-//Dates Function
+//Dates Function****************************************************************
 
 function updateDate(type){
     var dtop = document.getElementById("dtop");
     var dted = document.getElementById("dted");
     var dtopInput = document.getElementById("dtop-input");
     var dtedInput = document.getElementById("dted-input");
-    var date = new Date(dtop.value);
-    date.setDate(date.getDate() + 7)
+    
     if (type === 0){
         dtopInput.value = dtop.value;
+        dted.value = setMinDate(dtop.value);
+        dted.min = setMinDate(dtop.value);
     }else{
         dtedInput.value = dted.value;
     }
 }
 
-//Save functions
+//Save functions****************************************************************
+
+function validateBasics(){
+    
+    var valid = true;
+    
+    var prog = document.getElementById("prog-input");
+    var univ = document.getElementById("univ-count");
+    var dtop = document.getElementById("dtop-input");
+    var dted = document.getElementById("dted-input");
+    
+    if (prog.value === "null"){
+        document.getElementById("prog-error").innerHTML = "Debe seleccionar un programa";
+        valid = false;
+    }
+    
+    if (univ.value === "null"){
+        document.getElementById("univ-error").innerHTML = "Debe seleccionar al menos una universidad";
+        valid = false;
+    }
+    
+    if (dtop.value === "null"){
+        dtop.value = document.getElementById("dtop").value;
+    }
+    
+    if (dted.value === "null"){
+        dted.value = document.getElementById("dted").value;
+    }
+    
+    return valid;
+}
 
 function saveUpdateBasics(){
     var frmBas = document.getElementById("bas-frm");
+    
+    validateBasics();
     frmBas.submit();
 }

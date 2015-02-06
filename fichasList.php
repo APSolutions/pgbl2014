@@ -3,7 +3,7 @@
     
     session_name('Global');
     session_id('pgbl');
-    session_start();    
+    session_start();  
 ?>
 <!DOCTYPE html>
 <html>

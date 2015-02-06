@@ -77,7 +77,7 @@ if(!empty($_POST)){
                     <span class="title">Programa:</span>
                     <span class="content" id="program-content" data-value="<?php echo $brigade->getProgramID();?>">
                         <?php echo $brigade->getProgram();?>
-                    </span>
+                    </span>                    
                     <select id="selectProgram" class="cs-select" onclick="programClick()">
                         <option value="" selected></option>
                         <?php require 'src/brigade/getProgramsList.php';?>
@@ -88,13 +88,14 @@ if(!empty($_POST)){
                         </a>
                     </div>                    
                 </div>
+                <span class="error" id="prog-error"></span>
                 
                 <div class="brigade-universities main">
                     <span class="title">Universidad/es:</span>
                     <div class="content" id="univ-content">
                         <ul class="univesitiesList" id="universitiesList">
                             <?php $brigade->getUniversities();?>
-                        </ul>
+                        </ul>                        
                     </div>
                     <div id="addUniv" class="add-field pointer">
                         <a class="add-field" onclick="showUniversityList()">
@@ -106,6 +107,7 @@ if(!empty($_POST)){
                         <?php require 'src/brigade/getUniversitiesList.php';?>
                     </select>
                 </div>
+                <span class="error" id="univ-error"></span>
                 
                 <div class="brigade-dates main">
                     <h3>Fechas</h3>
