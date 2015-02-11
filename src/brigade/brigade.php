@@ -2,11 +2,14 @@
 
 class Brigade{
     
-    private $progID, $prog, $univ, $dtop, $dted, $vol, $ft;
+    private $type, $sBde, $progID, $prog, $sProgID, $sProg, $univ, $dtop, $dted, $sDtop, $sDted, $vol, $ft;
     
     function __construct() {
+        $this->type = 0;
         $this->progID = "0";
         $this->prog = "Ninguno";
+        $this->sProgID = "0";
+        $this->sProg = "Ninguno";
         $this->dtop = date("Y-m-d");
         $this->dted = date("Y-m-d",strtotime("+7 day"));
         $this->univ = "Ninguno";
@@ -14,13 +17,21 @@ class Brigade{
             
     function getBasicData($bdeID){
         require 'src/login/connect.php';
-        $query = "CALL get_brigade_data('$bdeID');";
+        $query = "CALL get_brigade_data('$bdeID', @p1, @p2, @p3, @p4, @p5, @p6, @p7, @p8, @p9, @p10);";
+        $conn->query($query);
+        $query = "SELECT @p1 AS param_type, @p2 AS param_progID, @p3 AS param_prog, @p4 AS param_dtop, @p5 AS param_dted, @p6 AS param_sBde , @p7 AS  param_sProgId , @p8 AS param_sProg, @p9 AS param_sDtop, @p10 AS param_sDted;";
         $result = $conn->query($query);
         $row = $result->fetch_assoc();
-        $this->progID = $row["id"];
-        $this->prog = $row["program"];
-        $this->dtop = $row["startingDate"];
-        $this->dted = $row["endDate"];
+        $this->type = $row["param_type"];
+        $this->progID = $row["param_progID"];
+        $this->prog = $row["param_prog"];
+        $this->dtop = $row["param_dtop"];
+        $this->dted = $row["param_dted"];
+        $this->sBde = $row["param_sBde"];
+        $this->sProgID = $row["param_sProgId"];
+        $this->sProg = $row["param_sProg"];        
+        $this->sDtop = $row["param_sDtop"];
+        $this->sDted = $row["param_sDted"];
     }
     
     function getUniversitiesData($bdeID){
@@ -138,6 +149,14 @@ class Brigade{
     
     function getProgram() {
         return $this->prog;
+    }
+    
+    function getSubProgramID() {
+        return $this->sProgID;
+    }
+    
+    function getSubProgram() {
+        return $this->sProg;
     }
     
     function getUniversities(){

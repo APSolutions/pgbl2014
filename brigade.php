@@ -84,11 +84,26 @@ if(!empty($_POST)){
                     </select>
                     <div id="updateProgram" class="update-field pointer">
                         <a class="update-field" onclick="updateProgram()">
-                            <span class="icon-update"></span>
+                            <span class="icon-add"></span>
                         </a>
                     </div>                    
                 </div>
                 <span class="error" id="prog-error"></span>
+                <div class="brigade-subprog main">
+                    <span class="title">Sub programa:</span>
+                    <span class="content" id="subprog-content" data-value="<?php echo $brigade->getProgramID();?>">
+                        <?php echo $brigade->getProgram();?>
+                    </span>                    
+                    <select id="selectProgram" class="cs-select" onclick="programClick()">
+                        <option value="" selected></option>
+                        <?php require 'src/brigade/getProgramsList.php';?>
+                    </select>
+                    <div id="updateProgram" class="update-field pointer">
+                        <a class="update-field" onclick="updateProgram()">
+                            <span class="icon-add"></span>
+                        </a>
+                    </div>                    
+                </div>
                 
                 <div class="brigade-universities main">
                     <span class="title">Universidad/es:</span>
