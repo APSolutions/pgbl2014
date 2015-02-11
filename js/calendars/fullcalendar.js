@@ -3825,7 +3825,7 @@ Grid.mixin({
 			view.opt('eventTextColor');
 		var statements = [];
 		if (backgroundColor) {
-			statements.push('background-color:' + backgroundColor);
+			statements.push('background:' + backgroundColor);
 		}
 		if (borderColor) {
 			statements.push('border-color:' + borderColor);
