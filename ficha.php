@@ -15,6 +15,8 @@ $fichaID = $ficha->getID();
 $communities = $ficha->getCommunities();
 $compounds = $ficha->getCompounds();
 $fichaGenerals = $ficha->getFichaData();
+$stafflist = $ficha->getStaff();
+
 ?>
 <html>
     <head>
@@ -42,6 +44,7 @@ $fichaGenerals = $ficha->getFichaData();
                 var a = <?php echo json_encode($compounds)?>;
                 return a;
             }
+            function get
             function selectedCommunity(){
                 var a = <?php echo json_encode($fichaGenerals["community"])?>;
                 return a;
@@ -49,9 +52,6 @@ $fichaGenerals = $ficha->getFichaData();
             function selectedCompound(){
                 var a = <?php echo json_encode($fichaGenerals["compound"])?>;
                 return a;
-            }
-            function selectedStaffCoordinator(){
-                var a = <?php echo json_encode($staffCoordinator)?>;
             }
         </script>
     </head>

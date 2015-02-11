@@ -8,7 +8,7 @@
 class Ficha {
     //atributes
     private $id, $iDate, $fDate, $dDate, $aDate, $tStudents, $cityTour;
-    private $compound, $community, $program , $staffCoordinator;
+    private $compound, $community, $program;
     private $flights = array(array(
         "id" => "",
         "type" => "",
@@ -182,8 +182,9 @@ class Ficha {
     public function getVehicles() {
         return $this->vehicles;
     }
-    public function getSatff(){
-        return $this->staff;
+    public function getStaff(){
+        $staff = $this->runQuery("CALL get_fichaStafflist();","stafflist");
+        return $staff;
     }    
     public function getUniversities(){
         return $this->universities;
@@ -311,3 +312,5 @@ class Ficha {
         }
     }
 }
+
+?>
