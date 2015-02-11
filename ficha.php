@@ -49,7 +49,10 @@ $fichaGenerals = $ficha->getFichaData();
             function selectedCompound(){
                 var a = <?php echo json_encode($fichaGenerals["compound"])?>;
                 return a;
-            }                
+            }
+            function selectedStaffCoordinator(){
+                var a = <?php echo json_encode($staffCoordinator)?>;
+            }
         </script>
     </head>
     <body onload="loadData(getCommunities(),getCompounds());loadCommunities(selectedCommunity());loadCompounds(selectedCommunity());">
@@ -91,7 +94,26 @@ $fichaGenerals = $ficha->getFichaData();
             </div>
             <div class="fichaSection fichaStaff">
                 <h2 class="ficha-tittle">Staff</h2>
+                <div>
+                    <h2 class="ficha-places"> Coordinador </h2>
+                    <select class="cs-select" id="coordinatorList"></select>
+                    <h2 class="ficha-places"> Interpretes </h2>                
+                    <select class="cs-select" id="interpreterList"></select>
+                    <h2 class="ficha-places"> Chofer </h2>                
+                    <select class="cs-select" id="driverList"></select>
+                </div>
             </div>
+            <div class="fichaSection fichaStaff">
+                <h2 class="ficha-tittle">Staff</h2>
+                <div>
+                    <h2 class="ficha-places"> Paramédico </h2>
+                    <select class="cs-select" id="paramedicList"></select>
+                    <h2 class="ficha-places"> Técnico </h2>                
+                    <select class="cs-select" id="technicianList"></select>  
+                    <h2 class="ficha-places"> Otros </h2>                
+                    <select class="cs-select" id="other0List"></select>
+                </div>
+            </div>            
             <div class="fichaSection fichaVolunteers" style="clear: both;">
                 <h2 class="ficha-tittle">Voluntarios</h2>
                 <div class="volunteers">
@@ -109,6 +131,6 @@ $fichaGenerals = $ficha->getFichaData();
                     </table>
                 </div>
             </div>
-        </div>        
+        </div>      
     </body>
 </html>
