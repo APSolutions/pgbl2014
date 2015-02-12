@@ -91,8 +91,8 @@ if(!empty($_POST)){
                 <span class="error" id="prog-error"></span>
                 <div class="brigade-subprog main">
                     <span class="title">Sub programa:</span>
-                    <span class="content" id="subprog-content" data-value="<?php echo $brigade->getProgramID();?>">
-                        <?php echo $brigade->getProgram();?>
+                    <span class="content" id="subprog-content" data-value="<?php echo $brigade->getSubProgramID();?>">
+                        <?php echo $brigade->getSubProgram();?>
                     </span>                    
                     <select id="selectProgram" class="cs-select" onclick="programClick()">
                         <option value="" selected></option>
