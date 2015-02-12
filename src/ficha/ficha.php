@@ -8,7 +8,7 @@
 class Ficha {
     //atributes
     private $id, $iDate, $fDate, $dDate, $aDate, $tStudents, $cityTour;
-    private $compound, $community, $program;
+    private $compound, $community, $program , $staffCoordinator;
     private $flights = array(array(
         "id" => "",
         "type" => "",
@@ -57,7 +57,7 @@ class Ficha {
                    $this->cityTour = $row["tour"];
                    $this->compound = $row["compound"];
                    $this->community = $row["community"];
-                   $this->program = $row["program"];
+                   $this->program = $row["program"];    
                }
             }
        } catch (Exception $ex) {
@@ -76,7 +76,7 @@ class Ficha {
                    $this->flights[$i]["type"] = $row["type"];
                    $this->flights[$i]["arrivalTime"] = $row["arrivalTime"];
                    $this->flights[$i]["tStudents"] = $row["tStudents"];
-                   $i ++;
+                   $i ++; 
                }
             }
             return 'ok';
