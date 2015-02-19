@@ -15,7 +15,8 @@ $fichaID = $ficha->getID();
 $communities = $ficha->getCommunities();
 $compounds = $ficha->getCompounds();
 $fichaGenerals = $ficha->getFichaData();
-$stafflist = $ficha->getStaff();
+$staffCoordinator = $ficha->getStaffCoordinator();
+$staffInterpreter = $ficha->getStaffInterpreter();
 
 ?>
 <html>
@@ -44,7 +45,14 @@ $stafflist = $ficha->getStaff();
                 var a = <?php echo json_encode($compounds)?>;
                 return a;
             }
-            function get
+            function getStaffCoordinator(){
+                var a = <?php echo json_encode($staffCoordinator)?>;
+                return a;
+            }
+            function getStaffInterpreter(){
+                var a = <?php echo json_encode($staffInterpreter)?>;
+                return a;
+            }
             function selectedCommunity(){
                 var a = <?php echo json_encode($fichaGenerals["community"])?>;
                 return a;
@@ -55,7 +63,7 @@ $stafflist = $ficha->getStaff();
             }
         </script>
     </head>
-    <body onload="loadData(getCommunities(),getCompounds());loadCommunities(selectedCommunity());loadCompounds(selectedCommunity());">
+    <body onload="loadData(getCommunities(),getCompounds(),getStaffCoordinator(),getStaffInterpreter());loadCommunities(selectedCommunity());loadCompounds(selectedCompound());loadStaffCoordinator(' ');loadStaffInterpreter(' ')" >
         <?php
         require 'header.php';
         ?>
@@ -111,7 +119,7 @@ $stafflist = $ficha->getStaff();
                     <h2 class="ficha-places"> Técnico </h2>                
                     <select class="cs-select" id="technicianList"></select>  
                     <h2 class="ficha-places"> Otros </h2>                
-                    <select class="cs-select" id="other0List"></select>
+                    <select class="cs-select" id="otherList"></select>
                 </div>
             </div>            
             <div class="fichaSection fichaVolunteers" style="clear: both;">

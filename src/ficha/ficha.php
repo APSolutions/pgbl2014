@@ -182,8 +182,12 @@ class Ficha {
     public function getVehicles() {
         return $this->vehicles;
     }
-    public function getStaff(){
-        $staff = $this->runQuery("CALL get_fichaStafflist();","stafflist");
+    public function getStaffCoordinator(){
+        $staff = $this->runQuery("CALL get_fichaCompCommStaff('3','coordinator');","stafflist");
+        return $staff;
+    } 
+    public function getStaffInterpreter(){
+        $staff = $this->runQuery("CALL get_fichaCompCommStaff('3','interpreter');","stafflist");
         return $staff;
     }    
     public function getUniversities(){
@@ -193,11 +197,11 @@ class Ficha {
         return $this->volunteers;
     }
     public function getCommunities(){
-        $communities = $this->runQuery("CALL get_communities();", "communities");
+        $communities = $this->runQuery("CALL get_fichaCompCommStaff('2','');", "name");
         return $communities;
     }
     public function getCompounds(){
-        $compounds = $this->runQuery("CALL get_compounds();", "compound");
+        $compounds = $this->runQuery("CALL get_fichaCompCommStaff('1','');", "name");
         return $compounds;
     }
     
