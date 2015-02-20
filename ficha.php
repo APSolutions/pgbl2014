@@ -11,12 +11,33 @@ $_SESSION["action"] = "";
 $_SESSION["program"] = "";
 
 $ficha = $_SESSION["ficha"];
+
 $fichaID = $ficha->getID();
-$communities = $ficha->getCommunities();
-$compounds = $ficha->getCompounds();
 $fichaGenerals = $ficha->getFichaData();
-$staffCoordinator = $ficha->getStaffCoordinator();
-$staffInterpreter = $ficha->getStaffInterpreter();
+$aContenido = $ficha->getCompCommStaff();
+$compounds = getArray($aContenido, 0);
+$communities = getArray($aContenido, 1);
+$staffCoordinator = getArray($aContenido, 2);
+$staffInterpreter = getArray($aContenido, 3);
+$staffDrivers = getArray($aContenido, 4);
+$staffParamedics = getArray($aContenido, 5);
+$staffTecnicians = getArray($aContenido, 6);
+$staffOthers = getArray($aContenido, 7);
+
+function getArray($aContenido, $col){
+    $array = array();
+    $i=0;
+    $rows = count($aContenido);
+    for ($row = 0; $row < $rows; $row++) {
+        if ($aContenido[$row][$col] != ""){
+            $array[$i] = $aContenido[$row][$col];
+            $i=$i+1;
+        } 
+    }
+    return $array;
+}
+
+
 
 ?>
 <html>
@@ -53,6 +74,22 @@ $staffInterpreter = $ficha->getStaffInterpreter();
                 var a = <?php echo json_encode($staffInterpreter)?>;
                 return a;
             }
+            function getStaffDrivers(){
+                var a = <?php echo json_encode($staffDrivers)?>;
+                return a;
+            }
+            function getStaffParamedics(){
+                var a = <?php echo json_encode($staffParamedics)?>;
+                return a;
+            }
+            function getStaffTecnicians(){
+                var a = <?php echo json_encode($staffTecnicians)?>;
+                return a;
+            }
+            function getStaffOthers(){
+                var a = <?php echo json_encode($staffOthers)?>;
+                return a;
+            }
             function selectedCommunity(){
                 var a = <?php echo json_encode($fichaGenerals["community"])?>;
                 return a;
@@ -63,7 +100,7 @@ $staffInterpreter = $ficha->getStaffInterpreter();
             }
         </script>
     </head>
-    <body onload="loadData(getCommunities(),getCompounds(),getStaffCoordinator(),getStaffInterpreter());loadCommunities(selectedCommunity());loadCompounds(selectedCompound());loadStaffCoordinator(' ');loadStaffInterpreter(' ')" >
+    <body onload="loadData(getCommunities(),getCompounds(),getStaffCoordinator(),getStaffInterpreter(),getStaffDrivers(),getStaffParamedics(),getStaffTecnicians(),getStaffOthers());loadCommunities(selectedCommunity());loadCompounds(selectedCompound());loadStaffCoordinator(' ');loadStaffInterpreter(' ');loadStaffDrivers(' ');loadStaffParamedics(' ');loadStaffTecnicians('');loadStaffOthers('')" >
         <?php
         require 'header.php';
         ?>

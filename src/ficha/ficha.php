@@ -32,6 +32,7 @@ class Ficha {
     private $universities = array();
     private $vehicles = array();
     //methods
+
     public function __construct($param_id){
         $this->id = $param_id;
         $this->obtainVariables();
@@ -76,6 +77,7 @@ class Ficha {
                    $this->flights[$i]["type"] = $row["type"];
                    $this->flights[$i]["arrivalTime"] = $row["arrivalTime"];
                    $this->flights[$i]["tStudents"] = $row["tStudents"];
+                   
                    $i ++; 
                }
             }
@@ -182,27 +184,15 @@ class Ficha {
     public function getVehicles() {
         return $this->vehicles;
     }
-    public function getStaffCoordinator(){
-        $staff = $this->runQuery("CALL get_fichaCompCommStaff('3','coordinator');","stafflist");
-        return $staff;
+    public function getCompCommStaff(){
+        $compCommStaff = $this->runQueryTwoDim("CALL get_fichaCompCommStaff()");
+        return $compCommStaff;
     } 
-    public function getStaffInterpreter(){
-        $staff = $this->runQuery("CALL get_fichaCompCommStaff('3','interpreter');","stafflist");
-        return $staff;
-    }    
     public function getUniversities(){
         return $this->universities;
     }
     public function getVolunteers(){
         return $this->volunteers;
-    }
-    public function getCommunities(){
-        $communities = $this->runQuery("CALL get_fichaCompCommStaff('2','');", "name");
-        return $communities;
-    }
-    public function getCompounds(){
-        $compounds = $this->runQuery("CALL get_fichaCompCommStaff('1','');", "name");
-        return $compounds;
     }
     
     
@@ -221,6 +211,24 @@ class Ficha {
         } catch (Exception $ex){
             return "Error";
         }
+    }
+    private function runQueryTwoDim($query){
+        $aContenido = array();
+        try{
+            require 'src/login/connect.php';
+            $result= $conn->query($query);
+            $i = 0;
+            while ($row = $result->fetch_assoc()){
+                $col = count($row);
+                for($j=0;$j<$col;$j++){
+                    $aContenido[$i][$j] = $row[$j];
+                }
+                $i++;
+            }
+            return $aContenido;
+        } catch (Exception $ex) {
+            return "Error";
+        }       
     }
      
     public function setiDate($param_iDate){
