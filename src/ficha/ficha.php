@@ -34,7 +34,8 @@ class Ficha {
     //methods
 
     public function __construct($param_id){
-        $this->id = $param_id;
+    $this->id = $param_id;}
+    
         $this->prueba();
         $this->obtainFlights();
         $this->obtainVolunteers();
@@ -43,50 +44,53 @@ class Ficha {
         $this->obtainUniversities();
     }
     
+    require 'src/login/connect.php';
+        $query = "CALL get_brigade_basic_data();";        
+        $result = $conn->query($query);
+        
+        if ($result->num_rows > 0){
+            $i = $j = 0;
+            while($row = $result->fetch_assoc()){
+                if (!is_null($row["progID"])){
+                    $this->programs[$i]["progID"] = $row["progID"];
+                    $this->programs[$i]["prog"] = $row["prog"];
+                    $i ++;
+                }
+                
+                if (!is_null($row["univID"])){
+                    $this->univeristies[$j]["univID"] = $row["univID"];
+                    $this->univeristies[$j]["univ"] = $row["univ"];
+                    $j ++;
+                }
+            }
+        }
+    
     private function prueba(){
-        //arreglo multidimensional con 30 columnas con todos los datos
-        $aContenido = array();
         try{
             require '../login/connect.php';
             $query = "CALL get_fichaSelectedData('$this->id');";
             $result= $conn->query($query);
             if ($result->num_rows > 0){
-               $i = 0;
-               while($row = $result->fetch_assoc()){
-                  $aContenido[$i]["id"] = $row["flight"];
-                  $this->flights[$i]["type"] = $row["type"];
-                  $this->flights[$i]["arrivalTime"] = $row["arrivalTime"];
-                  $this->flights[$i]["tStudents"] = $row["tStudents"];
-                  $i ++; 
+            $i = $j = 0;
+            while($row = $result->fetch_assoc()){
+                if (!is_null($row["progID"])){
+                    $this->programs[$i]["progID"] = $row["progID"];
+                    $this->programs[$i]["prog"] = $row["prog"];
+                    $i ++;
                 }
-           }
-        //asignar variables de ficha
-            $this->iDate = $prueba[0]["iDate"];
-            $this->fDate = $prueba[0]["fDate"];
-            $this->dDate = $prueba[0]["dDate"];
-            $this->aDate = $prueba[0]["aDate"];
-            $this->tStudents = $prueba[0]["tStudents"];
-            $this->cityTour = $prueba[0]["tour"];
-            $this->compound = $prueba[0]["compound"];
-            $this->community = $prueba[0]["community"];
-            $this->program = $prueba[0]["program"];    
+                
+                if (!is_null($row["univID"])){
+                    $this->univeristies[$j]["univID"] = $row["univID"];
+                    $this->univeristies[$j]["univ"] = $row["univ"];
+                    $j ++;
+                }
+            }
+        }
             return 'ok';
         } catch (Exception $ex) {
             return 'error';
             }
     } 
-    private function getArray($aContenido, $col){
-    $array = array();
-    $i=0;
-    $rows = count($aContenido);
-    for ($row = 0; $row < $rows; $row++) {
-        if ($aContenido[$row][$col] != ""){
-            $array[$i] = $aContenido[$row][$col];
-            $i=$i+1;
-        } 
-    }
-    return $array;
-}
     
    
     private function obtainFlights(){

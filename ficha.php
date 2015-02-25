@@ -24,6 +24,7 @@ $staffParamedics = getArray($aContenido, 5);
 $staffTecnicians = getArray($aContenido, 6);
 $staffOthers = getArray($aContenido, 7);
 
+print $fichaGenerals['id'].$fichaGenerals['compound'].$fichaGenerals['community'];
 function getArray($aContenido, $col){
     $array = array();
     $i=0;
