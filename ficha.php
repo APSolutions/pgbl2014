@@ -14,6 +14,9 @@ $ficha = $_SESSION["ficha"];
 
 $fichaID = $ficha->getID();
 $fichaGenerals = $ficha->getFichaData();
+$fichaFlights = $ficha->getFlights();
+$fichaVehicles = $ficha->getVehicles();
+$selectedStaffCoordinator = $ficha->getStaff();
 $aContenido = $ficha->getCompCommStaff();
 $compounds = getArray($aContenido, 0);
 $communities = getArray($aContenido, 1);
@@ -24,7 +27,7 @@ $staffParamedics = getArray($aContenido, 5);
 $staffTecnicians = getArray($aContenido, 6);
 $staffOthers = getArray($aContenido, 7);
 
-print $fichaGenerals['id'].$fichaGenerals['compound'].$fichaGenerals['community'];
+print $fichaVehicles[0].$fichaVehicles[1];
 function getArray($aContenido, $col){
     $array = array();
     $i=0;
