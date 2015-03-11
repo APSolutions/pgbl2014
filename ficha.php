@@ -1,4 +1,5 @@
 <?php
+print "Roy usa lentes";
 require 'src/ficha/ficha.php';
 require 'src/login/usuario.php';
 
@@ -16,7 +17,7 @@ $fichaID = $ficha->getID();
 $fichaGenerals = $ficha->getFichaData();
 $fichaFlights = $ficha->getFlights();
 $fichaVehicles = $ficha->getVehicles();
-$selectedStaffCoordinator = $ficha->getStaff();
+//$selectedStaffCoordinator = $ficha->getStaff();
 $aContenido = $ficha->getCompCommStaff();
 $compounds = getArray($aContenido, 0);
 $communities = getArray($aContenido, 1);
