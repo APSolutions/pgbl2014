@@ -27,6 +27,7 @@ function setDate(type){
     return ""+ yy + "-" + mm + "-" + dd + "";
 }
 
+
 function setMinDate(date){
     var dt = new Date(date);
     var dn = new Date(dt);
@@ -46,6 +47,44 @@ function setMinDate(date){
     return ""+ yy + "-" + mm + "-" + dd + "";
 }
 
+//used to set the default data into selects
+function setData(programs, universities){
+    var progs = programs;
+    var univs = universities;
+    
+    var progSelect1 = document.getElementById("progSelect1");
+    var progSelect2 = document.getElementById("progSelect2");
+    var univSelect = document.getElementById("univSelect");
+        
+    for (var i = 0; i < progs.length; i++){
+        var option1 = document.createElement("option");
+        var option2 = document.createElement("option");
+        
+        option1.id = "prog"+progs[i].progID;
+        option1.value = progs[i].progID;
+        option1.innerHTML = progs[i].prog;
+        
+        progSelect1.appendChild(option1);
+        
+        option2.id = "subProg"+progs[i].progID;
+        option2.value = progs[i].progID;
+        option2.innerHTML = progs[i].prog;        
+        
+        progSelect2.appendChild(option2);
+    }
+    
+    for (var i = 0; i < univs.length; i++){
+        var option = document.createElement("option");
+        
+        option.id = "univ" + univs[i].univID;
+        option.value = univs[i].univID;
+        option.innerHTML = univs[i].univ;
+        
+        univSelect.appendChild(option);
+    }
+}
+
+
 //used to set up a current or no brigade
 function setBrigade(bdeID){
     
@@ -54,76 +93,88 @@ function setBrigade(bdeID){
     
     document.getElementById("dtop").min = dtop;
     document.getElementById("dted").min = dted;
+    
+    document.getElementById("priDtop").min = dtop;
+    document.getElementById("priDted").min = dtop;
+    
+    document.getElementById("priDtop").max = dted;
+    document.getElementById("priDted").max = dted;
+    
+    document.getElementById("subDtop").min = dtop;
+    document.getElementById("subDted").min = dtop;
+    
+    document.getElementById("subDtop").max = dted;
+    document.getElementById("subDted").max = dted;
         
-    if (bdeID === "Ninguno"){
+    if (bdeID === ""){
         //For new brigade
         //For the main form
         //sets the button save
-        document.getElementById("bde-save-updt").innerHTML = "Save";        
+        document.getElementById("btnPriSubmit").innerHTML = "Save";
+        document.getElementById("dtop").value = dtop;
+        document.getElementById("dted").value = dted;
         
     }else{
         //For existing brigade
         //For the main form
-        document.getElementById("bde-save-updt").innerHTML = "Update";
-        //sets the program update button
-        document.getElementById("updateProgram").className += " hidden";
-        //set the program in the form
-        var prog = document.getElementById("program-content").getAttribute("data-value");
-        document.getElementById("prog-input").value = prog;
-        //set current universities for post save
-        var univList = document.getElementsByClassName("univ-item");
-        
-        for (var i = 0; i < univList.length; i++){
-            addUniv(i);
-        }
+        document.getElementById("btnPriSubmit").innerHTML = "Update";   
     }
 }
 
 //******************************************************************************
 
-//Functions for programs*******************************************************
-function updateProgram(){
-    //Change classes to show and hide items
-    var program = document.getElementById("program-content");
-    if (program.className === "content"){
-        program.className += " hidden";
-    } else {
-        program.className = "content";
-    }        
+//Functions for programs********************************************************
+var priProg = 0;
+var subProg = 0;
+
+function addSubProgram(){
+    var elements = document.getElementsByClassName("subProgramField");
+    var visibility= "";
     
-    var select = document.getElementById("selectProgram");
-    if (select.className === "cs-select"){
-        select.className += " selecting";
-        select.selectedIndex = 0;
-        select.focus();
-    } else {
-        select.className = "cs-select";
+    if (document.getElementById("subProgramSelected").checked){
+        document.getElementById("subProgramSelected").checked = false;
+        document.getElementById("btnAddProg").innerHTML = "Agregar Programa Secundario";
+        visibility = "subProgramField hidden";
+    }else{
+        document.getElementById("subProgramSelected").checked = true;
+        document.getElementById("btnAddProg").innerHTML = "Eliminar Programa Secundario";
+        visibility = "subProgramField visible";
     }
     
-    var update = document.getElementById("updateProgram");
-    if (update.className === "update-field pointer"){
-        update.className = "hidden";
-    } else {
-        update.className = "update-field pointer";
-    }  
+    for (var i = 0; i < elements.length; i++){
+        elements.item(i).className = visibility;
+    }
 }
 
+function updateSubProg(){
+    var selProg = document.getElementById("progSelect1");
+    
+    if (selProg.selectedIndex != priProg && selProg.selectedIndex != 0){
+        if(priProg != 0){
+            var id = selProg.options[priProg].value;
+            document.getElementById("subProg" + id).disabled = false;
+        }      
+        
+        priProg = selProg.selectedIndex;
+        
+        id = selProg.options[selProg.selectedIndex].value;
+        document.getElementById("subProg" + id).disabled = true;
+    }
+}
 
-//Function after selecting a new program
-function programClick(){
-    var select = document.getElementById("selectProgram");
-    var program = document.getElementById("program-content");
+function updateProg(){
+    var selProg = document.getElementById("progSelect2");
     
-    document.getElementById("prog-error").innerHTML = "";
-    
-    //Sets the program to show
-    program.innerHTML = select.options[select.selectedIndex].innerHTML;
-    if (select.selectedIndex > 0){
-        //Hides the select box
-        updateProgram();
-        //Sets the value for further save
-        setBasicFormProgram(select.options[select.selectedIndex].value);
-    }    
+    if (selProg.selectedIndex != subProg && selProg.selectedIndex != 0){
+        if (subProg != 0){
+            var id = selProg.options[subProg].value;
+            document.getElementById("prog" + id).disabled = false;
+        }
+        subProg = selProg.selectedIndex;
+        
+        id = selProg.options[selProg.selectedIndex].value;
+        document.getElementById("prog" + id).disabled = true;
+    }
 }
 
 function setBasicFormProgram(value){
@@ -132,137 +183,104 @@ function setBasicFormProgram(value){
 }
 
 //******************************************************************************
-
-
 //Functions for universities **************************************************/
+var currentUniv = 0;
 
-function showUniversityList(){
-       
-    var univContent = document.getElementById("univ-content");
-    
-    if (univContent.className === "content"){
-        univContent.className += " hidden";
-    } else {
-        univContent.className = "content";
-    }
-    
-    var univSelect = document.getElementById("selectUniversity");
-    
-    if (univSelect.className === "cs-select"){
-        univSelect.className += " selecting";
-        univSelect.selectedIndex = 0;
-        univSelect.focus();
-    } else {
-        univSelect.className = "cs-select";
-    }
-    
-    var univButton = document.getElementById("addUniv");
-    if (univButton.className === "add-field pointer"){
-        univButton.className = "hidden";
-    } else {
-        univButton.className = "add-field pointer";
-    }
-}
 
 function addUniversity(){
-    var univSelect = document.getElementById("selectUniversity");
-    var univList = document.getElementById("universitiesList");    
-    var univItem = document.createElement("li");
-    var univCancel = document.createElement("span");
-    var univName = univSelect.options[univSelect.selectedIndex].innerHTML;
-    var univID = univSelect.options[univSelect.selectedIndex].value;
-    var univCount = document.getElementsByClassName("univ-item").length;
+    var univsList = document.getElementById("univSelect");
+    var selectedUnivList = document.getElementById("selectedUnivList");
+    var selectedUnivs = document.getElementById("selectedUniv");
     
-    document.getElementById("univ-error").innerHTML = "";
-    
-    if (univSelect.selectedIndex > 0){
-        univItem.id = "univ"+univCount;
-        univItem.className = "univ-item";
-        univItem.setAttribute("data-id", univID);
-        univItem.innerHTML = univName;
-        univCancel.className = "icon-cancel";
-        univCancel.setAttribute("onclick","deleteUniversity("+univCount+")");
-        univItem.appendChild(univCancel);
-        
-        if (univList.innerHTML.indexOf("Ninguno") > -1){
-            univList.innerHTML = "";
-            univList.appendChild(univItem);
-            addUniv(univCount);
-        }else if (univList.innerHTML.indexOf(univName) > -1){
-            alert("Esta universidad: "+univName+", ya ha sido agragada.");
-        }else {
-            univList.appendChild(univItem);
-            addUniv(univCount);
-        }
-        
-        showUniversityList();
-    }    
+    if (univsList.selectedIndex != currentUniv && univsList.selectedIndex != 0){
+       var selectedUniv = univsList.options[univsList.selectedIndex];
+       selectedUniv.disabled = "disabled";
+       currentUniv = univsList.selectedIndex;       
+             
+       var univToList = document.createElement("li");
+       var univToForm = document.createElement("option");
+       var deleteUniv = document.createElement("a");
+       
+       univToList.id = "listUniv"+selectedUniv.value;
+       univToList.innerHTML = selectedUniv.innerHTML;
+       univToList.setAttribute("data-id",selectedUniv.value);
+       
+       univToForm.id = "selUniv"+selectedUniv.value;
+       univToForm.value = selectedUniv.value;
+       univToForm.selected = "selected";
+       
+       deleteUniv.innerHTML = "Eliminar";
+       deleteUniv.className = "pointer";
+       deleteUniv.setAttribute("onclick","deleteUniversity("+selectedUniv.value+")");
+       
+       univToList.appendChild(deleteUniv);
+       selectedUnivs.appendChild(univToForm);
+       selectedUnivList.appendChild(univToList);
+    }
 }
 
 function deleteUniversity(id){
-    var univList = document.getElementById("universitiesList");
-    var uni = document.getElementById("univ"+id);
-    var univCount = document.getElementById("univ-count");
-    var frmBas = document.getElementById("bas-frm");
-    var univField = document.getElementById("univ-field-"+id);
-    
-    if(Number(univCount.value) === 1){
+    var selectedUnivs = document.getElementById("selectedUniv");
+    var selectedUnivList = document.getElementById("selectedUnivList");
+        
+    if(selectedUnivs.childElementCount === 1){
         alert("La brigada debe tener al menos una universidad.")
     }else{
-        univList.removeChild(uni);
-        frmBas.removeChild(univField);
-        univCount.value = Number(univCount.value) - 1;
-    }
-    
-    //Rearrange  universities list
-    var univList = document.getElementsByClassName("univ-item");
-    var univRecs = document.getElementsByClassName("univ-recs");
-    var univCBut = document.getElementsByClassName("icon-cancel");
-    if (univList.length === univRecs.length){
-        for (var i = 0; i < univList.length; i++){
-            univList.item(i).id = "univ"+i;
-            univCBut.item(i).setAttribute("onclick","deleteUniversity("+i+")");
-            univRecs.item(i).id = "univ-field-"+i;
-            univRecs.item(i).name = "univ"+i;
-        }
+        document.getElementById("univ"+id).disabled = false;
+        selectedUnivs.removeChild(document.getElementById("selUniv"+id));
+        selectedUnivList.removeChild(document.getElementById("listUniv"+id))
     }
 }
-
-function addUniv(id){
-    var univCount = document.getElementById("univ-count");
-    var frmBas = document.getElementById("bas-frm");
-    var univRecord = document.createElement("input");
-    var univData = document.getElementById("univ"+id).getAttribute("data-id");
-    
-    if (univCount.value === "null"){
-        univCount.value = 1;
-    } else {
-        univCount.value = Number(univCount.value) + 1;
-    }
-    
-    univRecord.type = "hidden";
-    univRecord.className = "univ-recs";
-    univRecord.name = "univ"+id;
-    univRecord.id = "univ-field-"+id;
-    univRecord.value = univData;
-    
-    frmBas.appendChild(univRecord);
-}
-
 //Dates Function****************************************************************
 
 function updateDate(type){
     var dtop = document.getElementById("dtop");
     var dted = document.getElementById("dted");
-    var dtopInput = document.getElementById("dtop-input");
-    var dtedInput = document.getElementById("dted-input");
+    var priDtop = document.getElementById("priDtop");
+    var priDted = document.getElementById("priDted");
+    var subDtop = document.getElementById("subDtop");
+    var subDted = document.getElementById("subDted");
+    
+    var dn = new Date(setMinDate(dtop.value)).getDate();
+    var dc = new Date(dted.value).getDate();
     
     if (type === 0){
-        dtopInput.value = dtop.value;
-        dted.value = setMinDate(dtop.value);
+        
+        
+        if (dn > dc){
+            dted.value = setMinDate(dtop.value);            
+        }
+        
         dted.min = setMinDate(dtop.value);
-    }else{
-        dtedInput.value = dted.value;
+        
+        priDtop.value = dtop.value;
+        priDtop.min = dtop.value;
+        priDtop.max = dted.value;
+        
+        subDtop.value = dtop.value;
+        subDtop.min = dtop.value;
+        subDtop.max = dted.value;
+        
+        priDted.value = dtop.value;
+        priDted.min = dtop.value;
+        priDted.max = dted.value;
+        
+        subDted.value = dtop.value;
+        subDted.min = dtop.value;
+        subDted.max = dted.value;        
+    }else if(type === 1){
+        priDtop.max = dted.value;
+        subDtop.max = dted.value;
+        priDted.max = dted.value;
+        subDted.max = dted.value;        
+    }else if(type === 2){
+        
+    }else if(type === 3){
+        
+    }else if(type === 4){
+        
+    }else if(type === 5){
+        
     }
 }
 
@@ -306,3 +324,5 @@ function saveUpdateBasics(){
     }
     
 }
+
+/*Validation Methods*/

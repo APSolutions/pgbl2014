@@ -1,6 +1,7 @@
 <?php
 require 'src/login/usuario.php';
 require 'src/brigade/brigade.php';
+require 'src/brigade/brigadeData.php';
 
 session_name('Global');
 session_id('pgbl');
@@ -8,6 +9,7 @@ session_start();
 
 $_SESSION["position"] = "Formulario de Brigada";
 $brigade = new Brigade();
+$bdeData = new BrigadeData();
 
 
 if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
@@ -17,7 +19,7 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
     $brigade->getUniversitiesData($bdeID);
 }else {
     //Configures data for a new brigade
-    $bdeID = "Ninguno";
+    $bdeID = "";
 }
 
 if(!empty($_POST)){
@@ -54,7 +56,10 @@ if(!empty($_POST)){
         <script type="text/javascript" src="js/brigade.js"></script>
         <script type="text/javascript">
             function init(){
-                var bdeID = <?php echo json_encode($bdeID);?>; 
+                var bdeID = <?php echo json_encode($bdeID);?>;
+                var progs = <?php echo json_encode($bdeData->getPrograms());?>;
+                var univs = <?php echo json_encode($bdeData->getUniversities());?>;            
+                setData(progs,univs);
                 setBrigade(bdeID);
             }
         </script>
@@ -64,129 +69,119 @@ if(!empty($_POST)){
         require 'header.php';
         ?>
         <div class="container">
-            <h2>Datos de la Brigada</h2>
-            <div class="basics">                
-                <div class="brigade-id main">
-                    <span class="title">ID Asignado:</span>
-                    <span class="content" id="bde-id">
-                        <?php echo $bdeID?>
-                    </span>
-                </div>
-                
-                <div class="brigade-program main">
-                    <span class="title">Programa:</span>
-                    <span class="content" id="program-content" data-value="<?php echo $brigade->getProgramID();?>">
-                        <?php echo $brigade->getProgram();?>
-                    </span>                    
-                    <select id="selectProgram" class="cs-select" onclick="programClick()">
-                        <option value="" selected></option>
-                        <?php require 'src/brigade/getProgramsList.php';?>
-                    </select>
-                    <div id="updateProgram" class="update-field pointer">
-                        <a class="update-field" onclick="updateProgram()">
-                            <span class="icon-add"></span>
-                        </a>
-                    </div>                    
-                </div>
-                <span class="error" id="prog-error"></span>
-                <div class="brigade-subprog main">
-                    <span class="title">Sub programa:</span>
-                    <span class="content" id="subprog-content" data-value="<?php echo $brigade->getSubProgramID();?>">
-                        <?php echo $brigade->getSubProgram();?>
-                    </span>                    
-                    <select id="selectProgram" class="cs-select" onclick="programClick()">
-                        <option value="" selected></option>
-                        <?php require 'src/brigade/getProgramsList.php';?>
-                    </select>
-                    <div id="updateProgram" class="update-field pointer">
-                        <a class="update-field" onclick="updateProgram()">
-                            <span class="icon-add"></span>
-                        </a>
-                    </div>                    
-                </div>
-                
-                <div class="brigade-universities main">
-                    <span class="title">Universidad/es:</span>
-                    <div class="content" id="univ-content">
-                        <ul class="univesitiesList" id="universitiesList">
-                            <?php $brigade->getUniversities();?>
-                        </ul>                        
-                    </div>
-                    <div id="addUniv" class="add-field pointer">
-                        <a class="add-field" onclick="showUniversityList()">
-                            <span class="icon-add"></span>
-                        </a>
-                    </div>
-                    <select id="selectUniversity" class="cs-select" onclick="addUniversity()">
-                        <option value="" selected></option>
-                        <?php require 'src/brigade/getUniversitiesList.php';?>
-                    </select>
-                </div>
-                <span class="error" id="univ-error"></span>
-                
-                <div class="brigade-dates main">
-                    <h3>Fechas</h3>
-                    <div>
-                        <span class="title">Inicio:</span>
-                        <span class="content">
-                            <input type="date" name="dtop" id="dtop" value="<?php echo $brigade->getOpeningDate();?>" onchange="updateDate(0)"/>
-                        </span>
-                    </div>
-                    <div>
-                        <span class="title">Final:</span>
-                        <span class="content">
-                            <input type="date" name="dted" id="dted" value="<?php echo $brigade->getEndingDate();?>" onchange="updateDate(1)"/>
-                        </span>
-                    </div>
-                </div>
-                <div class="btn-save-updt">
-                    <button id="bde-save-updt" onclick="saveUpdateBasics()">Save/Update</button>
-                </div>
-            </div>
-            <div class="flights">
-                <h2>Vuelos</h2>                
-                <form id="frmFlights" class="required" method="post" action="">
-                    <input type="text" name="flightNumber" required/>
-                    <input type="date" name="flightDate" required/>
-                    <input type="time" name="flightTime" required/>
-                    <input type="number" name="flightStudents"/>
-                    <select name="flightType">
-                        <option value="0" selected>Llegada</option>
-                        <option value="1">Salida</option>
-                    </select>
-                    <input type="button" value="Add"/>
-                </form>                
-            </div>
-            <div class="volunteers">
-                <h2>Voluntarios</h2>
-                <form id="frmVolunteers" class="required" method="post" action="">
-                    <input type="text" name="volunteerID" required/>
-                    <input type="text" name="volunteerName" required/>
-                    <input type="text" name="volunteerLastName" required/>
-                    <select name="flightType">
-                        <option value="0" selected>Voluntario</option>
-                        <option value="1">Presidente</option>
-                        <option value="2">Tutor</option>
-                    </select>
-                    <input type="text" name="volunteerAllergies"/>
-                    <input type="text" name="volunteerDiet"/>
-                    <input type="text" name="volunteerComments"/>
-                    <input type="checkbox" name="volunteerArrive"/>
-                    <input type="checkbox" name="volunteerLeave"/>
-                </form>
-            </div>
-            <div id="forms-space" class="forms">
-                <form id="bas-frm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-                    <input type="hidden" name="prog" id="prog-input" value="null">
-                    <input type="hidden" name="univ" id="univ-count" value="null">
-                    <input type="hidden" name="dtop" id="dtop-input" value="null">
-                    <input type="hidden" name="dted" id="dted-input" value="null">
-                </form>
-                <form id="flt-frm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-                    <input type="hidden" name="fltQT" id="fltQt-input" value="null">
-                </form>
-                <form id="vol-frm" method="post" action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']);?>">
-                    <input type="hidden" name="volQT" id="volQt-input" value="null">
+            <div class="section basic-data">
+                <h2> Datos Basicos </h2>
+                <h3 id="bdeID"> <?php echo $bdeID;?> </h3>
+                <form>
+                    <dl>
+                        <!-- Select for the program of the brigade -->
+                        <dt>                        
+                            <label>
+                                <span class="label">Programa:</span>
+                                <select id="progSelect1" onclick="updateSubProg()">
+                                    <option>Seleccione un programa</option>
+                                </select>
+                                <span class="error"></span>
+                            </label>
+                        </dt>
+                        
+                        <!-- hidden program field to select the secondary program-->                                            
+                        
+                        <dt class="subProgramField hidden">
+                            <label>
+                                <span class="label">Programa Secundario:</span>
+                                <select id="progSelect2" onclick="updateProg()">
+                                    <option>Seleccione un programa</option>
+                                </select>
+                                <span class="error"></span>
+                            </label>
+                        </dt>
+                        
+                        <dt>
+                        <button type="button" id="btnAddProg" onclick="addSubProgram()"> Agregar Programa </button>
+                        <input type="checkbox" name="subprogram" id="subProgramSelected" hidden="hidden"/>
+                        </dt>
+                        
+                        <!-- Multi select for universities field -->
+                        <dt>
+                            <label>
+                                <span class="label">Universidad:</span>
+                                <select id="univSelect" onclick="addUniversity()">
+                                    <option>Seleccione una o varias universidades</option>
+                                </select>
+                                <span class="error"></span>
+                                <select id="selectedUniv" name="univ" multiple="multiple" hidden="hidden"></select>
+                            </label>
+                        </dt>                        
+                        
+                        <!-- List for selected universities-->
+                        <dd>
+                            <ol id="selectedUnivList">
+                                
+                            </ol>
+                        </dd>
+                        
+                        <!-- Dates fields -->
+                        <dt> Fechas </dt>
+                        
+                        <dd>
+                            <label>
+                                <span class="label">Inicio:</span>
+                                <input type="date" id="dtop" onchange="updateDate(0)"/>
+                                <span class="error"></span>
+                            </label>
+                        </dd>
+
+                        <dd>
+                            <label>
+                                <span class="label">Conclusión:</span>
+                                <input type="date" id="dted" onchange="updateDate(1)"/>
+                                <span class="error"></span>
+                            </label>
+                        </dd>
+
+                        <!-- Hidden date fields for primary and sub program -->
+                        
+                        <dt class="subProgramField hidden"> Programa Primario</dt>
+                        
+                        <dd class="subProgramField hidden">
+                            <label>
+                                <span class="label">Inicio:</span>
+                                <input type="date" id="priDtop"/>
+                                <span class="error"></span>
+                            </label>
+                        </dd>
+
+                        <dd class="subProgramField hidden">
+                            <label>
+                                <span class="label">Conclusión:</span>
+                                <input type="date" id="priDted"/>
+                                <span class="error"></span>
+                            </label>
+                        </dd>
+                        
+                        <dt class="subProgramField hidden"> Programa Secundario</dt>
+                        
+                        <dd class="subProgramField hidden">
+                            <label>
+                                <span class="label">Inicio:</span>
+                                <input type="date" id="subDtop"/>
+                                <span class="error"></span>
+                            </label>
+                        </dd>
+
+                        <dd class="subProgramField hidden">
+                            <label>
+                                <span class="label">Conclusión:</span>
+                                <input type="date" id="subDted"/>
+                                <span class="error"></span>
+                            </label>
+                        </dd>
+                        
+                        <dt>
+                        <button id="btnPriSubmit"> Salvar Cambios </button>                            
+                        </dt>
+                    </dl>
                 </form>
             </div>
         </div>
