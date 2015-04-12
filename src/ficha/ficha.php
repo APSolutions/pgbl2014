@@ -8,7 +8,7 @@
 class Ficha {
     //atributes
     private $id, $iDate, $fDate, $dDate, $aDate, $tStudents, $cityTour;
-    private $compound, $community, $program , $staffCoordinator;
+    private $compound, $community, $program;
     private $flights = array(array(
         "id" => "",
         "type" => "",
@@ -32,75 +32,62 @@ class Ficha {
     private $universities = array();
     private $vehicles = array();
     //methods
+
     public function __construct($param_id){
+    
         $this->id = $param_id;
-        $this->obtainVariables();
-        $this->obtainFlights();
+        $this->obtainAll();
         $this->obtainVolunteers();
         $this->obtainStaff();
-        $this->obtainVehicles();
         $this->obtainUniversities();
     }
     
-    private function obtainVariables(){
-       try {
-           require '../login/connect.php';
-           $query = "CALL get_fichasData('$this->id');";
-           $result = $conn->query($query);
-           if ($result->num_rows > 0){
-               while($row = $result->fetch_assoc()){
-                   $this->iDate = $row["iDate"];
-                   $this->fDate = $row["fDate"];
-                   $this->dDate = $row["dDate"];
-                   $this->aDate = $row["aDate"];
-                   $this->tStudents = $row["tStudents"];
-                   $this->cityTour = $row["tour"];
-                   $this->compound = $row["compound"];
-                   $this->community = $row["community"];
-                   $this->program = $row["program"];    
-               }
-            }
-       } catch (Exception $ex) {
-           //in error case
-       } 
-    }
-    private function obtainFlights(){
-        try {
+    private function obtainAll(){
+        try{
             require '../login/connect.php';
-            $query = "CALL get_fichasFlights('$this->id');";
-            $result = $conn->query($query);
+            $query = "CALL get_fichaSelectedData('$this->id');";
+            $result= $conn->query($query);
             if ($result->num_rows > 0){
-                $i = 0;
+                $i = $j = 0;
                 while($row = $result->fetch_assoc()){
-                   $this->flights[$i]["id"] = $row["flight"];
-                   $this->flights[$i]["type"] = $row["type"];
-                   $this->flights[$i]["arrivalTime"] = $row["arrivalTime"];
-                   $this->flights[$i]["tStudents"] = $row["tStudents"];
-                   $i ++; 
-               }
-            }
-            return 'ok';
-        }catch (Exception $ex) {
-            return 'error';
-        }      
-    }
-    private function obtainVehicles(){
-        try {
-            require '../login/connect.php';
-            $query = "CALL get_fichaVehicles('$this->id');";
-            $result = $conn->query($query);
-            if ($result->num_rows > 0){
-                $i = 0;
-                while($row = $result->fetch_assoc()){
-                   $this->vehicles[$i] = $row["vehicle"];
-                   $i ++;
-               }
+                    if (!is_null($row["ficha"])){
+                        $this->iDate = $row["iDate"];
+                        $this->fDate = $row["fDate"];
+                        $this->dDate = $row["dDate"];
+                        $this->aDate = $row["aDate"];
+                        $this->tStudents = $row["tStudents"];
+                        $this->cityTour= $row["tour"];
+                        $this->compound = $row["compound"];
+                        $this->community = $row["community"];
+                        $this->program = $row["program"];
+                    }
+
+                    if (!is_null($row["flight"])){
+                        $this->flights[$i]["id"] = $row["flight"];
+                        $this->flights[$i]["type"] = $row["type"];
+                        $this->flights[$i]["arrivalTime"] = $row["arrivalTime"];
+                        $this->flights[$i]["tStudents"] = $row["tStudentsf"];
+                        $i ++;
+                    }
+                    
+                    if (!is_null($row["vehicle"])){
+                        $this->vehicles[$j] = $row["vehicle"];
+                        $j ++;
+                    }
+                    
+                    if (!is_null($row["staffCoordinator"])){
+                        $this->vehicles[$j] = $row["staffCoordinator"];
+                        $j ++;
+                    }
+                    
+                }
             }
             return 'ok';
         } catch (Exception $ex) {
             return 'error';
         }
-    }
+    } 
+    
     private function obtainStaff(){
         try {
             require '../login/connect.php';
@@ -182,28 +169,21 @@ class Ficha {
     public function getVehicles() {
         return $this->vehicles;
     }
-    public function getSatff(){
-        return $this->staff;
-    }    
+    public function getCompCommStaff(){
+        $compCommStaff = $this->runQueryTwoDim("CALL get_fichaCompCommStaff()");
+        return $compCommStaff;
+    } 
     public function getUniversities(){
         return $this->universities;
     }
     public function getVolunteers(){
         return $this->volunteers;
     }
-    public function getCommunities(){
-        $communities = $this->runQuery("CALL get_communities();", "communities");
-        return $communities;
-    }
-    public function getCompounds(){
-        $compounds = $this->runQuery("CALL get_compounds();", "compound");
-        return $compounds;
-    }
     
     
     private function runQuery($query, $rowName){        
         try{
-            require 'src/login/connect.php';
+            require '../login/connect.php';
             $result = $conn->query($query);
             if ($result->num_rows > 0){
                 $i = 0;
@@ -216,6 +196,24 @@ class Ficha {
         } catch (Exception $ex){
             return "Error";
         }
+    }
+    private function runQueryTwoDim($query){
+        $aContenido = array();
+        try{
+            require 'src/login/connect.php';
+            $result= $conn->query($query);
+            $i = 0;
+            while ($row = $result->fetch_assoc()){
+                $col = count($row);
+                for($j=0;$j<$col;$j++){
+                    $aContenido[$i][$j] = $row[$j];
+                }
+                $i++;
+            }
+            return $aContenido;
+        } catch (Exception $ex) {
+            return "Error";
+        }       
     }
      
     public function setiDate($param_iDate){
@@ -311,3 +309,5 @@ class Ficha {
         }
     }
 }
+
+?>
