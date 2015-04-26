@@ -9,37 +9,44 @@ class Ficha {
     //atributes
     private $id, $iDate, $fDate, $dDate, $aDate, $tStudents, $cityTour;
     private $compound, $community, $program;
-    private $flights = array(array(
-        "id" => "",
-        "type" => "",
-        "arrivalTime" => "",
-        "tStudents" => ""
+    private $flightsa = array(array(
+        "0" => "",
+        "1" => "",
+        "2" => ""
+    ));   
+    private $flightsd = array(array(
+        "0" => "",
+        "1" => "",
+        "2" => ""
     ));    
     private $staff = array(array(
         "id" => "",
         "role" => ""
     ));
     private $volunteers = array(array(
-        "id" => "",
-        "name" => "",
-        "lastname" => "",
-        "earlyArrival" => "",
-        "ownLeave" => "",
-        "allergies" => "",
-        "diet" => "",
-        "comments" => ""
+        "0" => "",
+        "1" => "",
+        "2" => "",
+        "3" => "",
+        "4" => "",
+        "5" => "",
+        "6" => "",
+        "7" => ""
     ));
     private $universities = array();
     private $vehicles = array();
+    private $staff_coordinator = array();
+    private $staff_interpreter = array();
+    private $staff_driver = array();
+    private $staff_paramedic = array();
+    private $staff_tecnician = array();
+    private $staff_others = array();
     //methods
 
     public function __construct($param_id){
     
         $this->id = $param_id;
         $this->obtainAll();
-        $this->obtainVolunteers();
-        $this->obtainStaff();
-        $this->obtainUniversities();
     }
     
     private function obtainAll(){
@@ -48,7 +55,7 @@ class Ficha {
             $query = "CALL get_fichaSelectedData('$this->id');";
             $result= $conn->query($query);
             if ($result->num_rows > 0){
-                $i = $j = 0;
+                $i = $j = $k = $l = $m = $n = $o = $p = $q = $r = $s = 0;
                 while($row = $result->fetch_assoc()){
                     if (!is_null($row["ficha"])){
                         $this->iDate = $row["iDate"];
@@ -63,11 +70,18 @@ class Ficha {
                     }
 
                     if (!is_null($row["flight"])){
-                        $this->flights[$i]["id"] = $row["flight"];
-                        $this->flights[$i]["type"] = $row["type"];
-                        $this->flights[$i]["arrivalTime"] = $row["arrivalTime"];
-                        $this->flights[$i]["tStudents"] = $row["tStudentsf"];
-                        $i ++;
+                        if ($row["type"] == 0){
+                            $this->flightsa[$i]["0"] = $row["flight"];
+                            $this->flightsa[$i]["1"] = $row["arrivalTime"];
+                            $this->flightsa[$i]["2"] = $row["tStudentsf"];
+                            $i ++;
+                        }else{
+                            $this->flightsd[$i]["0"] = $row["flight"];
+                            $this->flightsd[$i]["1"] = $row["arrivalTime"];
+                            $this->flightsd[$i]["2"] = $row["tStudentsf"];
+                            $r ++;
+                        }
+                        
                     }
                     
                     if (!is_null($row["vehicle"])){
@@ -76,10 +90,49 @@ class Ficha {
                     }
                     
                     if (!is_null($row["staffCoordinator"])){
-                        $this->vehicles[$j] = $row["staffCoordinator"];
-                        $j ++;
+                        $this->staff_coordinator[$k] = $row["staffCoordinator"];
+                        $k ++;
                     }
                     
+                    if (!is_null($row["staffInterpreter"])){
+                        $this->staff_interpreter[$l] = $row["staffInterpreter"];
+                        $l ++;
+                    }
+                    
+                    if (!is_null($row["staffDriver"])){
+                        $this->staff_driver[$m] = $row["staffDriver"];
+                        $m ++;
+                    }
+                    
+                    if (!is_null($row["staffParamedic"])){
+                        $this->staff_paramedic[$n] = $row["staffParamedic"];
+                        $n ++;
+                    }
+                    
+                    if (!is_null($row["staffTecnicians"])){
+                        $this->staff_tecnician[$o] = $row["staffTecnicians"];
+                        $o ++;
+                    }
+                    
+                    if (!is_null($row["staffOthers"])){
+                        $this->staff_others[$p] = $row["staffOthers"];
+                        $p ++;
+                    }
+                    if (!is_null($row["vid"])){
+                        $this->volunteers[$q]["0"] = $row["vid"];
+                        $this->volunteers[$q]["1"] = $row["vname"];
+                        $this->volunteers[$q]["2"] = $row["vlastname"];
+                        $this->volunteers[$q]["3"] = $row["earlyArrival"];
+                        $this->volunteers[$q]["4"] = $row["ownLeave"];
+                        $this->volunteers[$q]["5"] = $row["allergies"];
+                        $this->volunteers[$q]["6"] = $row["diet"];
+                        $this->volunteers[$q]["7"] = $row["comments"];
+                        $q ++;
+                    }
+                    if (!is_null($row["university"])){
+                        $this->universities[$s] = $row["university"];
+                        $s ++;
+                    }
                 }
             }
             return 'ok';
@@ -87,64 +140,6 @@ class Ficha {
             return 'error';
         }
     } 
-    
-    private function obtainStaff(){
-        try {
-            require '../login/connect.php';
-            $query = "CALL get_fichaStaff('$this->id');";
-            $result = $conn->query($query);
-            if ($result->num_rows > 0){
-                $i = 0;
-                while($row = $result->fetch_assoc()){
-                   $this->staff[$i]["id"] = $row["staff"];
-                   $this->staff[$i]["role"] = $row["role"];
-                   $i ++;
-               }
-            }
-            return 'ok';
-        } catch (Exception $ex) {
-            return 'error';
-        }
-    }
-    private function obtainVolunteers(){
-        try {
-            require '../login/connect.php';
-            $query = " CALL get_fichaVolunteers($this->id)";
-            $result = $conn->query($query);
-            if ($result->num_rows > 0){
-                $i = 0;
-                while($row = $result->fetch_assoc()){
-                   $this->volunteers[$i]["id"] = $row["id"];
-                   $this->volunteers[$i]["name"] = $row["name"];
-                   $this->volunteers[$i]["lastname"] = $row["lastname"];
-                   $this->volunteers[$i]["earlyArrival"] = $row["earlyArrival"];
-                   $this->volunteers[$i]["ownLeave"] = $row["ownLeave"];
-                   $this->volunteers[$i]["allergies"] = $row["allergies"];
-                   $this->volunteers[$i]["diet"] = $row["diet"];
-                   $this->volunteers[$i]["comments"] = $row["comments"];
-                   $i ++;
-               }
-            }
-        } catch (Exception $ex) {
-        }
-    }
-    private function obtainUniversities(){
-        try{
-            require '../login/connect.php';
-            $query = "CALL get_fichaUniversities($this->id);";
-            $result = $conn->query($query);
-            if ($result->num_rows > 0){
-                $i = 0;
-                while($row = $result->fetch_assoc()){
-                   $this->universities[$i] = $row["name"];
-                   $i ++;
-               }
-            }
-            return 'ok';
-        } catch (Exception $ex) {
-            return 'error';
-        }
-    }
     
     public function getFichaData(){
         return $result= array(
@@ -163,8 +158,11 @@ class Ficha {
     public function getID() {
         return $this->id;
     }
-    public function getFlights() {
-        return $this->flights;
+    public function getFlightsa() {
+        return $this->flightsa;
+    }
+    public function getFlightsd() {
+        return $this->flightsd;
     }
     public function getVehicles() {
         return $this->vehicles;
@@ -172,6 +170,30 @@ class Ficha {
     public function getCompCommStaff(){
         $compCommStaff = $this->runQueryTwoDim("CALL get_fichaCompCommStaff()");
         return $compCommStaff;
+    } 
+    public function getCompound(){
+        return $this->compound;
+    }
+    public function getCommunity(){
+        return $this->community;
+    }
+    public function getStaffCoordinator(){
+        return $this->staff_coordinator;
+    } 
+    public function getStaffInterpreter(){
+        return $this->staff_interpreter;
+    } 
+    public function getStaffDriver(){
+        return $this->staff_driver;
+    } 
+    public function getStaffParamedic(){
+        return $this->staff_paramedic;
+    } 
+    public function getStaffTecnician(){
+        return $this->staff_tecnician;
+    } 
+    public function getStaffOthers(){
+        return $this->staff_others;
     } 
     public function getUniversities(){
         return $this->universities;

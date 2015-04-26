@@ -1,5 +1,4 @@
 <?php
-print "Roy usa lentes";
 require 'src/ficha/ficha.php';
 require 'src/login/usuario.php';
 
@@ -15,8 +14,10 @@ $ficha = $_SESSION["ficha"];
 
 $fichaID = $ficha->getID();
 $fichaGenerals = $ficha->getFichaData();
-$fichaFlights = $ficha->getFlights();
+$fichaFlightsa = $ficha->getFlightsa();
+$fichaFlightsd = $ficha->getFlightsd();
 $fichaVehicles = $ficha->getVehicles();
+$fichaUniversity = $ficha->getUniversities();
 //$selectedStaffCoordinator = $ficha->getStaff();
 $aContenido = $ficha->getCompCommStaff();
 $compounds = getArray($aContenido, 0);
@@ -28,7 +29,9 @@ $staffParamedics = getArray($aContenido, 5);
 $staffTecnicians = getArray($aContenido, 6);
 $staffOthers = getArray($aContenido, 7);
 
-print $fichaVehicles[0].$fichaVehicles[1];
+ $aHeader = $bHeader = $aVoluntarios = array();
+ $aVoluntarios = $ficha->getVolunteers();
+
 function getArray($aContenido, $col){
     $array = array();
     $i=0;
@@ -42,7 +45,22 @@ function getArray($aContenido, $col){
     return $array;
 }
 
-
+//header of table
+    $aHeader = array(
+            '0' => "Identificacion",
+            '1' => "Nombre",
+            '2' => "Apellido",
+            '3' => "Llega antes",
+            '4' => "Se retira solo",
+            '5' => "Alergias",
+            '6' => "Dieta",
+            '7' => "Comentarios",
+            );
+    $bHeader = array(
+            '0' => "Vuelo",
+            '1' => "Fecha",
+            '2' => "# de Estudiantes",
+        );
 
 ?>
 <html>
@@ -111,9 +129,25 @@ function getArray($aContenido, $col){
         ?>
         <div class="container">
             <div class="fichaSection fichaGenerals">
-                <h2 class="ficha-tittle"><?php echo $fichaID;?>
+                <h2 class="ficha-tittle"><?php echo $fichaID?>
                     <span class="ficha-program"><?php echo $fichaGenerals["program"]?></span>
-                </h2>
+               
+                <table id="tableUniversidad"> 
+                    <thead>
+                        <tr>                                 
+                            <th align="left"></th>                                                                                                
+                        </tr> 
+                    </thead>
+                    <tbody>
+                        <?php
+                           for($i=0;$i<count($fichaUniversity);$i++){
+                                echo "<tr id=\"$i\">";
+                                echo "<td id=\"$i\">".$fichaUniversity[$i]."</td>";
+                                echo"</tr>"; 
+                            }                                                                                                     
+                        ?>  
+                    </tbody>
+                </table>
                 <h2 class="ficha-places"> Comunidad </h2>
                 <select class="cs-select" id="communityList"></select>
                 <h2 class="ficha-places"> Campamento </h2>                
@@ -121,14 +155,55 @@ function getArray($aContenido, $col){
             </div>
             <div class="fichaSection fichaFlights">
                 <div class="flights">
-                    <h2 class="ficha-tittle">Vuelos</h2>
-                    <table id="tableFlights">
-                        <tr>
-                            <td><h4>Vuelo</h4></td>
-                            <td><h4>Fecha y Hora</h4></td>
-                            <td><h4>Estudiantes</h4></td>
-                        </tr>
-                    </table>                    
+                    <h3 class="ficha-tittle">Vuelos</h3>
+                    <h3 class="ficha-h3">Vuelos de Llegada</h3>
+                        <table class="tableFlightsArrival">
+                            <thead>
+                                <tr>
+                                    <?php
+                                        for ($i=0; $i<count($bHeader); $i++) {
+                                        echo "<th align=\"center\" >".$bHeader[$i]."</th>";                       
+                                        }
+                                    ?>
+                                </tr> 
+                            </thead>
+                            <tbody>
+                            <?php
+                               for($i=0;$i<count($fichaFlightsa);$i++){
+                                    echo "<tr id=\"$i\">";
+                                    for($j=0;$j<3;$j++){
+                                       echo "<td align=\"center\">".$fichaFlightsa[$i][$j]."</td>";  
+                                    }                                                               
+                                }
+                                echo"</tr>";                         
+                            ?>
+                            </tbody>
+                        </table>
+                </div>
+                <div class="flights">
+                    <h3 class="ficha-h3">Vuelos de Salida</h3>
+                        <table class="tableFlightsDeparture">
+                            <thead>
+                                <tr>
+                                    <?php
+                                      for ($i=0; $i<count($bHeader); $i++) {
+                                      echo "<th align=\"center\">".$bHeader[$i]."</th>";                       
+                                      }
+                                    ?>
+                              </tr> 
+                            </thead>
+                            <tbody>
+                            <?php
+                               for($i=0;$i<count($fichaFlightsd);$i++){
+                                    echo "<tr id=\"$i\">";
+                                    for($j=0;$j<3;$j++){
+                                       echo "<td align=\"center\">".$fichaFlightsd[$i][$j]."</td>";  
+                                    }                                                               
+                                }
+                                echo"</tr>";                         
+                            ?>
+                            </tbody>
+                        </table> 
                 </div>                
             </div>
             <div class="fichaSection fichaTransportation">
@@ -168,18 +243,27 @@ function getArray($aContenido, $col){
                 <h2 class="ficha-tittle">Voluntarios</h2>
                 <div class="volunteers">
                     <table id="tableVolunteers">
-                        <tr>
-                            <td><h4>Identificación</h4></td>
-                            <td><h4>Nombre</h4></td>
-                            <td><h4>Apellido</h4></td>
-                            <td><h4>Llega antes</h4></td>
-                            <td><h4>Se retira solo</h4></td>
-                            <td><h4>Alergias</h4></td>
-                            <td><h4>Dieta</h4></td>
-                            <td><h4>Comentarios</h4></td>
-                        </tr>
+                         <thead>
+                    <tr>
+                        <?php
+                            for ($i=0; $i<count($aHeader); $i++) {
+                            echo "<th>".$aHeader[$i]."</th>";                       
+                            }
+                        ?>
+                    </tr> 
+                    </thead>
+                    <tbody>
+                    <?php
+                       for($i=0;$i<count($aVoluntarios);$i++){
+                            echo "<tr id=\"$i\">";
+                            for($j=0;$j<8;$j++){
+                               echo "<td>".$aVoluntarios[$i][$j]."</td>";  
+                            }                                                               
+                        }
+                        echo"</tr>";                         
+                    ?>
+                    </tbody>
                     </table>
-                </div>
             </div>
         </div>      
     </body>

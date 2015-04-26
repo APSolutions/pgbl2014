@@ -44,6 +44,9 @@ and open the template in the editor.
 .ficha-tittle{
     font-size: 200%;
 }
+.ficha-h3{
+    font-size: 100%;
+}
 
 .ficha-program{
     font-style: oblique;
@@ -91,4 +94,15 @@ and open the template in the editor.
 
 .volunteers table td{
     padding: 1em;
+}
+
+.tableFlightsDeparture {
+        border: 1px solid black;
+        border-collapse: collapse;
+}
+    
+
+.tableFlightsArrival {
+    border: 1px solid black;
+    border-collapse: collapse;
 }
