@@ -216,6 +216,7 @@ function addUniversity(){
        univToList.appendChild(deleteUniv);
        selectedUnivs.appendChild(univToForm);
        selectedUnivList.appendChild(univToList);
+     
     }
 }
 
@@ -228,7 +229,7 @@ function deleteUniversity(id){
     }else{
         document.getElementById("univ"+id).disabled = false;
         selectedUnivs.removeChild(document.getElementById("selUniv"+id));
-        selectedUnivList.removeChild(document.getElementById("listUniv"+id))
+        selectedUnivList.removeChild(document.getElementById("listUniv"+id));
     }
 }
 //Dates Function****************************************************************

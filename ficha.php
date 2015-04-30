@@ -14,6 +14,8 @@ $ficha = $_SESSION["ficha"];
 
 $fichaID = $ficha->getID();
 $fichaGenerals = $ficha->getFichaData();
+$idate = $fichaGenerals["iDate"];
+$fdate = $fichaGenerals["fDate"];
 $fichaFlightsa = $ficha->getFlightsa();
 $fichaFlightsd = $ficha->getFlightsd();
 $fichaVehicles = $ficha->getVehicles();
@@ -121,9 +123,17 @@ function getArray($aContenido, $col){
                 var a = <?php echo json_encode($fichaGenerals["compound"])?>;
                 return a;
             }
+            function selectedArrivalHour(){
+                var a = <?php echo json_encode($fichaGenerals["aDate"])?>;
+                return a;
+            }
+            function selectedLeaveHour(){
+                var a = <?php echo json_encode($fichaGenerals["dDate"])?>;
+                return a;
+            }
         </script>
     </head>
-    <body onload="loadData(getCommunities(),getCompounds(),getStaffCoordinator(),getStaffInterpreter(),getStaffDrivers(),getStaffParamedics(),getStaffTecnicians(),getStaffOthers());loadCommunities(selectedCommunity());loadCompounds(selectedCompound());loadStaffCoordinator(' ');loadStaffInterpreter(' ');loadStaffDrivers(' ');loadStaffParamedics(' ');loadStaffTecnicians('');loadStaffOthers('')" >
+    <body onload="loadData(getCommunities(),getCompounds(),getStaffCoordinator(),getStaffInterpreter(),getStaffDrivers(),getStaffParamedics(),getStaffTecnicians(),getStaffOthers());loadCommunities(selectedCommunity());loadCompounds(selectedCompound());loadStaffCoordinator(' ');loadStaffInterpreter(' ');loadStaffDrivers(' ');loadStaffParamedics(' ');loadStaffTecnicians('');loadStaffOthers('');loadArrivalHour(selectedArrivalHour());loadLeaveHour(selectedLeaveHour())" >
         <?php
         require 'header.php';
         ?>
@@ -152,6 +162,43 @@ function getArray($aContenido, $col){
                 <select class="cs-select" id="communityList"></select>
                 <h2 class="ficha-places"> Campamento </h2>                
                 <select class="cs-select" id="compoundList"></select>                            
+            </div>
+            <div class="fichaSection fichaDates">
+                <div class="fechas">
+                    <h2 class="ficha-tittle">Fechas</h2>
+                </div>
+                <h2 class="ficha-places">Inicio de Brigada</h2>
+                <span><?php echo $idate ?></span>
+                <h3>Fin de Brigada</h3>
+                <span><?php echo $fdate ?></span>
+                <h2 class="ficha-places">Hora de Llegada</h2>
+                <select class="cs-select" id="arrivalhour">
+                    <?php
+                        $start = "08:00";
+                        $end = "20:00";
+                        $tStart = strtotime($start);
+                        $tEnd = strtotime($end);
+                        $tNow = $tStart;
+                        while($tNow <= $tEnd){
+                            echo "<option value="."".date("H:i",$tNow).">".date("H:i",$tNow)." </option>"."\n";
+                            $tNow = strtotime('+30 minutes',$tNow);
+                        }
+                    ?>               
+                </select >
+                <h3>Hora de Salida</h3>
+                <select class="cs-select" id="leavehour">
+                    <?php
+                        $start = "08:00";
+                        $end = "20:00";
+                        $tStart = strtotime($start);
+                        $tEnd = strtotime($end);
+                        $tNow = $tStart;
+                        while($tNow <= $tEnd){
+                            echo "<option value=".date("H:i",$tNow).">".date("H:i",$tNow)." </option>"."\n";
+                            $tNow = strtotime('+30 minutes',$tNow);
+                        }
+                    ?>               
+                </select>
             </div>
             <div class="fichaSection fichaFlights">
                 <div class="flights">
@@ -220,8 +267,23 @@ function getArray($aContenido, $col){
             <div class="fichaSection fichaStaff">
                 <h2 class="ficha-tittle">Staff</h2>
                 <div>
-                    <h2 class="ficha-places"> Coordinador </h2>
-                    <select class="cs-select" id="coordinatorList"></select>
+                    <!-- Multi select for coordinator field -->
+                    <dt>
+                        <label>Coordinador
+                            <select class="cs-select" id="coordinatorList" onclick="addCoordinator()">
+                                <option>Seleccione uno o varios</option>
+                            </select>
+                            <span class="error"></span>
+                            <select id="selectedCoordinator" name="coor" multiple="multiple" hidden="hidden"></select>
+                        </label>
+                    </dt>  
+                    <!-- List for selected coordinators-->
+                    <dd>
+                        <ol id="selectedCoordinatorList">
+
+                        </ol>
+                    </dd>
+                    <!-- Multi select for Interpreter field -->
                     <h2 class="ficha-places"> Interpretes </h2>                
                     <select class="cs-select" id="interpreterList"></select>
                     <h2 class="ficha-places"> Chofer </h2>                
@@ -238,8 +300,9 @@ function getArray($aContenido, $col){
                     <h2 class="ficha-places"> Otros </h2>                
                     <select class="cs-select" id="otherList"></select>
                 </div>
-            </div>            
-            <div class="fichaSection fichaVolunteers" style="clear: both;">
+            </div>                       
+        </div>     
+        <div class="fichaSection fichaVolunteers" style="clear: both;">
                 <h2 class="ficha-tittle">Voluntarios</h2>
                 <div class="volunteers">
                     <table id="tableVolunteers">
@@ -264,7 +327,7 @@ function getArray($aContenido, $col){
                     ?>
                     </tbody>
                     </table>
-            </div>
-        </div>      
+                </div>
+        </div>
     </body>
 </html>

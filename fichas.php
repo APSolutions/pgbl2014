@@ -55,7 +55,7 @@ $_SESSION["program"] = "";
                     </li>
                     <li>
                         <a href="<?php echo "src/webrouter.php?position=Fichas&program=Dental"?>" name="dental" >
-                            <span class="cbp-ig-icon icon-programs-dental"></span>
+                            <span class="cbp-ig-icon icon-programs-medical"></span>
                             <h3 class="cbp-ig-title">Dental</h3>
                             <span class="cbp-ig-category">short description</span>
                         </a>

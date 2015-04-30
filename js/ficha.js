@@ -12,6 +12,8 @@ var staffDriversLoaded = false;
 var staffParamedicsLoaded = false;
 var staffTecniciansLoaded = false;
 var staffOthersLoaded = false;
+var arrivalHourLoaded = false;
+var leaveHourLoaded = false;
 
 function loadData(param_communities, param_compounds, param_staffCoor, param_staffInt, param_staffDriv, param_staffPar, param_staffTec, param_staffOthers) {
     comunities = param_communities;
@@ -61,12 +63,13 @@ function loadCompounds(param_compound){
 }
 
 function loadStaffCoordinator(param_staffCoordinator){
+
     if (!staffCoordinatorLoaded) {
         var list = document.getElementById("coordinatorList");
         var item = [];
         for (var i = 0; i < staffCoordinator.length; i++){
            item[i] = document.createElement('option');
-           item[i].id = "coordinator"+i;
+           item[i].id = "coor"+staffCoordinator[i];
            item[i].value = staffCoordinator[i];
            item[i].innerHTML = staffCoordinator[i];
            if (staffCoordinator[i] === param_staffCoordinator){
@@ -166,6 +169,75 @@ function loadStaffOthers(param_staffOthers){
         }
         staffOthersLoaded = true;
     }    
+}
+
+function loadArrivalHour(param_arrivalHour){
+    if (!param_arrivalHour == ""){
+        var option = document.getElementById('arrivalhour').childNodes;      
+        for (i=0;i<option.length;i++){
+            if (option[i].value == param_arrivalHour){
+                option[i].selected='selected';
+            }
+        }
+    }
+}
+
+function loadLeaveHour (param_leaveHour){   
+    if (!param_leaveHour == ""){
+        var option = document.getElementById('leavehour').childNodes;
+        for (i=0;i<option.length;i++){
+            if (option[i].value == param_leaveHour){
+                option[i].selected='selected';
+            }
+        }
+    }
+}
+//******************************************************************************
+//Functions for staff **************************************************/
+var currentCoordinator = 0;
+function addCoordinator(){
+    var coordinatorList = document.getElementById("coordinatorList");
+    var selectedCoordinatorList = document.getElementById("selectedCoordinatorList");
+    var selectedCoordinators = document.getElementById("selectedCoordinator");
+    
+    if (coordinatorList.selectedIndex != currentCoordinator && coordinatorList.selectedIndex != 0){
+       var selectedCoordinator = coordinatorList.options[coordinatorList.selectedIndex];
+       selectedCoordinator.disabled = "disabled";
+       currentCoordinator = coordinatorList.selectedIndex;       
+             
+       var coordinatorToList = document.createElement("li");
+       var coordinatorToForm = document.createElement("option");
+       var deleteCoordinator = document.createElement("a");
+       
+       coordinatorToList.id = "listCoordinator"+selectedCoordinator.value;
+       coordinatorToList.innerHTML = selectedCoordinator.innerHTML;
+       coordinatorToList.setAttribute("data-id",selectedCoordinator.value);
+       
+       coordinatorToForm.id = "selCoordinator"+selectedCoordinator.value;
+       coordinatorToForm.value = selectedCoordinator.value;
+       coordinatorToForm.selected = "selected";
+       
+       deleteCoordinator.innerHTML = "Eliminar";
+       deleteCoordinator.className = "pointer";
+       deleteCoordinator.setAttribute("onclick","deleteCoor("+"'"+selectedCoordinator.value+"'"+")");
+       
+       coordinatorToList.appendChild(deleteCoordinator);
+       selectedCoordinators.appendChild(coordinatorToForm);
+       selectedCoordinatorList.appendChild(coordinatorToList);
+    }
+}
+
+function deleteCoor(id){
+    var selectedCoordinators = document.getElementById("selectedCoordinator");
+    var selectedCoordinatorList = document.getElementById("selectedCoordinatorList");
+        
+    if(selectedCoordinators.childElementCount === 1){
+        alert("La brigada debe tener al menos un coordinador.")
+    }else{
+        document.getElementById("coor"+id).disabled = false;
+        selectedCoordinators.removeChild(document.getElementById("selCoordinator"+id));
+        selectedCoordinatorList.removeChild(document.getElementById("listCoordinator"+id));
+    }
 }
 
 

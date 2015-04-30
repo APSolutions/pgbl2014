@@ -31,14 +31,15 @@ and open the template in the editor.
 
 .fichaSection {
     float: left;
-    width: 15%;
+    width: 14%;
     margin: 1%;
+    font-size: 80%;
 }
 
 .fichaGenerals span{
     display: block;
     width: 100%;
-    font-size: 100%;
+    font-size: 75%;
 }
 
 .ficha-tittle{
@@ -67,7 +68,7 @@ and open the template in the editor.
     -moz-appearance: none;
     appearance: none;
     font-weight: 500;
-    font-size: 125%;
+    font-size: 100%;
     min-height: 30px;
 }
 
@@ -82,14 +83,17 @@ and open the template in the editor.
 /******************************************************************************/
 .fichaVolunteers{
     width: 100%;
+    
 }
 
 .volunteers {
     border: 1px solid;
+    
     }
 
 .volunteers table{
     float: left;
+    
 }
 
 .volunteers table td{
@@ -99,10 +103,31 @@ and open the template in the editor.
 .tableFlightsDeparture {
         border: 1px solid black;
         border-collapse: collapse;
+        font-size: 90%;
 }
     
 
 .tableFlightsArrival {
     border: 1px solid black;
     border-collapse: collapse;
+    font-size: 90%;
+}
+dd{
+    margin:0;
+}
+
+ol{
+  display: block;
+  list-style-type: decimal;
+  -webkit-margin-before: 0;
+  -webkit-margin-after: 0;
+  -webkit-margin-start: 0;
+  -webkit-margin-end: 0;
+  -webkit-padding-start: 0;
+  margin: 20;
+}
+
+ol li{
+    margin: 0;
+    padding: 0;
 }
