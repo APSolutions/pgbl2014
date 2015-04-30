@@ -122,8 +122,16 @@ class Ficha {
                         $this->volunteers[$q]["0"] = $row["vid"];
                         $this->volunteers[$q]["1"] = $row["vname"];
                         $this->volunteers[$q]["2"] = $row["vlastname"];
-                        $this->volunteers[$q]["3"] = $row["earlyArrival"];
-                        $this->volunteers[$q]["4"] = $row["ownLeave"];
+                        if ($row["earlyArrival"] == 0){
+                            $this->volunteers[$q]["3"] = "No";
+                        }else{
+                            $this->volunteers[$q]["3"] = "Si";
+                        }
+                        if ($row["ownLeave"]== 0){
+                            $this->volunteers[$q]["4"] = "No";
+                        }else{
+                            $this->volunteers[$q]["4"] = "Si";
+                        }
                         $this->volunteers[$q]["5"] = $row["allergies"];
                         $this->volunteers[$q]["6"] = $row["diet"];
                         $this->volunteers[$q]["7"] = $row["comments"];

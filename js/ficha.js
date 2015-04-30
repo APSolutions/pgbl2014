@@ -87,7 +87,7 @@ function loadStaffInterpreter(param_staffInterpreter){
         var item = [];
         for (var i = 0; i < staffInterpreter.length; i++){
            item[i] = document.createElement('option');
-           item[i].id = "interpreter"+i;
+           item[i].id = "inter"+staffInterpreter[i];
            item[i].value = staffInterpreter[i];
            item[i].innerHTML = staffInterpreter[i];
            if (staffInterpreter[i] === param_staffInterpreter){
@@ -105,7 +105,7 @@ function loadStaffDrivers(param_staffDrivers){
         var item = [];
         for (var i = 0; i < staffDrivers.length; i++){
            item[i] = document.createElement('option');
-           item[i].id = "driver"+i;
+           item[i].id = "driver"+staffDrivers[i];
            item[i].value = staffDrivers[i];
            item[i].innerHTML = staffDrivers[i];
            if (staffDrivers[i] === param_staffDrivers){
@@ -123,7 +123,7 @@ function loadStaffParamedics(param_staffParamedics){
         var item = [];
         for (var i = 0; i < staffParamedics.length; i++){
            item[i] = document.createElement('option');
-           item[i].id = "paramedic"+i;
+           item[i].id = "paramedic"+staffParamedics[i];
            item[i].value = staffParamedics[i];
            item[i].innerHTML = staffParamedics[i];
            if (staffParamedics[i] === param_staffParamedics){
@@ -141,7 +141,7 @@ function loadStaffTecnicians(param_staffTecnicians){
         var item = [];
         for (var i = 0; i < staffTecnicians.length; i++){
            item[i] = document.createElement('option');
-           item[i].id = "tecnician"+i;
+           item[i].id = "tec"+staffTecnicians[i];
            item[i].value = staffTecnicians[i];
            item[i].innerHTML = staffTecnicians[i];
            if (staffTecnicians[i] === param_staffTecnicians){
@@ -159,7 +159,7 @@ function loadStaffOthers(param_staffOthers){
         var item = [];
         for (var i = 0; i < staffOthers.length; i++){
            item[i] = document.createElement('option');
-           item[i].id = "other"+i;
+           item[i].id = "other"+staffOthers[i];
            item[i].value = staffOthers[i];
            item[i].innerHTML = staffOthers[i];
            if (staffOthers[i] === param_staffOthers){
@@ -240,4 +240,176 @@ function deleteCoor(id){
     }
 }
 
+var currentInterpreter = 0;
+function addInterpreter(){
+    var interpreterList = document.getElementById("interpreterList");
+    var selectedInterpreterList = document.getElementById("selectedInterpreterList");
+    var selectedInterpreters = document.getElementById("selectedInterpreter");
+    
+    if (interpreterList.selectedIndex != currentInterpreter && interpreterList.selectedIndex != 0){
+       var selectedInterpreter = interpreterList.options[interpreterList.selectedIndex];
+       selectedInterpreter.disabled = "disabled";
+       currentInterpreter = interpreterList.selectedIndex;       
+             
+       var interpreterToList = document.createElement("li");
+       var interpreterToForm = document.createElement("option");
+       var deleteInterpreter = document.createElement("a");
+       
+       interpreterToList.id = "listInterpreter"+selectedInterpreter.value;
+       interpreterToList.innerHTML = selectedInterpreter.innerHTML;
+       interpreterToList.setAttribute("data-id",selectedInterpreter.value);
+       
+       interpreterToForm.id = "selInterpreter"+selectedInterpreter.value;
+       interpreterToForm.value = selectedInterpreter.value;
+       interpreterToForm.selected = "selected";
+       
+       deleteInterpreter.innerHTML = "Eliminar";
+       deleteInterpreter.className = "pointer";
+       deleteInterpreter.setAttribute("onclick","deleteInt("+"'"+selectedInterpreter.value+"'"+")");
+       
+       interpreterToList.appendChild(deleteInterpreter);
+       selectedInterpreters.appendChild(interpreterToForm);
+       selectedInterpreterList.appendChild(interpreterToList);
+    }
+}
 
+function deleteInt(id){
+    var selectedInterpreters = document.getElementById("selectedInterpreter");
+    var selectedInterpreterList = document.getElementById("selectedInterpreterList");
+        
+    if(selectedInterpreters.childElementCount === 1){
+        alert("La brigada debe tener al menos un interprete.")
+    }else{
+        document.getElementById("inter"+id).disabled = false;
+        selectedInterpreters.removeChild(document.getElementById("selInterpreter"+id));
+        selectedInterpreterList.removeChild(document.getElementById("listInterpreter"+id));
+    }
+}
+
+var currentDriver = 0;
+function addDriver(){
+    var driverList = document.getElementById("driverList");
+    var selectedDriverList = document.getElementById("selectedDriverList");
+    var selectedDrivers = document.getElementById("selectedDrivers");
+    
+    if (driverList.selectedIndex != currentDriver && driverList.selectedIndex != 0){
+       var selectedDriver = driverList.options[driverList.selectedIndex];
+       selectedDriver.disabled = "disabled";
+       currentDriver = driverList.selectedIndex;       
+             
+       var driverToList = document.createElement("li");
+       var driverToForm = document.createElement("option");
+       var deleteDriver = document.createElement("a");
+       
+       driverToList.id = "listDriver"+selectedDriver.value;
+       driverToList.innerHTML = selectedDriver.innerHTML;
+       driverToList.setAttribute("data-id",selectedDriver.value);
+       
+       driverToForm.id = "selDriver"+selectedDriver.value;
+       driverToForm.value = selectedDriver.value;
+       driverToForm.selected = "selected";
+       
+       deleteDriver.innerHTML = "Eliminar";
+       deleteDriver.className = "pointer";
+       deleteDriver.setAttribute("onclick","deleteDriver("+"'"+selectedDriver.value+"'"+")");
+       
+       driverToList.appendChild(deleteDriver);
+       selectedDrivers.appendChild(driverToForm);
+       selectedDriverList.appendChild(driverToList);
+    }
+}
+
+function deleteDriver(id){
+    var selectedDriver = document.getElementById("selectedDrivers");
+    var selectedDriverList = document.getElementById("selectedDriverList");
+        
+    if(selectedDriver.childElementCount === 1){
+        alert("La brigada debe tener al menos un chofer.");
+    }else{
+        document.getElementById("driver"+id).disabled = false;
+        selectedDriver.removeChild(document.getElementById("selDriver"+id));
+        selectedDriverList.removeChild(document.getElementById("listDriver"+id));
+    }
+}
+
+var currentTec = 0;
+function addTec(){
+    var tecList = document.getElementById("technicianList");
+    var selectedTecList = document.getElementById("selectedTecList");
+    var selectedTecs = document.getElementById("selectedTec");
+    
+    if (tecList.selectedIndex != currentTec && tecList.selectedIndex != 0){
+       var selectedTec = tecList.options[tecList.selectedIndex];
+       selectedTec.disabled = "disabled";
+       currentTec = tecList.selectedIndex;       
+             
+       var tecToList = document.createElement("li");
+       var tecToForm = document.createElement("option");
+       var deleteTec = document.createElement("a");
+       
+       tecToList.id = "listTec"+selectedTec.value;
+       tecToList.innerHTML = selectedTec.innerHTML;
+       tecToList.setAttribute("data-id",selectedTec.value);
+       
+       tecToForm.id = "selTec"+selectedTec.value;
+       tecToForm.value = selectedTec.value;
+       tecToForm.selected = "selected";
+       
+       deleteTec.innerHTML = "Eliminar";
+       deleteTec.className = "pointer";
+       deleteTec.setAttribute("onclick","deleteTec("+"'"+selectedTec.value+"'"+")");
+       
+       tecToList.appendChild(deleteTec);
+       selectedTecs.appendChild(tecToForm);
+       selectedTecList.appendChild(tecToList);
+    }
+}
+
+function deleteTec(id){
+    var selectedTec = document.getElementById("selectedTec");
+    var selectedTecList = document.getElementById("selectedTecList");   
+    document.getElementById("tec"+id).disabled = false;
+    selectedTec.removeChild(document.getElementById("selTec"+id));
+    selectedTecList.removeChild(document.getElementById("listTec"+id));
+}
+
+var currentOther = 0;
+function addOther(){
+    var otherList = document.getElementById("otherList");
+    var selectedOtherList = document.getElementById("selectedOtherList");
+    var selectedOthers = document.getElementById("selectedOther");
+    
+    if (otherList.selectedIndex != currentOther && otherList.selectedIndex != 0){
+       var selectedOther = otherList.options[otherList.selectedIndex];
+       selectedOther.disabled = "disabled";
+       currentOther = otherList.selectedIndex;       
+             
+       var otherToList = document.createElement("li");
+       var otherToForm = document.createElement("option");
+       var deleteOther = document.createElement("a");
+       
+       otherToList.id = "listOther"+selectedOther.value;
+       otherToList.innerHTML = selectedOther.innerHTML;
+       otherToList.setAttribute("data-id",selectedOther.value);
+       
+       otherToForm.id = "selOther"+selectedOther.value;
+       otherToForm.value = selectedOther.value;
+       otherToForm.selected = "selected";
+       
+       deleteOther.innerHTML = "Eliminar";
+       deleteOther.className = "pointer";
+       deleteOther.setAttribute("onclick","deleteOther("+"'"+selectedOther.value+"'"+")");
+       
+       otherToList.appendChild(deleteOther);
+       selectedOthers.appendChild(otherToForm);
+       selectedOtherList.appendChild(otherToList);
+    }
+}
+
+function deleteOther(id){
+    var selectedOther = document.getElementById("selectedOther");
+    var selectedOtherList = document.getElementById("selectedOtherList");   
+    document.getElementById("other"+id).disabled = false;
+    selectedOther.removeChild(document.getElementById("selOther"+id));
+    selectedOtherList.removeChild(document.getElementById("listOther"+id));
+}

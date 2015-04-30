@@ -284,21 +284,90 @@ function getArray($aContenido, $col){
                         </ol>
                     </dd>
                     <!-- Multi select for Interpreter field -->
-                    <h2 class="ficha-places"> Interpretes </h2>                
-                    <select class="cs-select" id="interpreterList"></select>
-                    <h2 class="ficha-places"> Chofer </h2>                
-                    <select class="cs-select" id="driverList"></select>
+                    <dt>
+                        <label>Interprete
+                            <select class="cs-select" id="interpreterList" onclick="addInterpreter()">
+                                <option>Seleccione uno o varios</option>
+                            </select>
+                            <span class="error"></span>
+                            <select id="selectedInterpreter" name="int" multiple="multiple" hidden="hidden"></select>
+                        </label>
+                    </dt>  
+                    <!-- List for selected interpreters-->
+                    <dd>
+                        <ol id="selectedInterpreterList">
+
+                        </ol>
+                    </dd>
+                    <!-- Multi select for Drivers field -->
+                    <dt>
+                        <label>Chofer
+                            <select class="cs-select" id="driverList" onclick="addDriver()">
+                                <option>Seleccione uno o varios</option>
+                            </select>
+                            <span class="error"></span>
+                            <select id="selectedDrivers" name="driver" multiple="multiple" hidden="hidden"></select>
+                        </label>
+                    </dt>  
+                    <!-- List for selected drivers-->
+                    <dd>
+                        <ol id="selectedDriverList">
+
+                        </ol>
+                    </dd>
                 </div>
             </div>
             <div class="fichaSection fichaStaff">
                 <h2 class="ficha-tittle">Staff</h2>
                 <div>
-                    <h2 class="ficha-places"> Paramédico </h2>
-                    <select class="cs-select" id="paramedicList"></select>
-                    <h2 class="ficha-places"> Técnico </h2>                
-                    <select class="cs-select" id="technicianList"></select>  
-                    <h2 class="ficha-places"> Otros </h2>                
-                    <select class="cs-select" id="otherList"></select>
+                    <!-- Multi select for Paramedics field -->
+                    <dt>
+                        <label>Paramédico
+                            <select class="cs-select" id="paramedicList" onclick="addParamedic()">
+                                <option>Seleccione uno o varios</option>
+                            </select>
+                            <span class="error"></span>
+                            <select id="selectedPara" name="para" multiple="multiple" hidden="hidden"></select>
+                        </label>
+                    </dt>  
+                    <!-- List for selected paramedics-->
+                    <dd>
+                        <ol id="selectedParaList">
+
+                        </ol>
+                    </dd>
+                   <!-- Multi select for Tecnicians field -->
+                    <dt>
+                        <label>Técnico
+                            <select class="cs-select" id="technicianList" onclick="addTec()">
+                                <option>Seleccione uno o varios</option>
+                            </select>
+                            <span class="error"></span>
+                            <select id="selectedTec" name="tec" multiple="multiple" hidden="hidden"></select>
+                        </label>
+                    </dt>  
+                    <!-- List for selected tecnicians-->
+                    <dd>
+                        <ol id="selectedTecList">
+
+                        </ol>
+                    </dd>
+                       <!-- Multi select for Others field -->
+                    <dt>
+                        <label>Otros
+                            <select class="cs-select" id="otherList" onclick="addOther()">
+                                <option>Seleccione uno o varios</option>
+                            </select>
+                            <span class="error"></span>
+                            <select id="selectedOther" name="other" multiple="multiple" hidden="hidden"></select>
+                        </label>
+                    </dt>  
+                    <!-- List for selected others-->
+                    <dd>
+                        <ol id="selectedOtherList">
+
+                        </ol>
+                    </dd>
                 </div>
             </div>                       
         </div>     
