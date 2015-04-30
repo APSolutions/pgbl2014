@@ -7,8 +7,6 @@ class Brigade{
      * Nombre del Programa Principal
      * ID del programa secundario
      * Nombre del programa secundario
-     * ID de las universidades
-     * Nombre de las universidades
      * Fecha de inicio de la brigada
      * Fecha de conclusion de la brigada
      * Fecha de inicio del programa principal
@@ -19,15 +17,22 @@ class Brigade{
     private $progID;
     private $prog;
     private $sProgID;
-    private $sProg;
-    private $univID;
-    private $univName;
+    private $sProg;    
     private $dtop;
     private $dted;
     private $priDtop;
     private $priDted;
     private $secDtop;
     private $secDted;
+    
+    /*
+     *Variables para universidades, voluntarios y vuelos 
+     *      
+    */
+    private $univ;
+    private $vol;
+    private $flt;
+    
     
     function __construct() {
         $this->progID = NULL;
@@ -44,7 +49,7 @@ class Brigade{
         $result = $conn->query($query);
         $row = $result->fetch_assoc();
         if ($result->num_rows > 0){
-            $i = $j = 0;
+            $i = $j = $k = 0;
             
             $this->progID = $row["priProgID"];
             $this->prog = $row["priProg"];
@@ -59,34 +64,35 @@ class Brigade{
             
             while($row = $result->fetch_assoc()){
                 if (!is_null($row["univID"])){
-                    $this->univID[$i] = $row["univID"];
+                    $this->univ[$i]["univID"] = $row["univID"];
+                    $this->univ[$i]["univName"] = $row["univName"];
                     $i ++;
                 }
-                if (!is_null($row["univName"])){
-                    $this->univName[$j] = $row["univName"];
+                if (!is_null($row["fltID"])){
+                    $this->flt[$j]["fltID"]= $row["fltID"];
+                    $this->flt[$j]["fltType"]= $row["fltType"];
+                    $this->flt[$j]["fltArrTime"]= $row["fltArrTime"];
+                    $this->flt[$j]["fltTotalStud"]= $row["fltTotalStud"];
                     $j ++;
-                }                
-            }
-        }
-    }
-    
-    function getUniversitiesData($bdeID){
-        require 'src/login/connect.php';
-        $query = "CALL get_brigade_universities('$bdeID');";
-        $result = $conn->query($query);
-        if ($result->num_rows > 0){
-            $i = 0;
-            $this->univ = array();
-            while($row = $result->fetch_assoc()){
-                $this->univ[$i]["id"] = $row["id"];
-                $this->univ[$i]["name"] = $row["name"];
-                $i++;                
+                }
+                if (!is_null($row["volID"])){
+                    $this->vol[$k]["volID"] = $row["volID"];
+                    $this->vol[$k]["volName"] = $row["volName"];
+                    $this->vol[$k]["volLastName"] = $row["volLastName"];
+                    $this->vol[$k]["volType"] = $row["volType"];
+                    $this->vol[$k]["volEarArr"] = $row["volEarArr"];
+                    $this->vol[$k]["volOwnLve"] = $row["volOwnLve"];
+                    $this->vol[$k]["volAlg"] = $row["volAlg"];
+                    $this->vol[$k]["volDiet"] = $row["volDiet"];
+                    $this->vol[$k]["volCmts"] = $row["volCmts"];
+                    $k ++;
+                }
             }
         }
     }
     
     /*Other functions*/
-    function setBrigadeID($prog, $dtop){          
+    function generateID($prog, $subProg, $dtop){          
         switch ($prog) {
             case 1:
                 $progAB = "ARC";
@@ -122,10 +128,25 @@ class Brigade{
                 $progAB = "H2O";
                 break;
         }
+        $date = strtotime($dtop);
+        $month = date('m',$date);
+        $year = date('Y',$date);
         
+        echo $month + $year;
         
+        if ($subProg == 1){
+            $progAB = "HYB";
+            $query = "select count(id) from ficha where subProgram > 0 and MONTH(startingDate) = $month and YEAR(startingDate) = $year;";   
+        }else{
+            $query = "select count(id) from ficha where program = $prog and MONTH(startingDate) = $month and YEAR(startingDate) = $year;";   
+        }
         
-        return $progAB . $count . "-" . $month . $year;
+        require 'src/login/connect.php';             
+        $result = $conn->query($query);
+        $row = $result->fetch_assoc();
+        $count = $row["count(id)"];
+        
+        return $progAB . $count . "-" . date('M',$date) . date('y',$date);
     }    
     
     /*Functions to save and update data*/
@@ -136,15 +157,7 @@ class Brigade{
             return 1;
         }        
         return 0;
-    }
-    
-    function updateBasics($universities, $openingDate, $endingDate){
-        
-        if (true) {
-            return 1;
-        }        
-        return 0;
-    }
+    }    
     
     function saveFlights(){
         
@@ -196,17 +209,7 @@ class Brigade{
     }
     
     function getUniversities(){
-        if ($this->univ === "Ninguno"){
-            echo $this->univ; 
-        }else{
-            $i = 0;            
-            foreach ($this->univ as $value) {
-                echo '<li id="univ'.$i.'" class="univ-item" data-id="'.$value["id"].'">'.$value["name"].'<span class="icon-cancel" onclick="deleteUniversity('.$i.')"><span></li>';
-                $i++;
-            }
-            
-        }
-        
+        return $this->univ;        
     }
     
     function getDtop(){
@@ -238,6 +241,6 @@ class Brigade{
     }
     
     function getFlights(){
-        return $this->ft;
+        return $this->flt;
     }
 }

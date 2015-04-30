@@ -228,3 +228,27 @@ and open the template in the editor.
 [data-stage="false"]{
     display: none;
 }
+
+/*Orden de los elementos en la pantalla*/
+
+.basic-data {
+    float: left;
+    width: 40%;
+}
+
+.flights {
+    float: right;
+    width: 40%;
+}
+
+.tablesorter {    
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.volunteers {
+    clear: both;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}

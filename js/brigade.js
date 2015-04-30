@@ -26,6 +26,137 @@ function setStage(bdeID){
     
 }
 
+/*
+ * 
+ * @param {type} type
+ * @returns {String}
+ */
+
+function loadInfo(bdeID, universities, volunteers, flights){
+    var univ = universities;
+    var vol = volunteers;
+    var flt = flights;
+    
+    if (bdeID !== ""){
+        var univList = document.getElementById("loaded-univ-list");
+        var volsList = document.getElementById("table-volunteers-content");
+        var fltsList = document.getElementById("table-flights-content");
+        
+        for (var i = 0; i < univ.length; i++){
+            var univItem = document.createElement("li");        
+            univItem.id = "univ-"+univ[i].univID;
+            univItem.innerHTML = univ[i].univName;
+            univList.appendChild(univItem);
+        }
+        
+        for (var i = 0; i < vol.length; i++){
+            var volsItem = document.createElement("tr");
+            var volsID = document.createElement("td");
+            var volsName = document.createElement("td");
+            var volsLastName = document.createElement("td");
+            var volsType = document.createElement("td");
+            var volsEarArr = document.createElement("td");
+            var volsOwnLve = document.createElement("td");
+            var volsAlg = document.createElement("td");
+            var volsDiet = document.createElement("td");
+            var volsCmts = document.createElement("td");
+            
+            volsItem.setAttribute("onmouseover","volHover(this, true, this.id)");
+            volsItem.setAttribute("onmouseout","volHover(this, false, this.id)");
+            volsItem.setAttribute("onclick","volSelect(this, this.id)");
+            
+            volsItem.id = "vol-"+vol[i].volID;
+            volsID.id = "vol-"+vol[i].volID+"-ID";
+            volsName.id = "vol-"+vol[i].volID+"-name";
+            volsLastName.id = "vol-"+vol[i].volID+"-lastName";
+            volsType.id = "vol-"+vol[i].volID+"-type";
+            volsEarArr.id = "vol-"+vol[i].volID+"-earArr";
+            volsOwnLve.id = "vol-"+vol[i].volID+"-ownLve";
+            volsAlg.id = "vol-"+vol[i].volID+"-volAlg";
+            volsDiet.id = "vol-"+vol[i].volID+"-volDiet";
+            volsCmts.id = "vol-"+vol[i].volID+"-volCmts";
+            
+            volsID.innerHTML = vol[i].volID;
+            volsName.innerHTML = vol[i].volName;
+            volsLastName.innerHTML = vol[i].volLastName;
+            
+            if(vol[i].volType == 0){
+                volsType.innerHTML = "Presidente";
+            }else if(vol[i].volType == 1){
+                volsType.innerHTML = "Co-presidente"
+            }else if(vol[i].volType == 2){
+                volsType.innerHTML = "Voluntario"
+            }else{
+                volsType.innerHTML = "Profesor"
+            }
+            
+            if(vol[i].volEarArr === 0){
+                volsEarArr.innerHTML = "Si";
+            }else{
+                volsEarArr.innerHTML = "No";
+            }
+            
+            if(vol[i].volOwnLve === 0){
+                volsOwnLve.innerHTML = "Si";
+            }else{
+                volsOwnLve.innerHTML = "No";
+            }
+
+            volsAlg.innerHTML = vol[i].volAlg;
+            volsDiet.innerHTML = vol[i].volDiet;
+            volsCmts.innerHTML = vol[i].volCmts;
+            
+            volsItem.appendChild(volsID);
+            volsItem.appendChild(volsName);
+            volsItem.appendChild(volsLastName);
+            volsItem.appendChild(volsType);
+            volsItem.appendChild(volsEarArr);
+            volsItem.appendChild(volsOwnLve);
+            volsItem.appendChild(volsAlg);
+            volsItem.appendChild(volsDiet);
+            volsItem.appendChild(volsCmts);
+            
+            volsList.appendChild(volsItem);
+            
+        }
+        
+        for (var i = 0; i < flt.length; i++){
+            var fltsItem = document.createElement("tr");
+            var fltsNmbr = document.createElement("td");
+            var fltsType = document.createElement("td");
+            var fltsArrTime = document.createElement("td");
+            var fltsTotalStud = document.createElement("td");
+            
+            fltsItem.setAttribute("onmouseover","fltHover(this, true, this.id)");
+            fltsItem.setAttribute("onmouseout","fltHover(this, false, this.id)");
+            fltsItem.setAttribute("onclick","fltSelect(this, this.id)");
+            
+            fltsItem.id = "flt-"+flt[i].fltID;
+            fltsNmbr.id = "flt-"+flt[i].fltID+"-number";
+            fltsType.id = "flt-"+flt[i].fltID+"-type";
+            fltsArrTime.id = "flt-"+flt[i].fltID+"-arrTime";
+            fltsTotalStud.id = "flt-"+flt[i].fltID+"-totalStud";
+            
+            fltsNmbr.innerHTML = flt[i].fltID;
+            if (flt[i].fltType === 1){
+                fltsType.innerHTML = "Llegada";
+            }else{
+                fltsType.innerHTML = "Llegada";
+            }
+            fltsArrTime.innerHTML = flt[i].fltArrTime;
+            fltsTotalStud.innerHTML = flt[i].fltTotalStud;            
+            
+            fltsItem.appendChild(fltsNmbr);
+            fltsItem.appendChild(fltsType);
+            fltsItem.appendChild(fltsArrTime);
+            fltsItem.appendChild(fltsTotalStud);
+            
+            fltsList.appendChild(fltsItem);
+        }
+    }
+    
+}
+
 //**************************Basic Data Manipulation*****************************
 
 function setDate(type){
