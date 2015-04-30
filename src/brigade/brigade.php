@@ -132,8 +132,6 @@ class Brigade{
         $month = date('m',$date);
         $year = date('Y',$date);
         
-        echo $month + $year;
-        
         if ($subProg == 1){
             $progAB = "HYB";
             $query = "select count(id) from ficha where subProgram > 0 and MONTH(startingDate) = $month and YEAR(startingDate) = $year;";   
@@ -146,17 +144,31 @@ class Brigade{
         $row = $result->fetch_assoc();
         $count = $row["count(id)"];
         
+        if ($count == 0){
+            $count = $count++;
+        }
+        
+        if ($count < 10){
+            $count = "0".$count;
+        }
+        
         return $progAB . $count . "-" . date('M',$date) . date('y',$date);
     }    
     
     /*Functions to save and update data*/
-    function saveBasics($prog, $univ, $dtop, $dted) {
-        $bdeID = setBrigadeID($prog,$dtop);
+    function saveBasics($bdeID, $sdtop, $sdted, $priProg, $secProg, $spriDtop, $spriDted, $ssecDtop, $ssecDted) {
+        require 'src/login/connect.php';
+        $query = "INSERT INTO pgbl2014.ficha (id, startingDate, endDate, program, subProgram, priDtop, priDted, secDtop, secDted) VALUES ('$bdeID', '$sdtop', '$sdted', $priProg, NULL, NULL, NULL, NULL, NULL);";
+        $result = $conn->query($query);
         
-        if (true) {
+        if ($result) {
             return 1;
+        }else{
+            return 0;
         }        
-        return 0;
+         
+        
+        
     }    
     
     function saveFlights(){

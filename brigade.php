@@ -80,9 +80,22 @@ if(!empty($_POST)){
         $dtop = $_POST["dtop"];
         $dted = $_POST["dted"];
         
-        echo $brigade->generateID($priProg, $subProg, $dtop);
+        $bdeID = $brigade->generateID($priProg, $subProg, $dtop);
+        if ($brigade->saveBasics($bdeID, $_POST["dtop"], $dted, $priProg, $secProg, $priDtop, $priDted, $secDtop, $secDted) == 1){
+            $_SESSION["brigadeID"] = $bdeID;
+        }
     }
 }
+
+if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
+    //Configures data for existing brigades
+    $bdeID = $_SESSION["brigadeID"];
+    $brigade->getBasicData($bdeID);
+}else {
+    //Configures data for a new brigade
+    $bdeID = "";
+}
+
 ?>
 
 <!DOCTYPE html>
@@ -199,7 +212,7 @@ if(!empty($_POST)){
                         </dt>
                         
                         <dt>
-                        <button type="button" id="btnAddProg" onclick="addSubProgram();"> Agregar Programa </button>
+                        <button type="button" id="btnAddProg" onclick="addSubProgram();" disabled="disabled"> Agregar Programa </button>
                         <input type="checkbox" name="subprogram" id="subProgramSelected" hidden="hidden"/>
                         </dt>
                         
