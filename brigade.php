@@ -61,6 +61,7 @@ if(!empty($_POST)){
                 var univs = <?php echo json_encode($bdeData->getUniversities());?>;            
                 setData(progs,univs);
                 setBrigade(bdeID);
+                setStage(bdeID);
             }
         </script>
     </head>
@@ -70,9 +71,34 @@ if(!empty($_POST)){
         ?>
         <div class="container">
             <div class="section basic-data">
+                <!-- Seccion para mostrar la informacion de la brigada -->
+                
                 <h2> Datos Basicos </h2>
-                <h3 id="bdeID"> <?php echo $bdeID;?> </h3>
-                <form>
+                
+                <div id="brigade-information">
+                    <h3 id="bdeID"> <?php echo $bdeID;?> </h3>
+                    <dl>
+                        <dt>Programa Principal: </dt>
+                        <dd> <?php echo $brigade->getProgram();?> </dd>
+                        <dt>Programa Secundario: </dt>
+                        <dd> <?php echo $brigade->getSubProgram();?> </dd>
+                        <dt>Universidades: </dt>
+                        <dd> Pending </dd>
+                        <dt>Fecha de Inicio: </dt>
+                        <dd> <?php echo $brigade->getDtop();?> </dd>
+                        <dt>Fehca de Conclusion: </dt>
+                        <dd> <?php echo $brigade->getDted();?> </dd>
+                        <dt>Fecha de Inicio Primario: </dt>
+                        <dd> <?php echo $brigade->getPriDtop();?> </dd>
+                        <dt>Fehca de Conclusion Primario: </dt>
+                        <dd> <?php echo $brigade->getPriDted();?> </dd>
+                        <dt>Fecha de Inicio Secundario: </dt>
+                        <dd> <?php echo $brigade->getSecDtop();?> </dd>
+                        <dt>Fehca de Conclusion Secundario: </dt>
+                        <dd> <?php echo $brigade->getSecDted();?> </dd>
+                    </dl>
+                </div>                
+                <form id="brigade-form">
                     <dl>
                         <!-- Select for the program of the brigade -->
                         <dt>                        

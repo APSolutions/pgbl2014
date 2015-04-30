@@ -218,3 +218,13 @@ and open the template in the editor.
     font-family: sans-serif;
     margin: 0;
 }
+
+/* Visibildad de la informacion o el formulario */
+
+[data-stage="true"]{
+    display: block;
+}
+
+[data-stage="false"]{
+    display: none;
+}

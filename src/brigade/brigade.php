@@ -2,7 +2,32 @@
 
 class Brigade{
     
-    private $progID, $prog, $sProgID, $sProg, $univ, $dtop, $dted, $sDtop, $sDted, $vol, $ft;
+    /*Variables de la brigada
+     * ID del programa principal
+     * Nombre del Programa Principal
+     * ID del programa secundario
+     * Nombre del programa secundario
+     * ID de las universidades
+     * Nombre de las universidades
+     * Fecha de inicio de la brigada
+     * Fecha de conclusion de la brigada
+     * Fecha de inicio del programa principal
+     * Fecha de conclusion del programa principal
+     * Fecha de inicio del programa secundario
+     * Fecha de conclusion del programa secundario
+    */
+    private $progID;
+    private $prog;
+    private $sProgID;
+    private $sProg;
+    private $univID;
+    private $univName;
+    private $dtop;
+    private $dted;
+    private $priDtop;
+    private $priDted;
+    private $secDtop;
+    private $secDted;
     
     function __construct() {
         $this->progID = NULL;
@@ -11,7 +36,6 @@ class Brigade{
         $this->sProg = "Ninguno";
         $this->dtop = date("Y-m-d");
         $this->dted = date("Y-m-d",strtotime("+7 day"));
-        $this->univ = "Ninguno";
     }
             
     function getBasicData($bdeID){
@@ -19,12 +43,31 @@ class Brigade{
         $query = "CALL get_brigade_data('$bdeID');";        
         $result = $conn->query($query);
         $row = $result->fetch_assoc();
-        $this->progID = $row["progID"];
-        $this->prog = $row["prog"];
-        $this->dtop = $row["dtop"];
-        $this->dted = $row["dted"];
-        $this->sProgID = $row["subProgID"];
-        $this->sProg = $row["subProg"];
+        if ($result->num_rows > 0){
+            $i = $j = 0;
+            
+            $this->progID = $row["priProgID"];
+            $this->prog = $row["priProg"];
+            $this->sProgID = $row["secProgID"];
+            $this->sProg = $row["secProg"];
+            $this->dtop = $row["dtop"];
+            $this->dted = $row["dted"];
+            $this->priDtop = $row["priDtop"];
+            $this->priDted = $row["priDted"];
+            $this->secDtop = $row["secDtop"];
+            $this->secDted = $row["secDted"];
+            
+            while($row = $result->fetch_assoc()){
+                if (!is_null($row["univID"])){
+                    $this->univID[$i] = $row["univID"];
+                    $i ++;
+                }
+                if (!is_null($row["univName"])){
+                    $this->univName[$j] = $row["univName"];
+                    $j ++;
+                }                
+            }
+        }
     }
     
     function getUniversitiesData($bdeID){
@@ -166,12 +209,28 @@ class Brigade{
         
     }
     
-    function getOpeningDate(){
+    function getDtop(){
         return $this->dtop;
     }
     
-    function getEndingDate() {
+    function getDted() {
         return $this->dted;
+    }
+    
+    function getPriDtop(){
+        return $this->priDtop;
+    }
+    
+    function getPriDted() {
+        return $this->priDted;
+    }
+    
+    function getSecDtop(){
+        return $this->secDtop;
+    }
+    
+    function getSecDted() {
+        return $this->secDted;
     }
     
     function getVolunteers() {

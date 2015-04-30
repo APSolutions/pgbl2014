@@ -3,6 +3,29 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
+
+
+/*Metodo para mostrar los datos relevantes
+ * 
+ * Si el usuario quiere crear una nueva brigada, solo muestra los campos para
+ * llenar, de lo contrario muestra la informacion de la brigda ya guardada.
+ * @param cadena bdeID, trae el id de la brigada si existe condiciona
+
+ * 
+ */
+
+function setStage(bdeID){
+    
+    if (bdeID === ""){
+        document.getElementById("brigade-information").setAttribute("data-stage","false");
+        document.getElementById("brigade-form").setAttribute("data-stage","true"); 
+    }else{
+        document.getElementById("brigade-information").setAttribute("data-stage","true");
+        document.getElementById("brigade-form").setAttribute("data-stage","false");
+    }
+    
+}
+
 //**************************Basic Data Manipulation*****************************
 
 function setDate(type){
