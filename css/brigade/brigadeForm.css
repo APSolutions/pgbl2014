@@ -1,0 +1,72 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 05/02/2015, 12:10:22 PM
+    Author     : Arturo
+*/
+.bgdeLabel {
+    clear: both;
+    float: left;
+    margin-top: 5px;
+    margin-left: 10px;
+    
+    font-weight: 600;
+    width: 200px;
+    height: 25px;
+}
+
+.bgdeField {
+    border: 1px solid;
+    float: left;
+    width: 275px;
+    height: 20px;
+    margin-top: 5px;
+    margin-left: 5px;
+}
+
+.bgdeSelect {
+    width: 280px;
+    height: 25px;
+}
+
+.error {
+    
+}
+
+.visible{
+    display: block;
+}
+
+.hidden{
+    display: none;
+}
+
+@media screen and (min-width: 1921px){
+
+}
+
+@media screen and (max-width: 1920px) and (min-width: 1367px){
+
+}
+
+@media screen and (max-width: 1366px) and (min-width: 1281px){
+    
+}
+
+@media screen and (max-width: 1280px) and (min-width: 1025){
+    
+}
+
+@media screen and (max-width: 1024px){
+    .bgdeField {
+        
+    }
+    
+    #brigada ol{
+        width: 220px;
+    }
+
+}

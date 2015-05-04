@@ -1,0 +1,98 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 05/01/2015, 11:01:21 AM
+    Author     : Arturo
+*/
+.tituloFormulario {
+    display: block;
+    font-size: 20px;
+    font-weight: 800;
+}
+
+.instrucciones {
+    font-size: 14px;
+    font-style: oblique;
+    font-weight: 200;
+}
+
+.contenido{
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.seccion {
+    border: 1px solid;
+}
+
+#brigada {
+    float: left;
+    width: 1000px;
+}
+
+#vuelos {
+    float: right;
+    width: 500px;
+}
+
+#voluntarios {
+    clear: both;
+}
+
+@media screen and (max-width: 1920px){
+    .contenido {
+        max-width: 90%;
+    }
+}
+
+@media screen and (max-width: 1366px){
+    .contenido{
+        width: 95%;
+        min-width: 1216px;
+    }
+    
+    #brigada, #vuelos{
+        max-width: 645px;
+        
+        width: 49%;
+        
+        min-width: 605px;
+    }
+    
+}
+
+@media screen and (max-width: 1280px){
+    .contenido{
+        width: 100%;      
+    }
+    
+    #brigada, #vuelos{
+        max-width: 640px;
+        
+        width: 49%;
+        
+        min-width: 512px;
+    }
+}
+
+@media screen and (max-width: 1024px){
+    body, .contenido{
+        width: 100%;        
+        min-width: 1010px;
+    }
+    
+    #brigada, #vuelos{
+        
+        display: inline-block;
+        vertical-align: top;
+        
+        max-width: 512px;
+        
+        width: 49%;
+        
+        min-width: 500px;
+    }
+}
