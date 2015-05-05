@@ -44,14 +44,17 @@ and open the template in the editor.
 
 @media screen and (max-width: 1920px){
     .contenido {
-        max-width: 90%;
+        width: 90%;
+    }
+    
+    #brigada, #vuelos{        
+        width: 49%;
     }
 }
 
 @media screen and (max-width: 1366px){
     .contenido{
         width: 95%;
-        min-width: 1216px;
     }
     
     #brigada, #vuelos{
@@ -74,7 +77,7 @@ and open the template in the editor.
         
         width: 49%;
         
-        min-width: 512px;
+        min-width: 510px;
     }
 }
 

@@ -12,28 +12,37 @@ and open the template in the editor.
     float: left;
     margin-top: 5px;
     margin-left: 10px;
-    
     font-weight: 600;
-    width: 200px;
     height: 25px;
+    width: 40%;
 }
 
 .bgdeField {
-    border: 1px solid;
     float: left;
-    width: 275px;
-    height: 20px;
     margin-top: 5px;
     margin-left: 5px;
+    height: 25px;
+    width: 55%;
 }
 
 .bgdeSelect {
-    width: 280px;
-    height: 25px;
+    width: 56%;
+}
+    
+#selectedUnivList{
+    width: 47%;
 }
 
 .error {
     
+}
+
+#selectedUnivList{
+    height: auto;
+}
+
+#selectedUnivList{
+    color: black;
 }
 
 .visible{
@@ -45,28 +54,43 @@ and open the template in the editor.
 }
 
 @media screen and (min-width: 1921px){
-
+    .bgdeLabel{
+        
+    }    
+    
+    .bgdeField {
+        
+    }
+    
+    
 }
 
 @media screen and (max-width: 1920px) and (min-width: 1367px){
 
 }
 
-@media screen and (max-width: 1366px) and (min-width: 1281px){
+@media screen and (max-width: 1366px){
     
 }
 
-@media screen and (max-width: 1280px) and (min-width: 1025){
+@media screen and (max-width: 1280px){
     
 }
 
 @media screen and (max-width: 1024px){
+    .bgdeLabel{
+        width: 200px;
+    }    
+    
     .bgdeField {
-        
+        width: 275px;
     }
     
-    #brigada ol{
-        width: 220px;
+    .bgdeSelect {
+        width: 280px;
     }
-
+    
+    #selectedUnivList{
+        width: 235px;
+    }
 }

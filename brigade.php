@@ -260,7 +260,13 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                             <label for="minoProgEndDate" class="bgdeLabel"> Fecha de Conclusión: </label>
                             <input  id="minoProgEndDate" name="sPED" class="bgdeField" type="date" onchange="updateDate(0)"/>
                             <span class="error"></span>                            
-                        </div>                        
+                        </div>
+                        
+                        <div class="buttons">
+                            <!--Boton para limpiar los campos-->
+                            <!--Boton para agregar una bigrada nueva-->
+                            <!--Boton para guardar los cambio-->
+                        </div>
                     </form>
                     
                 </div>
