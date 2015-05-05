@@ -186,7 +186,7 @@ function setMinDate(date){
     var dt = new Date(date);
     var dn = new Date(dt);
     
-    dn.setDate(dt.getDate() + 7);
+    dn.setDate(dt.getDate() + 3);
     
     var dd = dn.getDate();
     var mm = dn.getMonth()+1;
@@ -363,8 +363,7 @@ function addUniversity(){
        univToForm.value = selectedUniv.value;
        univToForm.selected = "selected";
        
-       deleteUniv.innerHTML = "Eliminar";
-       deleteUniv.className = "pointer";
+       deleteUniv.className = "univDelete icon-univdelete";
        deleteUniv.setAttribute("onclick","deleteUniversity("+selectedUniv.value+")");
        
        univToList.appendChild(deleteUniv);
