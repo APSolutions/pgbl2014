@@ -110,3 +110,33 @@ function setMinDate(date,type){
 }
 
 //Funciones para realizar validaciones desde el cliente a medida que el usuario va modificando los datos
+var prevProg = "";
+
+function updatePrgSel(option){    
+    //Funcion que deshabilita el programa del otro select para programas de acuerdo a cual haya sido elegido
+    if (prevProg !== ""){
+        if(prevProg.substring(0,4) === "main"){
+            document.getElementById(prevProg.replace("main","mino")).disabled = false;
+        }else if((prevProg.substring(0,4) === "mino")){
+            document.getElementById(prevProg.replace("mino","main")).disabled = false;
+        }
+    }
+    
+    if(option.id.substring(0,4) === "main"){
+        document.getElementById(option.id.replace("main","mino")).disabled = true;
+    }else if((option.id.substring(0,4) === "mino")){
+        document.getElementById(option.id.replace("mino","main")).disabled = true;
+    }
+    
+    prevProg = option.id;
+}
+
+function updateDates(date){
+    if(date.id.substring(0,4) === "main"){
+        document.getElementById("mainProgEndDate").value = setMinDate(date.value,2);
+        document.getElementById("mainProgEndDate").min = setMinDate(date.value,1);
+    }else{
+        document.getElementById("minoProgEndDate").value = setMinDate(date.value,2);
+        document.getElementById("minoProgEndDate").min = setMinDate(date.value,1);
+    }
+}

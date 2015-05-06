@@ -208,7 +208,7 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                         <!--Programa Principal-->
                         
                         <label for="mainProgSelect" class="bgdeLabel"> Programa: </label>
-                        <select id="mainProgSelect" name="mainProg" class="bgdeField bgdeSelect">
+                        <select id="mainProgSelect" name="mainProg" class="bgdeField bgdeSelect" onchange="updatePrgSel(this.options[this.selectedIndex])">
                             <option value=NULL> seleccione un programa </option>
                         </select>
                         <span id="mainProgErro" class="error"></span>
@@ -229,13 +229,13 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                         <!--Fecha de inicio del programa principal-->
                             
                         <label for="mainProgBgnDate" class="bgdeLabel"> Fecha de inicio: </label>
-                        <input  id="mainProgBgnDate" name="pPBD" class="bgdeField" type="date" onchange="updateDate(0)"/>
+                        <input  id="mainProgBgnDate" name="pPBD" class="bgdeField" type="date" onchange="updateDates(this)"/>
                         <span class="error"></span>
                             
                         <!--Fecha de conclusion del programa principal-->
                             
                         <label for="mainProgEndDate" class="bgdeLabel"> Fecha de Conclusión: </label>
-                        <input  id="mainProgEndDate" name="pPED" class="bgdeField" type="date" onchange="updateDate(0)"/>
+                        <input  id="mainProgEndDate" name="pPED" class="bgdeField" type="date" onchange=""/>
                         <span class="error"></span>
                         
                         <!--Programa Secundario-->
@@ -245,7 +245,7 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                             <!--Seleccion del programa secundario-->
                             
                             <label for="minoProgSelect" class="bgdeLabel"> Programa secundario: </label>
-                            <select id="minoProgSelect" name="minoProg" class="bgdeField bgdeSelect">                           
+                            <select id="minoProgSelect" name="minoProg" class="bgdeField bgdeSelect" onchange="updatePrgSel(this.options[this.selectedIndex])">                           
                                 <option value=NULL> seleccione un programa </option>
                             </select>
                             <span id="minoProgErro" class="error"></span>                            
@@ -253,14 +253,16 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                             <!--Fecha de inicio del programa secundario-->
                             
                             <label for="minoProgBgnDate" class="bgdeLabel"> Fecha de inicio: </label>
-                            <input  id="minoProgBgnDate" name="sPBD" class="bgdeField" type="date" onchange="updateDate(0)"/>
+                            <input  id="minoProgBgnDate" name="sPBD" class="bgdeField" type="date" onchange="updateDates(this)"/>
                             <span class="error"></span>
+                            <span class="warning"></span>
                             
                             <!--Fecha de conclusion del programa secundario-->
                             
                             <label for="minoProgEndDate" class="bgdeLabel"> Fecha de Conclusión: </label>
-                            <input  id="minoProgEndDate" name="sPED" class="bgdeField" type="date" onchange="updateDate(0)"/>
-                            <span class="error"></span>                            
+                            <input  id="minoProgEndDate" name="sPED" class="bgdeField" type="date" onchange=""/>
+                            <span class="error"></span>
+                            <span class="warning"></span>  
                         </div>
                         
                         <div class="buttons">
