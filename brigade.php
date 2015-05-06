@@ -160,6 +160,7 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                 //Brigada
                 setProgSelect(progs);
                 setUnivSelect(univs);
+                setDateInputs();
                 
                 
                 setBrigade(bdeID);

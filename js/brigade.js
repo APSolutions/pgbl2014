@@ -159,7 +159,7 @@ function loadInfo(bdeID, universities, volunteers, flights){
 
 //**************************Basic Data Manipulation*****************************
 
-function setDate(type){
+function initializeDate(type){
     var dt = new Date();
     var dn = new Date(dt);
         

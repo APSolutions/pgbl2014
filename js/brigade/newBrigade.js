@@ -52,3 +52,61 @@ function setUnivSelect(universities){
     }
 }
 
+function setDateInputs(){
+    //Funcion para configurar las fechas iniciales y minimas del formulario para cada elemento
+    
+    var mainProgBgnDate = document.getElementById("mainProgBgnDate");
+    var mainProgEndDate = document.getElementById("mainProgEndDate");
+    var minoProgBgnDate = document.getElementById("minoProgBgnDate");
+    var minoProgEndDate = document.getElementById("minoProgEndDate");
+    
+    //Configuracion de la fechas minimas
+    mainProgBgnDate.min = minoProgBgnDate.min = setMinDate(null,0);
+    mainProgEndDate.min = minoProgEndDate.min = setMinDate(null,1);
+    
+    
+    
+    //Configuracion de la fecha a mostrar de las fechas por defecto del programa primario
+    mainProgBgnDate.value = setMinDate(null,0);
+    mainProgEndDate.value = setMinDate(mainProgBgnDate.value,2);
+    
+    //Configuracion de la fecha a mostrar de las fechas por defecto del programa secundario
+    minoProgBgnDate.value = setMinDate(mainProgEndDate.value, 1);
+    minoProgEndDate.value = setMinDate(minoProgBgnDate.value, 2);
+    
+}
+
+function setMinDate(date,type){
+    //Funcion para obtener las fechas minimas que pueden ser utilizadas en los elementos    
+    var dt;
+    var dn;
+    
+    if(date !== null){
+        dt = new Date(date);
+    }else{
+        dt = new Date();
+    }
+    
+    dn = new Date(dt);
+    
+    if (type === 1){
+        dn.setDate(dt.getUTCDate() + 1);
+    }else if(type === 2){
+        dn.setDate(dt.getUTCDate() + 6);
+    }
+    
+    var dd = dn.getDate();
+    var mm = dn.getMonth()+1;
+    var yy = dn.getFullYear();
+    
+    if (dd < 10){
+        dd = "0" + dd;
+    }
+    if (mm < 10){
+        mm = "0" + mm;
+    }
+    
+    return ""+ yy + "-" + mm + "-" + dd + "";
+}
+
+//Funciones para realizar validaciones desde el cliente a medida que el usuario va modificando los datos
