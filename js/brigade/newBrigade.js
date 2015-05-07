@@ -74,6 +74,8 @@ function setDateInputs(){
     minoProgBgnDate.value = setMinDate(mainProgEndDate.value, 1);
     minoProgEndDate.value = setMinDate(minoProgBgnDate.value, 2);
     
+    updateDates(minoProgBgnDate);
+    
 }
 
 function setMinDate(date,type){
@@ -132,6 +134,7 @@ function updatePrgSel(option){
 }
 
 function updateDates(date){
+    //Funcion para actualizar las fechas a sus duraciones por defecto de acuerdo a cual se  actualize    
     if(date.id.substring(0,4) === "main"){
         document.getElementById("mainProgEndDate").value = setMinDate(date.value,2);
         document.getElementById("mainProgEndDate").min = setMinDate(date.value,1);
@@ -139,4 +142,44 @@ function updateDates(date){
         document.getElementById("minoProgEndDate").value = setMinDate(date.value,2);
         document.getElementById("minoProgEndDate").min = setMinDate(date.value,1);
     }
+    checkDates()
+}
+
+function checkDates(){
+    //Funcion que verifica que las fechas no chocquen entre si y envia una alerta al usuario en pantalla que indica que hay un problema
+    var warningMessage = "";
+    var controlDate;
+    var location;
+    var mainProgBgnDate = new Date(document.getElementById("mainProgBgnDate").value);
+    var mainProgEndDate = new Date(document.getElementById("mainProgEndDate").value);
+    var minoProgBgnDate = new Date(document.getElementById("minoProgBgnDate").value);
+    var minoProgEndDate = new Date(document.getElementById("minoProgEndDate").value);
+    
+    if(mainProgBgnDate > minoProgBgnDate){
+        controlDate = new Date(minoProgEndDate);
+        if(mainProgBgnDate !== (controlDate.setDate(minoProgEndDate.getUTCDate()) + 1)){
+            warningMessage = "Esta fecha debe ser igual a un dia despues de finalizado el programa secundario";
+            location = 1;
+        }
+    }else if(mainProgBgnDate < minoProgBgnDate){
+        controlDate = new Date(mainProgEndDate);
+        if(minoProgBgnDate !== (controlDate.setDate(mainProgEndDate.getUTCDate()) + 1)){
+            warningMessage = "Esta fecha debe ser igual a un dia despues de finalizado el programa principal";
+            location = 0;
+        }
+    }else{
+        warningMessage = "Las fechas de inicio no pueden ser iguales";
+        location = 2;
+    }
+    
+    if(location === 2){
+        for (var i = 0; i < document.getElementsByClassName("warning").lengt; i++){
+            document.getElementsByClassName("warning").item(i).innerHTML = warningMessage;
+        }
+    }else if (location === 0 || location === 1){
+        document.getElementsByClassName("warning").item(location).innerHTML = warningMessage;
+    }else{
+        alert("all good");
+    }
+    
 }

@@ -231,11 +231,12 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                         <label for="mainProgBgnDate" class="bgdeLabel"> Fecha de inicio: </label>
                         <input  id="mainProgBgnDate" name="pPBD" class="bgdeField" type="date" onchange="updateDates(this)"/>
                         <span class="error"></span>
+                        <span class="warning"></span>
                             
                         <!--Fecha de conclusion del programa principal-->
                             
                         <label for="mainProgEndDate" class="bgdeLabel"> Fecha de Conclusión: </label>
-                        <input  id="mainProgEndDate" name="pPED" class="bgdeField" type="date" onchange=""/>
+                        <input  id="mainProgEndDate" name="pPED" class="bgdeField" type="date" onchange="checkDates()"/>
                         <span class="error"></span>
                         
                         <!--Programa Secundario-->
@@ -260,9 +261,8 @@ if (isset($_SESSION["brigadeID"]) && !empty($_SESSION["brigadeID"])){
                             <!--Fecha de conclusion del programa secundario-->
                             
                             <label for="minoProgEndDate" class="bgdeLabel"> Fecha de Conclusión: </label>
-                            <input  id="minoProgEndDate" name="sPED" class="bgdeField" type="date" onchange=""/>
-                            <span class="error"></span>
-                            <span class="warning"></span>  
+                            <input  id="minoProgEndDate" name="sPED" class="bgdeField" type="date" onchange="checkDates()"/>
+                            <span class="error"></span>                            
                         </div>
                         
                         <div class="buttons">
